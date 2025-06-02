@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:34:03 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 16:15:52 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:21:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	my_echo(char **args)
 	}
 	if (n_line == 0)
 		write(1, "\n", 1);
+	exit_sta = 0;
 }
