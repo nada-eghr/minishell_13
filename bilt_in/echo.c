@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:34:03 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 15:24:31 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:15:52 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	my_echo(char **args)
 	while (args[i])
 	{
 		write(1, args[i], ft_strlen(args[i]));
-		write(1, " ", 1);
+		if (args[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (n_line == 0)
