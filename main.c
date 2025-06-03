@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:32:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 12:02:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:23:55 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,11 @@ int main(int ac, char **av, char **env)
 	av = NULL;
 	e = get_list_env(env);
 	input = "wee";
-	// int r = 255 -1;
-	// printf("%d\n", r);
-	// exit (0);
 	while (input) 
 	{
 		input = readline("Minishell$ ");
 		cmd_list = smal_list(input);
-		bilt_in(cmd_list, &e);
+		exc(cmd_list, &e);
 		//var_handler()
 	}
 	return 0;

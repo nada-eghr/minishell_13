@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 12:21:27 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:13:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,20 @@ int		bilt_in(t_my_list *list, t_env_list **list_env)
 	return(0);	
 }
 
-void	excut_comand(t_my_list *list, t_env_list *list_env)
+void	excut_comand(t_my_list *list, t_env_list **list_env)
 {
 	int b;
 	char	*path;
-	// int		child;
+	int		child;
 	char	**arg;
 	
 	arg = NULL;
-	// int status;
-	b = bilt_in(list, &list_env);
+	int status;
+	b = bilt_in(list, &*list_env);
 	if (b == 0)
 	{
-	//	arg = return_list_to_arg(list_env);
-		path = it_correct_comnd(list->args[0], list_env);
+		arg = return_list_to_arg(list_env);
+		path = it_correct_comnd(list->args[0], *list_env);
 		// if (!path)
 		// 	return;
 		// child = fork();
@@ -93,11 +93,15 @@ void	excut_comand(t_my_list *list, t_env_list *list_env)
 		//free_tab(arg);
 	}
 }
-void	exc(t_my_list *list, t_env_list *list_env)
+
+void	exc(t_my_list *list, t_env_list **list_env)
 {
-	while(list)
+	
+	if (!list->next)
+		excut_comand(list, &*list_env);
+	while(list->next)
 	{
-		excut_comand(list, list_env);
+		excut_comand(list, &*list_env);
 		list = list->next;
 	}
 }
