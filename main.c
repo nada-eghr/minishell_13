@@ -6,13 +6,13 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:32:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 11:51:15 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:02:48 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heder_shell.h"
 
-t_my_list *ft_lst_new(char **args) 
+t_my_list *ft_lst_new (char **args) 
 {
 	t_my_list *list = malloc(sizeof(t_my_list));
 	if (!list)
