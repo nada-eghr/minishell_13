@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 15:11:22 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:42:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_list
 
 typedef struct my_list
 {
-	char 	*cmd;
 	char 	**args;
 	char	**inf;
 	char	**outf;

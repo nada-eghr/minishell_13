@@ -6,18 +6,17 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:32:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/30 11:17:46 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:51:15 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heder_shell.h"
 
-t_my_list *ft_lst_new(char *cmd, char **args) 
+t_my_list *ft_lst_new(char **args) 
 {
 	t_my_list *list = malloc(sizeof(t_my_list));
 	if (!list)
 		return NULL;
-	list->cmd = strdup(cmd);
 	list->args = args;
 	list->next = NULL;
 	return list;
@@ -40,7 +39,7 @@ t_my_list *smal_list(char *s)
 	char **args = split_args(s);
 	if (!args || !args[0])
 		return NULL;
-	return ft_lst_new(args[0], args);
+	return ft_lst_new(args);
 }
 
 

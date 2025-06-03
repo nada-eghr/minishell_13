@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 15:11:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:47:29 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ char	*it_correct_comnd(char *cmd, t_env_list *env)
 }
 int		bilt_in(t_my_list *list, t_env_list **list_env)
 {
-	if (str_cmp(list->cmd, "pwd")|| str_cmp(list->cmd, "PWD"))
+	if (str_cmp(list->args[0], "pwd")|| str_cmp(list->args[0], "PWD"))
 		return(my_pwd());
-	else if (str_cmp(list->cmd, "env"))
+	else if (str_cmp(list->args[0], "env"))
 		return (my_env(*list_env));
-	else if (str_cmp(list->cmd, "cd"))
+	else if (str_cmp(list->args[0], "cd"))
 		return(my_cd(*list_env,list->args));
-	else if (str_cmp(list->cmd, "unset"))
+	else if (str_cmp(list->args[0], "unset"))
 		return(my_unset(list_env,list->args));
-	else if (str_cmp(list->cmd, "export"))
+	else if (str_cmp(list->args[0], "export"))
 		return(my_export(*list_env,list->args));
-	else if (str_cmp(list->cmd, "exit"))
+	else if (str_cmp(list->args[0], "exit"))
 		my_exit(list->args);
 	else if (str_cmp(list->args[0], "echo"))
 		my_echo(list->args);
@@ -81,11 +81,9 @@ void	excut_comand(t_my_list *list, t_env_list *list_env)
 	if (b == 0)
 	{
 	//	arg = return_list_to_arg(list_env);
-		path = it_correct_comnd(list->cmd, list_env);
+		path = it_correct_comnd(list->args[0], list_env);
 		// if (!path)
 		// 	return;
-		printf("%s\n",path);
-		exit(9);
 		// child = fork();
 		// if (child == 0)
 		// {
