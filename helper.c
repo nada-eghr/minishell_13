@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:56 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/28 19:30:00 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:40:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_strlen(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -50,9 +52,10 @@ char	*str_join(char *s1, char *s2)
 		return (str_dup(s1));
 	if (!s1 && !s2)
 		return (NULL);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	while (s1[i])
 		str[j++] = s1[i++];
+	str[j++] = '/';
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];
@@ -78,11 +81,12 @@ t_env_list	*get_list_env(char **env)
 {
 	t_env_list	*new_env;
 	t_env_list	*serch;
-	
 	int			i;
+	int			serch_old_p;
 	
 	i = 1;
 	new_env = ft_lstnew(env[0]);
+	serch_old_p = 0;
 	while (env[i])
 	{
 		ft_lstadd_back(&new_env, ft_lstnew(env[i]));
@@ -95,8 +99,11 @@ t_env_list	*get_list_env(char **env)
 		{
 			free(serch->content.last);
 			serch->content.last = NULL;
+			serch_old_p = 1;
 		}
 		serch = serch->next;
 	}
+	if (serch_old_p == 0)
+		ft_lstadd_back(&new_env, ft_lstnew("OLDPWD"));
 	return (new_env);
 }

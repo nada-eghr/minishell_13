@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 14:13:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:24:17 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ char	*it_correct_comnd(char *cmd, t_env_list *env)
 int		bilt_in(t_my_list *list, t_env_list **list_env)
 {
 	if (str_cmp(list->args[0], "pwd")|| str_cmp(list->args[0], "PWD"))
-		return(my_pwd());
+		return(my_pwd(), 1);
 	else if (str_cmp(list->args[0], "env"))
-		return (my_env(*list_env));
+		return (my_env(*list_env), 1);
 	else if (str_cmp(list->args[0], "cd"))
-		return(my_cd(*list_env,list->args));
+		return(my_cd(*list_env,list->args), 1);
 	else if (str_cmp(list->args[0], "unset"))
-		return(my_unset(list_env,list->args));
+		return(my_unset(list_env,list->args), 1);
 	else if (str_cmp(list->args[0], "export"))
-		return(my_export(*list_env,list->args));
+		return(my_export(*list_env,list->args), 1);
 	else if (str_cmp(list->args[0], "exit"))
 		my_exit(list->args);
 	else if (str_cmp(list->args[0], "echo"))
-		my_echo(list->args);
+		return (my_echo(list->args), 1);
 	return(0);	
 }
 
@@ -76,21 +76,22 @@ void	excut_comand(t_my_list *list, t_env_list **list_env)
 	char	**arg;
 	
 	arg = NULL;
-	int status;
+	//int status;
 	b = bilt_in(list, &*list_env);
 	if (b == 0)
 	{
-		arg = return_list_to_arg(list_env);
+		arg = return_list_to_arg(*list_env);
 		path = it_correct_comnd(list->args[0], *list_env);
-		// if (!path)
-		// 	return;
-		// child = fork();
-		// if (child == 0)
-		// {
-		// 	execve(path, list->args, arg);
-		// }
-		// wait(&status);
-		//free_tab(arg);
+		if (!path)
+		{
+			write_err("Minishell: ", list->args[0],": command not found\n", '\0');
+			exit_sta = CMD_NOTFIND;
+			return ;
+		}
+		b = fork();
+		if (b == 0)
+			execve(path, list->args, arg);
+		wait(&child);
 	}
 }
 
@@ -99,9 +100,9 @@ void	exc(t_my_list *list, t_env_list **list_env)
 	
 	if (!list->next)
 		excut_comand(list, &*list_env);
-	while(list->next)
-	{
-		excut_comand(list, &*list_env);
-		list = list->next;
-	}
+	// while(list->next)
+	// {
+	// 	excut_comand(list, &*list_env);
+	// 	list = list->next;
+	// }
 }

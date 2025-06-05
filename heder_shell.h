@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 14:14:11 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:27:05 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <readline/readline.h>
 #define SUCCESS 0
 #define	ERORR	1
-
+#define CMD_NOTFIND 127
 //-----------EXECUTION----------
 //.
 //			SAFIYA
@@ -73,7 +73,9 @@ char		*str_join(char *s1, char *s2);
 char		*str_dup(char *s);
 void		free_tab(char **str);
 char		*my_get_env(char *str, t_env_list *env);
+char		**return_list_to_arg(t_env_list *list_env);
 int			is_alpha(char c);
+void	write_err(char *s, char *arg, char *last, char up);
 //////----BILT_IN----///////
 int		my_pwd(void);
 int		my_env(t_env_list *env);

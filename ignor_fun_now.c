@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:42:51 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/22 10:43:04 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:16:31 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**return_list_to_arg(t_env_list *list_env)
 	}
 	l = list_env;
 	arg = malloc(sizeof(char *) * (i + 1));
-	while (j < i)
+	while (j < i && list_env)
 	{
 		arg[j] = malloc(ft_strlen(list_env->content.first) + ft_strlen(list_env->content.last) + 2);
 		while (list_env->content.first[k])
@@ -41,10 +41,13 @@ char	**return_list_to_arg(t_env_list *list_env)
 			arg[j][k] = list_env->content.first[k];
 			k++;
 		}
-		arg[j][k++] = '=';
-		while (list_env->content.last[s])
-			arg[j][k++] = list_env->content.last[s++];
-		arg[j][k] = '\0';
+		if (list_env->content.last)
+		{
+				arg[j][k++] = '=';
+			while (list_env->content.last[s])
+				arg[j][k++] = list_env->content.last[s++];
+			arg[j][k] = '\0';
+		}
 		j++;
 		list_env = list_env->next;
 		k = 0;

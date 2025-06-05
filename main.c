@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:32:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/03 12:23:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:28:55 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int main(int ac, char **av, char **env)
 		input = readline("Minishell$ ");
 		cmd_list = smal_list(input);
 		exc(cmd_list, &e);
-		//var_handler()
 	}
 	return 0;
 }
