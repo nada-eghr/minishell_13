@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:56 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/05 14:40:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 08:38:45 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ t_env_list	*get_list_env(char **env)
 	int			serch_old_p;
 	
 	i = 1;
-	new_env = ft_lstnew(env[0]);
+	new_env = ft_lstnew_env(env[0]);
 	serch_old_p = 0;
 	while (env[i])
 	{
-		ft_lstadd_back(&new_env, ft_lstnew(env[i]));
+		ft_lstadd_back(&new_env, ft_lstnew_env(env[i]));
 		i++;
 	}
 	serch = new_env;
@@ -104,6 +104,6 @@ t_env_list	*get_list_env(char **env)
 		serch = serch->next;
 	}
 	if (serch_old_p == 0)
-		ft_lstadd_back(&new_env, ft_lstnew("OLDPWD"));
+		ft_lstadd_back(&new_env, ft_lstnew_env("OLDPWD"));
 	return (new_env);
 }

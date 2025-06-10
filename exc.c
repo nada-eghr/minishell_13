@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/05 13:24:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 11:06:21 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,7 @@
 
 int	exit_sta = 0;
 
-char	*my_get_env(char *str, t_env_list *env)
-{
 
-	while (env)
-	{
-		if (str_cmp(str, env->content.first))
-			return (env->content.last);
-		env = env->next;	
-	}
-	return (NULL);
-}
 char	*it_correct_comnd(char *cmd, t_env_list *env)
 {
 	char	*path;
@@ -76,12 +66,13 @@ void	excut_comand(t_my_list *list, t_env_list **list_env)
 	char	**arg;
 	
 	arg = NULL;
-	//int status;
 	b = bilt_in(list, &*list_env);
+	path = list->args[0];
 	if (b == 0)
 	{
 		arg = return_list_to_arg(*list_env);
-		path = it_correct_comnd(list->args[0], *list_env);
+		if (access(list->args[0],X_OK) < 0)
+			path = it_correct_comnd(list->args[0], *list_env);
 		if (!path)
 		{
 			write_err("Minishell: ", list->args[0],": command not found\n", '\0');
@@ -90,19 +81,54 @@ void	excut_comand(t_my_list *list, t_env_list **list_env)
 		}
 		b = fork();
 		if (b == 0)
+		{
+			exit_sta = 0;
 			execve(path, list->args, arg);
+		}
 		wait(&child);
 	}
 }
+void	rederection(t_my_list *list)
+{
+	int	per;
+	int	i;
+	int j;
 
+	j = 0;
+	i = 0;
+	per = 0;
+	if (list->outf)
+	{
+		while (list->outf[i])
+		{
+			if (access(list->outf[i],W_OK) < 0)
+			{
+				per = -1;
+				break;
+			}
+			i++;
+		}
+			printf ("%s", list->outf[i]);
+			exit (0);
+		while (j < i)
+		{
+			open(list->outf[j], O_WRONLY);
+			j++;
+		}
+		if (per == -1)
+			write (2, "i find error this file no permetetoin", 37);
+	}
+}
 void	exc(t_my_list *list, t_env_list **list_env)
 {
-	
 	if (!list->next)
+	{
+		rederection(list);
 		excut_comand(list, &*list_env);
-	// while(list->next)
-	// {
-	// 	excut_comand(list, &*list_env);
-	// 	list = list->next;
-	// }
+	}
+	while(list->next)
+	{
+		excut_comand(list, &*list_env);
+		list = list->next;
+	}
 }

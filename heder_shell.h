@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/05 12:27:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 10:37:51 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 #include <string.h>
 #include <limits.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #define SUCCESS 0
 #define	ERORR	1
@@ -64,7 +65,7 @@ typedef	struct variabel
 
 
 t_env_list	*get_list_env(char **env);
-t_env_list	*ft_lstnew(void *content);
+t_env_list	*ft_lstnew_env(void *content);
 void		ft_lstadd_back(t_env_list **lst, t_env_list *new);
 int			ft_strlen(char *str);
 int			str_cmp(char *s1, char *s2);

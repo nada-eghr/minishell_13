@@ -1,0 +1,14 @@
+Makefile
+all_env.c
+bilt_in
+exc.c
+free_fun.c
+heder_shell.h
+helper.c
+ignor_fun_now.c
+linkd_list.c
+main.c
+minishell
+mm
+small_libft.c
+so

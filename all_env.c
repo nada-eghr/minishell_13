@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/28 16:16:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 08:36:42 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_line(char *data, char c)
 	return (NULL);
 }
 
-t_env_list	*ft_lstnew(void *content)
+t_env_list	*ft_lstnew_env(void *content)
 {
 	t_env_list	*nod;
 	char	*frst;
@@ -78,4 +78,15 @@ void	ft_lstadd_back(t_env_list **lst, t_env_list *new)
 	while (list->next)
 		list = list->next;
 	list->next = new;
+}
+char	*my_get_env(char *str, t_env_list *env)
+{
+
+	while (env)
+	{
+		if (str_cmp(str, env->content.first))
+			return (env->content.last);
+		env = env->next;	
+	}
+	return (NULL);
 }

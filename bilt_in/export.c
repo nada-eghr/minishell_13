@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/30 08:10:20 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 08:39:36 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	my_export(t_env_list *env, char **args)
 			ret = 1;
 		}
 		else if (orredy_hav_valu(env, args[i]) == 0)
-				ft_lstadd_back(&env,ft_lstnew(args[i]));
+				ft_lstadd_back(&env,ft_lstnew_env(args[i]));
 		i++;
 	}
 	return (0);
