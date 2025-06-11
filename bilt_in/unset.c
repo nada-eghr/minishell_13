@@ -6,28 +6,12 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/26 19:01:42 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:33:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../heder_shell.h"
 
-int	write_erorr(char *str, char *var)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		write(2, &str[i++], 1);
-	if (var)
-	{
-		write(2, "`",1);
-		write(2, var, ft_strlen(var));
-		write(2, "'", 1);
-		write(2, ":", 1);
-	}
-	return (1);
-}
 int	chake_arg(char *str)
 {
 	int	i;
@@ -86,8 +70,8 @@ int	my_unset(t_env_list **en, char **args)
 	{
 		if (chake_arg(args[i]))
 		{
-			write_erorr("Minishell: unset: ", args[i]);
-			write_erorr(" not a valid identifier\n", NULL);
+			// write_erorr("Minishell: unset: ", args[i]);
+			// write_erorr(" not a valid identifier\n", NULL);
 			ret = 1;
 		}
 		delet_list(en, args[i]);

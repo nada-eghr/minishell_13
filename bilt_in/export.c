@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 08:39:36 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:33:55 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	my_export(t_env_list *env, char **args)
 	{
 		if (chake_args(args[i]))
 		{
-			write_erorr("Minishell: export: ", args[i]);
-			write_erorr("not a balid identifier\n", NULL);
+			// write_erorr("Minishell: export: ", args[i]);
+			// write_erorr("not a balid identifier\n", NULL);
 			ret = 1;
 		}
 		else if (orredy_hav_valu(env, args[i]) == 0)

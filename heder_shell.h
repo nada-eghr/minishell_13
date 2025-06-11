@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 10:37:51 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:37:05 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define SUCCESS 0
 #define	ERORR	1
 #define CMD_NOTFIND 127
+#define NO_REDERCT -1
 //-----------EXECUTION----------
 //.
 //			SAFIYA
@@ -84,7 +85,6 @@ int		my_cd(t_env_list *ev, char **arg);
 int		my_unset(t_env_list **en, char **args);
 int		my_export(t_env_list *env, char **args);
 void		my_exit(char **args);
-int		write_erorr(char *str, char *var);
 void	my_echo(char **args);
 void	exc(t_my_list *list, t_env_list **list_env);
 int		bilt_in(t_my_list *list, t_env_list **list_env); //hydeha ger katesty beha

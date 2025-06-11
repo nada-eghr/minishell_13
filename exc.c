@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 11:06:21 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:59:05 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		bilt_in(t_my_list *list, t_env_list **list_env)
 	return(0);	
 }
 
-void	excut_comand(t_my_list *list, t_env_list **list_env)
+void	excut_comand(int fd, t_my_list *list, t_env_list **list_env)
 {
 	int b;
 	char	*path;
@@ -83,52 +83,58 @@ void	excut_comand(t_my_list *list, t_env_list **list_env)
 		if (b == 0)
 		{
 			exit_sta = 0;
+			if (fd != NO_REDERCT)
+				dup2(fd, 1);
 			execve(path, list->args, arg);
 		}
 		wait(&child);
 	}
 }
-void	rederection(t_my_list *list)
+char	*rederection(t_my_list *list)
 {
-	int	per;
+	int fd;
 	int	i;
-	int j;
-
-	j = 0;
+	
 	i = 0;
-	per = 0;
+	fd = 0;
+	if (list->outf[0] == NULL)
+		return (NULL);
 	if (list->outf)
 	{
 		while (list->outf[i])
 		{
-			if (access(list->outf[i],W_OK) < 0)
+			fd = open(list->outf[i], O_CREAT | O_RDWR , 0644);
+			if (fd < 0)
 			{
-				per = -1;
+				perror("Minishell");
+				exit_sta = 1;
 				break;
 			}
 			i++;
 		}
-			printf ("%s", list->outf[i]);
-			exit (0);
-		while (j < i)
-		{
-			open(list->outf[j], O_WRONLY);
-			j++;
-		}
-		if (per == -1)
-			write (2, "i find error this file no permetetoin", 37);
+		i--;
+		if (fd >= 0)
+			return (*&list->outf[i]);
 	}
+	return (NULL);
 }
+
 void	exc(t_my_list *list, t_env_list **list_env)
 {
+	char *file_name;
+	int fd;
+	
+	fd = 0;
+	file_name = NULL;
 	if (!list->next)
 	{
-		rederection(list);
-		excut_comand(list, &*list_env);
-	}
-	while(list->next)
-	{
-		excut_comand(list, &*list_env);
-		list = list->next;
+		file_name = rederection(list);
+		if (file_name ==  NULL)
+			excut_comand(NO_REDERCT, list, &*list_env);
+		else
+		{
+			fd = open (file_name, O_WRONLY , 664);
+			excut_comand(fd, list, &*list_env);
+		} 
 	}
 }
