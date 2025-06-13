@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:07:00 by naessgui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/13 13:25:33 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/02 13:31:30 by naessgui         ###   ########.fr       */
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +25,11 @@ int count_infiles(t_token *list)
     tmp = tmp->next;
     while (tmp && tmp->type != TOKEN_PIPE)
     {
+<<<<<<< HEAD
         if ((prev->type == TOKEN_REDIR_IN ||  prev->type == TOKEN_HERDOC) && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
+=======
+        if ((prev->type == TOKEN_REDIR_IN) && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
             count++;
         prev = tmp;
         tmp = tmp->next;
@@ -45,7 +53,11 @@ char **get_infiles(t_token *token)
     tmp = tmp->next;
     while (tmp && tmp->type != TOKEN_PIPE) 
     {
+<<<<<<< HEAD
         if (( prev->type == TOKEN_REDIR_IN || prev->type == TOKEN_HERDOC)  && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
+=======
+        if (( prev->type == TOKEN_REDIR_IN) && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
         {
             
             infiles[i] = strdup(tmp->token);

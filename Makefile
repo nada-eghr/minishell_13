@@ -6,7 +6,11 @@ LIBS    = -lreadline
 
 # Source and object files
 NAME    = minishell
+<<<<<<< HEAD
 SRCS    =  infile_arr.c outfile_arr.c print_cmd.c cmd.c main.c herdoc.c append.c intfiles.c outfiles.c get_param.c tokenization.c utils.c lst_file.c listUtils.c check_error.c
+=======
+SRCS    =  print_cmd.c cmd.c main.c herdoc.c append.c intfiles.c outfiles.c get_param.c tokenization.c utils.c lst_file.c listUtils.c check_error.c
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 OBJS    = $(SRCS:.c=.o)
 
 # Build target

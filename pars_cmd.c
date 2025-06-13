@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 10:56:04 by naessgui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/13 12:18:22 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/02 17:51:56 by naessgui         ###   ########.fr       */
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +45,11 @@ void free_cmd(t_cmd *cmd)
 	free_str_array(cmd->arg);
 	free_str_array(cmd->infile);
 	free_str_array(cmd->outfile);
+<<<<<<< HEAD
 	//free_str_array(cmd->append);
+=======
+	free_str_array(cmd->append);
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 	free_str_array(cmd->herdoc);
 	free(cmd);
 }
@@ -91,4 +99,8 @@ char **add_str_to_array(char **arr , char *new_str)
 // 	struct s_cmd *next; // next command in pipeline
 
 // }t_cmd;
+<<<<<<< HEAD
 // t_cmd *lst_cmd(t_token *list)
+=======
+t_cmd *lst_cmd(t_token *list)
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c

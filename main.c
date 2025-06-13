@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/13 12:14:06 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/12 19:07:22 by naessgui         ###   ########.fr       */
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +64,14 @@ int main() {
         char *input = readline("minishell$");
         t_token *tokens = convert_to_node(input);
         t_cmd *cmd = list_cmd(tokens);
+<<<<<<< HEAD
         
 
 
 
         
+=======
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
         // t_cmd *newlst = cmd;
         // printf("%s\n",newlst->arg[0]);
         // printf("%s\n",newlst->infile[0]);

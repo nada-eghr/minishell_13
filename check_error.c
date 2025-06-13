@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/13 12:46:59 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/12 19:08:05 by naessgui         ###   ########.fr       */
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +96,21 @@ bool check_redirections(t_token**list)
                // printf("Redirection token '%s' is the last token! SYNTAX ERROR.\n", tmp->token);
                 return true;
             }
+<<<<<<< HEAD
             else if (tmp->next->type == TOKEN_PIPE || tmp->next->type == TOKEN_ENV_VAR || tmp->next->type == TOKEN_UNKNOWN )    
             {
                 // printf("tmp->next->type = %s \n", tmp->next->token); 
                 return true;  
             }                      
+=======
+            else if (tmp->next->type != TOKEN_WORD && tmp->next->type != TOKEN_QUOTED )
+            
+            {
+                // printf("tmp->next->type = %s \n", tmp->next->token); 
+                return true;  
+            }
+                      
+>>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
         }
         if(ft_strcmp(tmp->token,"<>") ==0)
             return true;
