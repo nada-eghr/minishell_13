@@ -6,11 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/13 12:14:06 by naessgui         ###   ########.fr       */
-=======
-/*   Updated: 2025/06/12 19:07:22 by naessgui         ###   ########.fr       */
->>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
+/*   Updated: 2025/06/14 17:34:33 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +58,25 @@ int main() {
     while(1)
     {
         char *input = readline("minishell$");
+        
         t_token *tokens = convert_to_node(input);
+         if(!tokens)
+        {
+            free(tokens);
+            return 0;
+        }
+        if (check_error(&tokens) == 1)
+        {
+         // printf("minishell : syntax error"); /*free*/
+         free_list(tokens);
+          return 0;
+        }
         t_cmd *cmd = list_cmd(tokens);
-<<<<<<< HEAD
-        
+        print_cmd(cmd);
 
 
 
         
-=======
->>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
         // t_cmd *newlst = cmd;
         // printf("%s\n",newlst->arg[0]);
         // printf("%s\n",newlst->infile[0]);
@@ -79,7 +84,7 @@ int main() {
         // newlst = newlst->next;
         // printf("%s\n",newlst->arg[0]);
         // printf("%s\n",newlst->infile[0]);
-        printcmdLinkedList(cmd);
+        // printcmdLinkedList(cmd);
          
         // printf("%s\n",cmd->infile[0]);
     // int count = count_args(tokens);
@@ -145,21 +150,22 @@ int main() {
         {
          // printf("minishell : syntax error"); /*free*/
          free_list(tokens);
+         exit(1);
           return 0;
         }
     // t_cmd *cmd = convert_to_cmd(&tokens)
     //------------
-    // t_token *current = tokens;
+    t_token *current = tokens;
 
-    // while (current) {
-    //     printf("{token -> %s } ", current->token);
-    //     printf("{type -> %d } ", current->type);
-    //     current = current->next;
-    // }
-        // printf("\n");
+    while (current) {
+        printf("{token -> %s } ", current->token);
+        printf("{type -> %d } ", current->type);
+        current = current->next;
+    }
+        printf("\n");
 
-    //  printLinkedList(tokens);
-    // 
+     printLinkedList(tokens);
+    
     
     
     // Free memory if needed

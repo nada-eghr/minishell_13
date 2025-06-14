@@ -6,16 +6,45 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/03 21:50:43 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:23:50 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
 
+char loop_quote(char *data, int *i)
+{
+     char quote = data[*i]; // store the opening quote
+            // int start = i;
+            (*i)++; 
+
+            while (data[*i] && data[*i] != quote)
+                i++;
+            // printf("data[%d] = %c\n",i,data[i]);
+            
+            if (data[*i] == quote) // closing quote found
+            {
+                if(!ft_space(data[*i + 1]) && data[*i + 1])
+                {
+                    i++;
+                    while(ft_isprint(data[*i]) && data[*i])
+                            (*i)++;
+                }
+            }
+}
+ 
+int	ft_isprint(int c)
+{
+	if (c >= 32 && c <= 126)
+		return (1);
+	else
+		return (0);
+}
 t_token_type get_token_type(char *token)
 {
     int len = ft_strlen(token);
+    // printf("token [0] = %c\n",token[0]);
+	// printf("token [len - 1] = %c\n",token[len - 1]);
     if (!token)
         return (TOKEN_UNKNOWN);
     if (ft_strcmp(token, "|") == 0)
@@ -65,27 +94,37 @@ t_token *convert_to_node(char *data)
         }
         else if (data[i] == '\"' || data[i] == '\'')
         {
-            char quote = data[i]; // store the opening quote
+            loop_quote(data,&i);
+            
+            // char quote = data[i]; // store the opening quote
             int start = i;
-            i++; 
+            // i++; 
 
-            while (data[i] && data[i] != quote)
-                i++;
-
-            if (data[i] == quote) // closing quote found
-            {
+            // while (data[i] && data[i] != quote)
+            //     i++;
+            // // printf("data[%d] = %c\n",i,data[i]);
+            
+            // if (data[i] == quote) // closing quote found
+            // {
+            //     if(!ft_space(data[i + 1]) && data[i + 1]){
+            //         i++;
+            //         while(ft_isprint(data[i]) && data[i])
+            //                 i++;
+            //     }
+               
                 int end = i;
                 new = substr(data, start, end - start + 1); // include quotes
+                printf("new = %s\n",new);
                 token = creattoken(new);
                 free(new);
                 i++; 
-            }
-            else
-            {
-                printf("minishell: syntax error: unclosed quote\n");
-                free_list(head);  // free all previously created tokens
-                return NULL;      // signal failure
-            }
+            // }
+            // else
+            // {
+            //     printf("minishell: syntax error: unclosed quote\n");
+            //     free_list(head);  // free all previously created tokens
+            //     return NULL;      // signal failure
+            // }
 
         }
 
@@ -113,119 +152,3 @@ t_token *convert_to_node(char *data)
     
     return head;
 }
-
-// // void ll()
-// // {
-// //     system("leaks -q a.out");
-// // }
-
-// int main() {
-//      //atexit(ll);
-//    // while(1)
-//     {char *input = readline("minishell$");
-//     t_token *tokens = convert_to_node(input);
-//     int count = count_args(tokens);
-//     int nb = count_outfiles(tokens);
-//     int n = count_infiles(tokens);
-//     printf("the number of infiles is %d \n", n);
-//     printf("the number of outfiles is %d \n", nb);
-//      printf("the number of args is %d\n", count);
-//     char **cmd = get_args(tokens);
-//     int i = 0;
-//     while (count  >= 0)
-//     {
-//          printf("cmd[%d] = %s\n",i,cmd[i]);
-//         //printf("%s\n", cmd[i]);
-//         count--;
-//         i++;
-//     }
-//     char **infiles = get_infiles(tokens);
-//     int j = 0;
-//     while (n >= 0)
-//     {
-//         printf("infiles[%d] = %s\n",j,infiles[j]);
-//         n--;
-//         j++;
-//     }
-//     char **outfiles = get_outfiles(tokens);
-//     int k = 0;
-//     while (nb >= 0)
-//     {
-//         printf("outfiles[%d] = %s\n",k,outfiles[k]);
-//         nb--;
-//         k++;
-//     }
-
-    
-//     int cnt = count_append_files(tokens);
-//     char **append_files = get_append_files(tokens);
-//     int a = 0;
-//     while (cnt >= 0)
-//     {
-//         printf("append_files[%d] = %s\n",a,append_files[a]);
-//         cnt--;
-//         a++;
-//     }
-//     int tmp = count_herdoc_files(tokens);
-//     char **herdoc_files = get_herdoc_files(tokens);
-//     int h= 0;
-//     while (tmp >= 0)
-//     {
-//         printf("herdocfiles[%d] = %s\n",h,herdoc_files[h]);
-//         tmp--;
-//         h++;
-//     }
-    
-
-    
-//     if(!tokens)
-//     {
-//         free(tokens);
-//         return 0;
-//     }
-//     if (check_error(&tokens) == 1)
-//     {
-//        // printf("minishell : syntax error"); /*free*/
-//         free_list(tokens);
-//         return 0;
-//     }
-//     // t_cmd *cmd = convert_to_cmd(&tokens)
-//     //------------
-//     // t_token *current = tokens;
-
-//     // while (current) {
-//     //     printf("{token -> %s } ", current->token);
-//     //     printf("{type -> %d } ", current->type);
-//     //     current = current->next;
-//     // }
-//     printf("\n");
-
-//    // printLinkedList(tokens);
-    
-    
-    
-//     // Free memory if needed
-//     free_list(tokens);
-// }
-//     return 0;
-// }
-
-
-
-//         // else if (data[i] == '\"' || data[i] == '\'')
-//         // {
-//         //     int start = i;
-//         //     i++; 
-
-//         //     while (data[i] && data[i] != '\"' && data[i] != '\'')
-//         //         i++;
-
-//         //     if (data[i] == '\"' || data[i] == '\'')
-//         //     {
-//         //         int end = i;
-//         //         new = substr(data, start, end - start + 1);
-//         //         token = creattoken(new);
-//         //         free(new);
-//         //         i++; 
-//         //     }
-           

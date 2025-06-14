@@ -6,11 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/13 15:58:16 by naessgui         ###   ########.fr       */
-=======
-/*   Updated: 2025/06/12 19:05:55 by naessgui         ###   ########.fr       */
->>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
+/*   Updated: 2025/06/14 17:20:31 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +15,11 @@
 t_cmd *creat_cmd(t_token *list)
 {
     t_cmd *cmd = (t_cmd*)malloc(sizeof(t_cmd));
-<<<<<<< HEAD
-    t_infiles *infile = (t_infiles*)
     if (!cmd)
         return NULL;
     cmd->arg = get_args(list);
-    cmd-> infile->infiles = get_infiles(list);
-    cmd->infile->infile_flag = infiles_flage(list);
-    //cmd->append = get_append_files(list);
-    cmd->outfile->outfile_flag = outfiles_flage(list);
-    cmd->outfile->outfiles = get_outfiles(list);
-=======
-    if (!cmd)
-        return NULL;
-    cmd->arg = get_args(list);
-    cmd->infile = get_infiles(list);
-    cmd->append = get_append_files(list);
-    cmd->outfile = get_outfiles(list);
->>>>>>> 05a0283f39f744cb5e626e050f696d346ca0144c
-    cmd->herdoc = get_herdoc_files(list);
+    cmd->redi = get_files(list);
+    cmd->herdoc = check(list);
     cmd->next = NULL;
     return (cmd);
 }
@@ -81,4 +63,24 @@ t_cmd *list_cmd(t_token *tokens)
     }
     return (head);
     
+}
+void print_cmd(t_cmd *node_cmd)
+{
+	int i;
+	while(node_cmd)
+	{
+		i = 0;
+		printf("command -->");
+		while(node_cmd->arg[i])
+		{
+			printf(" [ %s ] ", node_cmd->arg[i++]);	
+		}
+		printf("\n");
+		while(node_cmd->redi)
+		{
+			printf("type : [ %d ] <-------> file : [ %s ] \n", node_cmd->redi->type, node_cmd->redi->file);
+			node_cmd->redi = node_cmd->redi->next;
+		}
+		node_cmd = node_cmd->next;
+	}
 }

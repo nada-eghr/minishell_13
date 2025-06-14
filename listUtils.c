@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/12 19:41:15 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:44:54 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ t_token* creattoken(char *data)
 	t_token *newnode= (t_token*)malloc(sizeof(t_token));
 	if (!newnode)
 		return NULL;
-	newnode->token =  strdup(data);
+	
+	newnode->token = ft_strdup(data);
+	int len = ft_strlen(newnode->token);
+	printf("token [0] = %c\n",newnode->token[0]);
+	printf("token [len - 1] = %c\n",newnode->token[len - 1]);
 	newnode->type = get_token_type(data);
 	newnode->next = NULL;
 	return (newnode);
@@ -39,6 +43,7 @@ void	add_back(t_token **head, t_token *node)
 	tmp->next = node;
 	node->next = NULL;
 }
+
 
 void printLinkedList(t_token* head)
 {
