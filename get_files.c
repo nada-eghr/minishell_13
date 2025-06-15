@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 16:32:03 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:19:50 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ void	ft_add_back_redi(t_redirection **head, t_redirection *node)
 	tmp->next = node;
 	node->next = NULL;
 }
+
 t_redirection	*get_files(t_token *token)
 {
-	t_token *tmp = token;
-	t_redirection *head ;
-	t_redirection *node;
+	t_token			*tmp;
+	t_redirection	*head;
+	t_redirection	*node;
+	t_token			*prev;
 
+	tmp = token;
 	head = NULL;
 	node = NULL;
-	t_token *prev;
-
 	prev = tmp;
 	tmp = tmp->next;
 	while (tmp && tmp->type != TOKEN_PIPE)
@@ -59,6 +60,5 @@ t_redirection	*get_files(t_token *token)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-
 	return (head);
 }

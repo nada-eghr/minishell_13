@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 16:34:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:17:55 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 int	main(void)
 {
+	char	*input;
+	t_token	*tokens;
+	t_cmd	*cmd;
+	t_token	*current;
 	// atexit(ll);
 	while (1)
 	{
-		char *input = readline("minishell$");
-		t_token *tokens = convert_to_node(input);
+		input = readline("minishell$");
+		tokens = convert_to_node(input);
 		if (!tokens)
 		{
 			free(tokens);
@@ -30,7 +34,7 @@ int	main(void)
 			free_list(tokens);
 			return (0);
 		}
-		t_cmd *cmd = list_cmd(tokens);
+		cmd = list_cmd(tokens);
 		print_cmd(cmd);
 		if (!tokens)
 		{
@@ -45,9 +49,7 @@ int	main(void)
 			return (0);
 		}
 		// t_cmd *cmd = convert_to_cmd(&tokens)
-		//------------
-		t_token *current = tokens;
-
+		current = tokens;
 		while (current)
 		{
 			printf("{token -> %s } ", current->token);
@@ -55,9 +57,7 @@ int	main(void)
 			current = current->next;
 		}
 		printf("\n");
-
 		printlinkedlist(tokens);
-
 		// Free memory if needed
 		free_list(tokens);
 	}

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 10:44:28 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:18:40 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_isprint(int c)
 	else
 		return (0);
 }
+
 int	ft_space(char c)
 {
 	return (c == ' ' || c == '\n' || c == '\t');
