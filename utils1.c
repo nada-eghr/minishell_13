@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   herdoc.c                                           :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 14:44:47 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 10:29:30 by naessgui         ###   ########.fr       */
+/*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
+/*   Updated: 2025/06/15 10:44:28 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check(t_token *token)
+int	ft_isprint(int c)
 {
-	t_token	*tmp;
-	t_token	*prev;
-	int		herdoc;
-
-	herdoc = 0;
-	tmp = token;
-	prev = tmp;
-	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE)
-	{
-		if ((prev->type == TOKEN_HERDOC) && (tmp->type == TOKEN_WORD
-				|| tmp->type == TOKEN_QUOTED))
-			herdoc = 1;
-		prev = tmp;
-		tmp = tmp->next;
-	}
-	return (herdoc);
+	if (c >= 32 && c <= 126)
+		return (1);
+	else
+		return (0);
+}
+int	ft_space(char c)
+{
+	return (c == ' ' || c == '\n' || c == '\t');
 }
