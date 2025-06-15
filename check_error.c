@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 11:26:45 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:30:40 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ bool	check_pipe(t_token **list)
 	return (false);
 }
 //------------------------------------------------
+
 bool	check_unclosed_quotes(t_token *tokens)
 {
 	t_token	*tmp;
 	int		len;
+	char	first ;
+	char	last;
 
 	tmp = tokens;
-	char first, last;
 	while (tmp)
 	{
 		len = ft_strlen(tmp->token);
@@ -75,15 +77,11 @@ bool	check_redirections(t_token **list)
 				|| tmp->type == TOKEN_PIPE))
 		{
 			if (tmp->next == NULL)
-			{
 				return (true);
-			}
 			else if (tmp->next->type == TOKEN_PIPE
 				|| tmp->next->type == TOKEN_ENV_VAR
 				|| tmp->next->type == TOKEN_UNKNOWN)
-			{
 				return (true);
-			}
 		}
 		if (ft_strcmp(tmp->token, "<>") == 0)
 			return (true);
@@ -112,5 +110,5 @@ bool	check_error(t_token **list)
 	return (false);
 }
 // &&  tmp->next && (tmp->next->type != TOKEN_WORD
-	// && tmp->next->type != TOKEN_QUOTED) )
+// && tmp->next->type != TOKEN_QUOTED) )
 //             return (true);

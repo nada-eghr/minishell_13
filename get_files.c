@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 10:13:39 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:32:03 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	ft_add_back_redi(t_redirection **head, t_redirection *node)
 t_redirection	*get_files(t_token *token)
 {
 	t_token *tmp = token;
-	t_redirection *head, *node;
+	t_redirection *head ;
+	t_redirection *node;
 
 	head = NULL;
 	node = NULL;
@@ -54,9 +55,7 @@ t_redirection	*get_files(t_token *token)
 		if ((prev->type == TOKEN_REDIR_OUT || prev->type == TOKEN_APPEND
 				|| prev->type == TOKEN_REDIR_IN || prev->type == TOKEN_HERDOC)
 			&& (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
-		{
 			ft_add_back_redi(&head, add_new(prev->type, tmp->token));
-		}
 		prev = tmp;
 		tmp = tmp->next;
 	}

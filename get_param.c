@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:56:54 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 10:25:03 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:32:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**get_args(t_token *token)
 
 	tmp = token;
 	i = 0;
-	cmd = malloc(sizeof(char *) * (count_args(token) + 2));
+	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
 	if (!*cmd)
 		return (NULL);
 	if (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED)
