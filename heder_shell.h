@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/11 16:37:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:55:02 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,22 @@ typedef struct s_list
 	struct s_list	*next;
 }t_env_list;
 
-typedef struct my_list
+//---------------------------  cmd struct  -------------------------------
+typedef struct s_redirection
 {
-	char 	**args;
-	char	**inf;
-	char	**outf;
-	struct my_list *next;
-}t_my_list;
+	char					*file;
+	int						type;
+	struct s_redirection	*next;
+}							t_redirection;
 
+typedef struct s_cmd
+{
+	char					**arg;
+	int 					herdoc; // 0 for no herdoc, 1 for herdoc
+	t_redirection			*redi;
+	struct s_cmd 			*next; // next command in pipeline
+}							t_cmd;
+//////// /////
 typedef	struct variabel
 {
 	int		i;
@@ -86,6 +94,6 @@ int		my_unset(t_env_list **en, char **args);
 int		my_export(t_env_list *env, char **args);
 void		my_exit(char **args);
 void	my_echo(char **args);
-void	exc(t_my_list *list, t_env_list **list_env);
-int		bilt_in(t_my_list *list, t_env_list **list_env); //hydeha ger katesty beha
+void	exc(t_cmd *list, t_env_list **list_env);
+int		bilt_in(t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 # endif

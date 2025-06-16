@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/11 18:59:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:59:08 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,26 @@ char	*it_correct_comnd(char *cmd, t_env_list *env)
 	free_tab(split_path);
 	return (NULL);
 }
-int		bilt_in(t_my_list *list, t_env_list **list_env)
+int		bilt_in(t_cmd *list, t_env_list **list_env)
 {
-	if (str_cmp(list->args[0], "pwd")|| str_cmp(list->args[0], "PWD"))
+	if (str_cmp(list->arg[0], "pwd")|| str_cmp(list->arg[0], "PWD"))
 		return(my_pwd(), 1);
-	else if (str_cmp(list->args[0], "env"))
+	else if (str_cmp(list->arg[0], "env"))
 		return (my_env(*list_env), 1);
-	else if (str_cmp(list->args[0], "cd"))
-		return(my_cd(*list_env,list->args), 1);
-	else if (str_cmp(list->args[0], "unset"))
-		return(my_unset(list_env,list->args), 1);
-	else if (str_cmp(list->args[0], "export"))
-		return(my_export(*list_env,list->args), 1);
-	else if (str_cmp(list->args[0], "exit"))
-		my_exit(list->args);
-	else if (str_cmp(list->args[0], "echo"))
-		return (my_echo(list->args), 1);
+	else if (str_cmp(list->arg[0], "cd"))
+		return(my_cd(*list_env,list->arg), 1);
+	else if (str_cmp(list->arg[0], "unset"))
+		return(my_unset(list_env,list->arg), 1);
+	else if (str_cmp(list->arg[0], "export"))
+		return(my_export(*list_env,list->arg), 1);
+	else if (str_cmp(list->arg[0], "exit"))
+		my_exit(list->arg);
+	else if (str_cmp(list->arg[0], "echo"))
+		return (my_echo(list->arg), 1);
 	return(0);	
 }
 
-void	excut_comand(int fd, t_my_list *list, t_env_list **list_env)
+void	excut_comand(int fd, t_cmd *list, t_env_list **list_env)
 {
 	int b;
 	char	*path;
@@ -67,15 +67,15 @@ void	excut_comand(int fd, t_my_list *list, t_env_list **list_env)
 	
 	arg = NULL;
 	b = bilt_in(list, &*list_env);
-	path = list->args[0];
+	path = list->arg[0];
 	if (b == 0)
 	{
 		arg = return_list_to_arg(*list_env);
-		if (access(list->args[0],X_OK) < 0)
-			path = it_correct_comnd(list->args[0], *list_env);
+		if (access(list->arg[0],X_OK) < 0)
+			path = it_correct_comnd(list->arg[0], *list_env);
 		if (!path)
 		{
-			write_err("Minishell: ", list->args[0],": command not found\n", '\0');
+			write_err("Minishell: ", list->arg[0],": command not found\n", '\0');
 			exit_sta = CMD_NOTFIND;
 			return ;
 		}
@@ -85,41 +85,28 @@ void	excut_comand(int fd, t_my_list *list, t_env_list **list_env)
 			exit_sta = 0;
 			if (fd != NO_REDERCT)
 				dup2(fd, 1);
-			execve(path, list->args, arg);
+			execve(path, list->arg, arg);
 		}
 		wait(&child);
 	}
 }
-char	*rederection(t_my_list *list)
+
+char	*rederection(t_cmd *list)
 {
 	int fd;
 	int	i;
 	
 	i = 0;
 	fd = 0;
-	if (list->outf[0] == NULL)
-		return (NULL);
-	if (list->outf)
-	{
-		while (list->outf[i])
-		{
-			fd = open(list->outf[i], O_CREAT | O_RDWR , 0644);
-			if (fd < 0)
-			{
-				perror("Minishell");
-				exit_sta = 1;
-				break;
-			}
-			i++;
-		}
-		i--;
-		if (fd >= 0)
-			return (*&list->outf[i]);
-	}
-	return (NULL);
+	
+	if (list->herdoc == 1)
+		i++;//open_herdok()
+	else
+		i++;
+	return ("ewerw");
 }
 
-void	exc(t_my_list *list, t_env_list **list_env)
+void	exc(t_cmd *list, t_env_list **list_env)
 {
 	char *file_name;
 	int fd;
