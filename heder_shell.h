@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/16 09:55:02 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:26:57 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ typedef struct s_list
 }t_env_list;
 
 //---------------------------  cmd struct  -------------------------------
+typedef enum e_token_type 
+{
+		TOKEN_WORD, /* word */
+		TOKEN_PIPE,          /* | */ 
+		TOKEN_REDIR_IN,      /* < */
+		TOKEN_REDIR_OUT,     /* > */
+		TOKEN_APPEND,        /* >> */
+		TOKEN_HERDOC,       /* << */
+		TOKEN_ENV_VAR,      /* $.. */
+		TOKEN_QUOTED,
+		TOKEN_UNKNOWN
+} t_token_type;
+
 typedef struct s_redirection
 {
 	char					*file;
@@ -70,6 +83,8 @@ typedef	struct variabel
 	char	*path;
 	char	*new_path;
 	char	**split_path;
+	int		count_in;
+	int		count_out;
 }t_var;
 
 
