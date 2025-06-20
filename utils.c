@@ -6,35 +6,39 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:08:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/14 16:53:57 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:44:52 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_strcmp(char *s1, char *s2)                                                                                                                                                                       
+int	ft_strcmp(char *s1, char *s2)
 {
-	int i=0;
-    while (s1[i] || s2[i])
-    {
-        if (s1[i] != s2[i])
-            return (s1[i] - s2[i]);
+	int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
-    }
-    return 0;
+	}
+	return (0);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i ;
-    i = 0;
-    while( str[i] )
-        i++;
-    return i;
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
+
 char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < n && src[i] != '\0')
@@ -49,31 +53,33 @@ char	*ft_strncpy(char *dst, const char *src, size_t n)
 	}
 	return (dst);
 }
-char *substr(const char *src, int start, int len)
+
+char	*substr(const char *src, int start, int len)
 {
-    char *res = malloc(len + 1);
-    if (!res) 
-        return NULL;
-    ft_strncpy(res, src + start, len);
-    res[len] = '\0';
-    return res;
+	char	*res;
+
+	res = malloc(len + 1);
+	if (!res)
+		return (NULL);
+	ft_strncpy(res, src + start, len);
+	res[len] = '\0';
+	return (res);
 }
 
-int			ft_space(char c)
+char	*ft_strdup(char *s)
 {
-	return (c == ' ' || c == '\n' || c == '\t');
-}
-char *ft_strdup(char *s)
-{
-	int i = 0;
-	char *cp = malloc(sizeof(char) * (strlen(s) + 1));
+	int		i;
+	char	*cp;
+
+	i = 0;
+	cp = malloc(sizeof(char) * (strlen(s) + 1));
 	if (!cp)
-		return NULL;
-	while(s[i])
+		return (NULL);
+	while (s[i])
 	{
 		cp[i] = s[i];
 		i++;
 	}
 	cp[i] = '\0';
-	return cp;
+	return (cp);
 }

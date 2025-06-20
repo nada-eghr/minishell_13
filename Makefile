@@ -6,7 +6,7 @@ LIBS    = -lreadline
 
 # Source and object files
 NAME    = minishell
-SRCS    =   cmd.c main.c herdoc.c  get_files.c get_param.c tokenization.c utils.c   listUtils.c check_error.c
+SRCS    =  expand.c env_utils.c utils1.c cmd.c main.c herdoc.c  get_files.c get_param.c tokenization.c utils.c   listUtils.c check_error.c
 OBJS    = $(SRCS:.c=.o)
 
 # Build target
