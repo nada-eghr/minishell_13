@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/20 17:45:47 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:22:50 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,26 @@ bool	check_error(t_token **list)
 	//     return (true);
 	// }
 	return (false);
+	if (check_redirections(list))
+	{
+		printf("minishell : syntax error near unexpected token `newline'\n");
+		return (true);
+	}
+	if (check_pipe(list) == 1)
+	{
+		printf("minishell : syntax error near unexpected token `|'\n");
+		return (true);
+	}
+	// if(check_unclosed_quotes(*list))
+	// {
+	//     printf("syntaxe error quotes");
+	//     return (true);
+	// }
+	return (false);
 }
+// &&  tmp->next && (tmp->next->type != TOKEN_WORD
+// && tmp->next->type != TOKEN_QUOTED) )
+//             return (true);
 // &&  tmp->next && (tmp->next->type != TOKEN_WORD
 // && tmp->next->type != TOKEN_QUOTED) )
 //             return (true);

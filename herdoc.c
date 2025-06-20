@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:44:47 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/18 17:40:07 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:13:44 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,4 @@ int	check(t_token *token)
 	}
 	return (herdoc);
 }
+

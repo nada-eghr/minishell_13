@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/20 21:35:32 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:46:14 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ t_token *expand_token(t_token *token , t_env_list *env)
     char *s2;
     t_token *prev;
     
-    prev = tmp;
-    prev->type = -1;
+    // prev = tmp;
+    // prev->type = -1;
     
     // int i = 0;
     // while(env->next){
@@ -112,7 +112,7 @@ t_token *expand_token(t_token *token , t_env_list *env)
             else
                 tmp->token = ft_strdup("");
         }
-        else if (tmp->type == TOKEN_D_QUOTE && prev->type != TOKEN_HERDOC)
+        else if (tmp->type == TOKEN_D_QUOTE && ft_strchr(tmp->token , '$') && prev->type != TOKEN_HERDOC)
         {
             new_data = tmp->token;
             while(new_data[j] != '$' && new_data[j])

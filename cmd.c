@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/16 22:50:48 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:21:39 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	*creat_cmd(t_token *list)
 	cmd->next = NULL;
 	return (cmd);
 }
+
 
 void	add_back_cmd(t_cmd **head, t_cmd *node)
 {
@@ -95,10 +96,14 @@ void	print_cmd(t_cmd *node_cmd)
 		while (node_cmd->arg[i])
 		{
 			printf(" [ %s ] ", node_cmd->arg[i++]);
+			printf(" [ %s ] ", node_cmd->arg[i++]);
 		}
 		printf("\n");
 		while (node_cmd->redi)
+		while (node_cmd->redi)
 		{
+			printf("type : [ %d ] <-------> file : [ %s ] \n",
+				node_cmd->redi->type, node_cmd->redi->file);
 			printf("type : [ %d ] <-------> file : [ %s ] \n",
 				node_cmd->redi->type, node_cmd->redi->file);
 			node_cmd->redi = node_cmd->redi->next;
@@ -107,3 +112,4 @@ void	print_cmd(t_cmd *node_cmd)
 		j++;
 	}
 }
+

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/16 20:16:53 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:20:40 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ void	printlinkedlist(t_token *head)
 	printf("NULL\n");
 }
 
-void	ll(void)
-{
-	system("leaks -q a.out");
-}
+
+
+
 
 void	free_list(t_token *head)
 {
@@ -77,3 +76,4 @@ void	free_list(t_token *head)
 		current = next_node;
 	}
 }
+

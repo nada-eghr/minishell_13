@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/18 17:34:49 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:12:25 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_redirection	*add_new(int type, char *file_name)
 	node->next = NULL;
 	return (node);
 }
+
 
 void	ft_add_back_redi(t_redirection **head, t_redirection *node)
 {
@@ -62,3 +63,4 @@ t_redirection	*get_files(t_token *token)
 
 	return (head);
 }
+
