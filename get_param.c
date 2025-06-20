@@ -6,35 +6,34 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:56:54 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/14 16:34:02 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:13:29 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-// cmd->args = get_argsetre(t_token);
-
-int count_args(t_token *list)
+int	count_args(t_token *list)
 {
-	int count = 0;
-	t_token *tmp = list;
-	t_token *prev ;
-	
+	int		count;
+	t_token	*tmp;
+	t_token	*prev;
 
-	if(tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED)
+	count = 0;
+	tmp = list;
+	if (tmp->type == TOKEN_WORD || tmp->type == TOKEN_S_QUOTE || tmp->type == TOKEN_D_QUOTE)
 		count++;
 	prev = tmp;
 	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE) 
+	while (tmp && tmp->type != TOKEN_PIPE)
 	{
-		if (( prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD  || prev->type == TOKEN_QUOTED) && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
+		if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD
+				|| prev->type == TOKEN_S_QUOTE || prev->type == TOKEN_D_QUOTE) && (tmp->type == TOKEN_WORD
+				|| tmp->type == TOKEN_D_QUOTE || tmp->type == TOKEN_S_QUOTE))
 			count++;
-		
-		prev = tmp ;
+		prev = tmp;
 		tmp = tmp->next;
 	}
-	return count ;
+	return (count);
 }
 
 char **get_args(t_token *token)
@@ -45,24 +44,26 @@ char **get_args(t_token *token)
 	int count = count_args(token);
 	char **cmd = malloc(sizeof(char*) * (count+2));
 	if (!*cmd)
-		return NULL;
-	if(tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED)
-	{
-		cmd[i] = ft_strdup(tmp->token);
-		i++;
-	}
+		return (NULL);
+	if (tmp->type == TOKEN_WORD || tmp->type == TOKEN_S_QUOTE || tmp->type == TOKEN_D_QUOTE)
+		cmd[i++] = ft_strdup(tmp->token);
 	prev = tmp;
 	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE) 
+	while (tmp && tmp->type != TOKEN_PIPE)
+	while (tmp && tmp->type != TOKEN_PIPE)
 	{
-		if (( prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD  || prev->type == TOKEN_QUOTED) && (tmp->type == TOKEN_WORD || tmp->type == TOKEN_QUOTED))
-		{
-			cmd[i] = ft_strdup(tmp->token);
-			i++;
-		}
-		prev = tmp ;
+		if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD
+				|| prev->type == TOKEN_S_QUOTE || prev->type == TOKEN_D_QUOTE) && (tmp->type == TOKEN_WORD
+				|| tmp->type == TOKEN_D_QUOTE || tmp->type == TOKEN_S_QUOTE))
+			cmd[i++] = ft_strdup(tmp->token);
+		prev = tmp;
 		tmp = tmp->next;
 	}
 	cmd[i] = NULL;
 	return (cmd);
 }
+
+	// int		count;
+	// count = count_args(token);
+	// int		count;
+	// count = count_args(token);
