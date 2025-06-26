@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/19 20:26:57 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/21 13:55:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef	struct variabel
 	char	**split_path;
 	int		count_in;
 	int		count_out;
+	int		last_in;
+	int		last_out;
 }t_var;
 
 
@@ -111,4 +113,8 @@ void		my_exit(char **args);
 void	my_echo(char **args);
 void	exc(t_cmd *list, t_env_list **list_env);
 int		bilt_in(t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
+///////////////////rediraction/////////////////
+void	rederection(t_cmd *list, t_var *var);
+
+
 # endif
