@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 20:33:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:34:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_alpha(char c)
 		return (1);
 	return (0);
 }
-int	chake_args(char *str)
+int	chake_args(char *str, int *pls)
 {
 	int	i;
 
@@ -29,8 +29,10 @@ int	chake_args(char *str)
 	while (str[i])
 	{
 		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
-			if (str[i] != '=' && str[i] != '_')
+			if (str[i] != '=' && str[i] != '_' && str[i] != '+')
 				return (1);
+		if (str[i] == '+' && is_alpha(str[i - 1]) && str[i + 1] == '=')
+			*pls = 1;
 		i++;
 	}
 	return (0);
@@ -88,24 +90,49 @@ int	orredy_hav_valu(t_env_list *env, char *arg)
 	}
 	return (0);
 }
-
+void	have_pls_(t_env_list *env, char *arg)
+{
+	int	i;
+	char *join;
+	
+	i = 0;
+	while (arg[i] && arg[i] != '+')
+		i++;
+	if (arg[i] == '+')
+	{
+		arg[i] = '\0';
+		while (env && !str_cmp(env->content.first, arg))
+			env = env->next;
+		if (env)
+		{
+			join = str_join(env->content.last, &arg[i + 2], '\0');
+			free(env->content.last);
+			env->content.last = join;
+		}
+	}
+	
+}
 int	my_export(t_env_list *env, char **args)
 {
 	int	i;
 	int ret;
-
+	int pls;
+	
 	i = 1;  
 	ret = 0;
+	pls = 0;
 	if (args[i] == NULL)
 		print_all_var(env);
 	while (args[i])
 	{
-		if (chake_args(args[i]))
+		if (chake_args(args[i], &pls))
 		{
-			// write_erorr("Minishell: export: ", args[i]);
-			// write_erorr("not a balid identifier\n", NULL);
+			write_err("Minishell: export: `", args[i], "': not a valid identifier\n");
 			ret = 1;
+			return ret;
 		}
+		if (pls == 1)
+			have_pls_(env, args[i]);
 		else if (orredy_hav_valu(env, args[i]) == 0)
 				ft_lstadd_back(&env,ft_lstnew_env(args[i]));
 		i++;

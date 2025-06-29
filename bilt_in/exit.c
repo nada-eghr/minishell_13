@@ -6,22 +6,23 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 12:31:23 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:35:01 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../heder_shell.h"
 
-void	write_err(char *s, char *arg, char *last, char up)
+void	write_err(char *s, char *arg, char *last)
 {
 	write(2, s, ft_strlen(s));
-	if (up && arg)
-	{
-		write(2, &up, 1);
-		write(2, arg, ft_strlen(arg));
-		write(2, &up, 1);
-	}
-	else if (arg)
+
+	// if (up && arg)
+	// {
+	// 	write(2, &up, 1);
+	// 	write(2, arg, ft_strlen(arg));
+	// 	write(2, &up, 1);
+	// }
+	 if (arg)
 		write(2, arg, ft_strlen(arg));
 	if (last)
 		write(2, last, ft_strlen(last));
@@ -89,19 +90,19 @@ void	my_exit(char **args)
 	if (another_alpha(args[1]))
 	{
 		write_err("exit\nMinishell: exit: ", args[1],
-		 ": numeric argument required\n", '\0');
+		 ": numeric argument required\n");
 		exit (255);
 	}
 	if	(args[2] != NULL)
 	{
 		write_err("exit\nMinishell:exit: ", NULL,
-		"too many arguments\n",'\0');
+		"too many arguments\n");
 		exit_sta = 1;
 		return ;
 	}
 	num = ft_atoi(args[1], &eror);
 	if (eror == -1)
 		write_err("exit\nMinishell: exit: ", args[1], 
-		": numeric argument required\n", '\0');
+		": numeric argument required\n");
 	exit (num);
 }

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:56 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 08:38:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:26:51 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*str_dup(char *s)
 	str[i] = '\0';
 	return (str);
 }
-char	*str_join(char *s1, char *s2)
+char	*str_join(char *s1, char *s2, char sep)
 {
 	char	*str;
 	int		i;
@@ -55,7 +55,8 @@ char	*str_join(char *s1, char *s2)
 	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	while (s1[i])
 		str[j++] = s1[i++];
-	str[j++] = '/';
+	if (sep == '/')
+		str[j++] = '/';
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];

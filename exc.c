@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/23 13:07:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:34:28 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*it_correct_comnd(char *cmd, t_env_list *env)
 	split_path = ft_split(path, ':');
 	while (split_path[i])
 	{
-		new_p = str_join(split_path[i], cmd);
+		new_p = str_join(split_path[i], cmd, '/');
 		if (access(new_p, X_OK) == 0)
 		{
 			free_tab(split_path);	
@@ -65,16 +65,26 @@ void	excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 	char	**arg;
 	
 	arg = NULL;
+	if (var->last_in >= 0)
+	{
+		var->sav_in = dup(0);
+		dup2(var->last_in, 0);
+	}
+	if (var->last_out >= 0)
+	{
+		var->sav_out = dup(1);
+		dup2(var->last_out, 1);
+	}
 	b = bilt_in(list, &*list_env);
 	path = list->arg[0];
 	if (b == 0)
 	{
 		arg = return_list_to_arg(*list_env);
-		if (access(list->arg[0],X_OK) < 0)
+		if (access(list->arg[0], X_OK) < 0)
 			path = it_correct_comnd(list->arg[0], *list_env);
 		if (!path)
 		{
-			write_err("Minishell: ", list->arg[0],": command not found\n", '\0');
+			write_err("Minishell: ", list->arg[0],": command not found\n");
 			exit_sta = CMD_NOTFIND;
 			return ;
 		}
@@ -90,18 +100,37 @@ void	excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 		}
 		wait(&child);
 	}
+	if (var->last_in >= 0)
+	{
+		dup2(var->sav_in, 0);
+		close (var->last_in);
+	}
+	if (var->sav_out >= 0)
+	{
+		dup2(var->sav_out, 1);
+		close (var->last_out);
+	}
 }
+
 
 void	exc(t_cmd *list, t_env_list **list_env)
 {
 	t_var	var;
+//	int	tab[2];
 	
 	if (!list->next)
 	{
 		rederection(list, &var);
-		if (var.last_in == -1 || var.last_out == -1)
+		if (var.last_in == ERORR || var.last_out == ERORR)
 			return;
 		else
 			excut_comand(&var, list, &*list_env);
+		return ;
+	}
+	while (list->next)
+	{
+		rederection(list, &var);
+		if (var.last_in == ERORR || var.last_out == ERORR)
+			return;
 	}
 }

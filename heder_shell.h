@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/21 13:55:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:34:14 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <readline/readline.h>
+#define	ERORR	-1
 #define SUCCESS 0
-#define	ERORR	1
+#define NO_REDERCT -2 
 #define CMD_NOTFIND 127
-#define NO_REDERCT -1
 //-----------EXECUTION----------
 //.
 //			SAFIYA
@@ -55,7 +55,7 @@ typedef enum e_token_type
 		TOKEN_PIPE,          /* | */ 
 		TOKEN_REDIR_IN,      /* < */
 		TOKEN_REDIR_OUT,     /* > */
-		TOKEN_APPEND,        /* >> */
+		TOKEN_APPEND,       /* >> */
 		TOKEN_HERDOC,       /* << */
 		TOKEN_ENV_VAR,      /* $.. */
 		TOKEN_QUOTED,
@@ -83,10 +83,10 @@ typedef	struct variabel
 	char	*path;
 	char	*new_path;
 	char	**split_path;
-	int		count_in;
-	int		count_out;
 	int		last_in;
 	int		last_out;
+	int		sav_in;
+	int		sav_out;
 }t_var;
 
 
@@ -96,13 +96,13 @@ void		ft_lstadd_back(t_env_list **lst, t_env_list *new);
 int			ft_strlen(char *str);
 int			str_cmp(char *s1, char *s2);
 char		**ft_split(char *str, char sep);
-char		*str_join(char *s1, char *s2);
+char		*str_join(char *s1, char *s2, char sep);
 char		*str_dup(char *s);
 void		free_tab(char **str);
 char		*my_get_env(char *str, t_env_list *env);
 char		**return_list_to_arg(t_env_list *list_env);
 int			is_alpha(char c);
-void	write_err(char *s, char *arg, char *last, char up);
+void	write_err(char *s, char *arg, char *last);
 //////----BILT_IN----///////
 int		my_pwd(void);
 int		my_env(t_env_list *env);
