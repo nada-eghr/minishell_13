@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   listUtils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/20 22:20:40 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*creattoken(char *data)
 {

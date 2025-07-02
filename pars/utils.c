@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:08:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/15 10:44:52 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:04 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -29,8 +29,10 @@ int	ft_strcmp(char *s1, char *s2)
 int	ft_strlen(char *str)
 {
 	int	i;
-
+	
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/20 22:14:19 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:20:33 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,25 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		t_cmd *cmd = list_cmd(tokens);
-		print_cmd(cmd);
+		exc(cmd, &env_list);
+		filter_lst = NULL;
+		// print_cmd(cmd);
 		
-		//------------
-		t_token *current = filter_lst;
+		// //------------
+		// t_token *current = filter_lst;
 
-		while (current)
-		{
-			printf("{token -> %s } ", current->token);
-			printf("{type -> %d } ", current->type);
-			current = current->next;
-		}
-		printf("\n");
+		// while (current)
+		// {
+		// 	printf("{token -> %s } ", current->token);
+		// 	printf("{type -> %d } ", current->type);
+		// 	current = current->next;
+		// }
+		// printf("\n");
 
-		printlinkedlist(filter_lst);
+		// printlinkedlist(filter_lst);
 
-		// Free memory if needed
-		free_list(tokens);
+		// // Free memory if needed
+		// free_list(tokens);
 	}
 	return (0);
 }

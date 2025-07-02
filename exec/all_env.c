@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   all_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 17:58:33 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/18 19:31:21 by naessgui         ###   ########.fr       */
+/*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "../minishell.h"
 
 char	*get_line(char *data, char c)
 {
@@ -49,75 +49,44 @@ char	*get_line(char *data, char c)
 t_env_list	*ft_lstnew_env(void *content)
 {
 	t_env_list	*nod;
-	char	*key;
-	char	*value;
+	char	*frst;
+	char	*last;
 
-	key = get_line(content, 'f');
-	value = get_line(content, 'l');
+	frst = get_line(content, 'f');
+	last = get_line(content, 'l');
 	nod = malloc(sizeof(t_env_list));
 	if (!nod)
 		return (NULL);
-	nod->content.key = key;
-	nod->content.value = value;
+	nod->content.key = frst;
+	nod->content.value = last;
 	nod->next = NULL;
 	return (nod);
 }
 
-void	ft_lstadd_back(t_env_list **lst, t_env_list *n)
+void	ft_lstadd_back(t_env_list **lst, t_env_list *new)
 {
 	t_env_list	*list;
 
-	if (!lst || !n)
+	if (!lst || !new)
 		return ;
 	list = *lst;
 	if (*lst == NULL)
 	{
-		*lst = n;
+		*lst = new;
 		return ;
 	}
 	while (list->next)
 		list = list->next;
-	list->next = n;
+	list->next = new;
 }
 char	*my_get_env(char *str, t_env_list *env)
 {
 
 	while (env)
 	{
-		if (ft_strcmp(str, env->content.key))
+		if (str_cmp(str, env->content.key))
 			return (env->content.value);
 		env = env->next;	
 	}
 	return (NULL);
-}
-t_env_list	*get_list_env(char **env)
-{
-	t_env_list	*new_env;
-	t_env_list	*serch;
-	int			i;
-	int			serch_old_p;
-	
-	i = 1;
-	new_env = ft_lstnew_env(env[0]);
-	serch_old_p = 0;
-	while (env[i])
-	{
-		ft_lstadd_back(&new_env, ft_lstnew_env(env[i]));
-		i++;
-	}
-	serch = new_env;
-    // why the oldpwd is null
-	while (serch)
-	{
-		if (!ft_strcmp(serch->content.key, "OLDPWD"))
-		{
-			free(serch->content.value);
-			serch->content.value = NULL;
-			serch_old_p = 1;
-		}
-		serch = serch->next;
-	}
-	if (serch_old_p == 0)
-		ft_lstadd_back(&new_env, ft_lstnew_env("OLDPWD"));
-	return (new_env);
 }

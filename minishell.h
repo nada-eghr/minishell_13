@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/06/20 22:24:02 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:21:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,30 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-
+# include <unistd.h>
+#include <limits.h>
+#include <fcntl.h>
+#define	ERORR	-1
+#define SUCCESS 0
+#define NO_REDERCT -2 
+#define CMD_NOTFIND 127
 
 extern int	exit_sta;
 //---------------------------------------------------------
+typedef	struct variabel
+{
+	int		i;
+	char	*path;
+	char	*new_path;
+	char	**split_path;
+	int		last_in;
+	int		last_out;
+	int		sav_in;
+	int		sav_out;
+	int		pipe;
+	int		pipe_fd[1];
+}t_var;
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,      
@@ -167,4 +187,34 @@ t_env_list	*get_list_env(char **env);
 
 t_token *expand_token(t_token *token , t_env_list *env);
 char *get_value(char *str , t_env_list *env);
+///////////////////////////////exc/////////////////////////////////////////
+
+
+//-----------------------------------------
+t_env_list	*get_list_env(char **env);
+t_env_list	*ft_lstnew_env(void *content);
+void		ft_lstadd_back(t_env_list **lst, t_env_list *new);
+int			ft_strlen(char *str);
+int			str_cmp(char *s1, char *s2);
+char		**ft_split(char *str, char sep);
+char		*str_join(char *s1, char *s2, char sep);
+char		*str_dup(char *s);
+void		free_tab(char **str);
+char		*my_get_env(char *str, t_env_list *env);
+char		**return_list_to_arg(t_env_list *list_env);
+int			is_alpha(char c);
+void	write_err(char *s, char *arg, char *last);
+//////----BILT_IN----///////
+int		my_pwd(void);
+int		my_env(t_env_list *env);
+int		my_cd(t_env_list *ev, char **arg);
+int		my_unset(t_env_list **en, char **args);
+int		my_export(t_env_list *env, char **args);
+void		my_exit(char **args);
+void	my_echo(char **args);
+void	exc(t_cmd *list, t_env_list **list_env);
+int		bilt_in(t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
+///////////////////rediraction/////////////////
+void	rederection(t_cmd *list, t_var *var);
+
 #endif
