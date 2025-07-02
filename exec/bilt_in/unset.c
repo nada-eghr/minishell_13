@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 20:33:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:22:50 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../../minishell.h"
 
 int	chake_arg(char *str)
 {
@@ -38,7 +38,7 @@ void	delet_list(t_env_list **en, char *var)
 	start = 0;
 	env = *en;
 	first = env;
-	while (env && str_cmp(env->content.first, var) == 0)
+	while (env && str_cmp(env->content.key, var) == 0)
 	{
 		env = env->next;
 		start++;
@@ -49,8 +49,8 @@ void	delet_list(t_env_list **en, char *var)
 	{
 		therd = env->next;
 		env->next = NULL;
-		free(env->content.first);
-		free(env->content.last);
+		free(env->content.key);
+		free(env->content.value);
 		free(env);
 		if (first)
 			first->next = therd;

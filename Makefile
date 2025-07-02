@@ -1,20 +1,36 @@
-NAME = minishell
-SRC = small_libft.c exc.c helper.c free_fun.c linkd_list.c all_env.c ./bilt_in/pwd.c ./bilt_in/env.c ./bilt_in/cd.c ./bilt_in/unset.c ./bilt_in/export.c ./bilt_in/exit.c ./bilt_in/echo.c \
- main.c ignor_fun_now.c rediraction.c
-OBJ = $(SRC:.c=.o)
-READLINE_DIR = /Users/slamhaou/.brew/opt/readline
+# Compiler and flags
+CC      = gcc -fsanitize=address -g
 
+CFLAGS  = -Wall -Wextra -Werror 
+LIBS    = -lreadline
+
+# Source and object files
+NAME    = minishell
+SRCS    =  ./pars/expand.c  ./pars/utils1.c  ./pars/utils.c \
+./pars/cmd.c main.c ./pars/herdoc.c  ./pars/get_files.c ./pars/get_param.c ./pars/tokenization.c \
+./pars/listUtils.c ./pars/check_error.c \
+./exec/small_libft.c ./exec/exc.c ./exec/helper.c ./exec/free_fun.c ./exec/linkd_list.c ./exec/all_env.c \
+./exec/bilt_in/pwd.c ./exec/bilt_in/env.c ./exec/bilt_in/cd.c ./exec/bilt_in/unset.c ./exec/bilt_in/export.c ./exec/bilt_in/exit.c ./exec/bilt_in/echo.c \
+ ./exec/ignor_fun_now.c ./exec/rediraction.c
+OBJS    = $(SRCS:.c=.o)
+
+# Build target
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	cc $(OBJ) $(OBJS) -fsanitize=address -g -L$(READLINE_DIR)/lib -lreadline -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
 
-%.o : %.c
-	cc -Wall -Wextra -Werror -fsanitize=address -g -c -I$(READLINE_DIR)/include   $< -o $@
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Clean up object files and binary
 clean:
-	rm -rf $(OBJ)
+	rm -f $(OBJS)
+
 fclean: clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
+
+# Rebuild everything
 re: fclean all
 s : all clean
+.PHONY: all clean fclean re

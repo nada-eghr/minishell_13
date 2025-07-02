@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heder_shell.h                                      :+:      :+:    :+:   */
+/*   minishell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:47:26 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/29 18:34:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:58:03 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <readline/readline.h>
-#define	ERORR	-1
-#define SUCCESS 0
-#define NO_REDERCT -2 
-#define CMD_NOTFIND 127
+
 //-----------EXECUTION----------
 //.
 //			SAFIYA

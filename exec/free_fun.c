@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   free_fun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 18:44:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/24 13:42:51 by slamhaou         ###   ########.fr       */
+/*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../minishell.h"
 
-int	my_pwd(void)
+void	free_tab(char **str)
 {
-	char *path;
+	int	i;
 
-	path = getcwd(NULL, 1);
-	if (!path)
-		return (ERORR); 
-	printf("%s\n", path);
-	free(path);
-	return (SUCCESS);
-}	
+	if (!*str || !str)
+		return ;
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+}

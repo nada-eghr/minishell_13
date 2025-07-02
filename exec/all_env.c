@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/10 08:36:42 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "heder_shell.h"
+#include "../minishell.h"
 
 char	*get_line(char *data, char c)
 {
@@ -57,8 +57,8 @@ t_env_list	*ft_lstnew_env(void *content)
 	nod = malloc(sizeof(t_env_list));
 	if (!nod)
 		return (NULL);
-	nod->content.first = frst;
-	nod->content.last = last;
+	nod->content.key = frst;
+	nod->content.value = last;
 	nod->next = NULL;
 	return (nod);
 }
@@ -84,8 +84,8 @@ char	*my_get_env(char *str, t_env_list *env)
 
 	while (env)
 	{
-		if (str_cmp(str, env->content.first))
-			return (env->content.last);
+		if (str_cmp(str, env->content.key))
+			return (env->content.value);
 		env = env->next;	
 	}
 	return (NULL);

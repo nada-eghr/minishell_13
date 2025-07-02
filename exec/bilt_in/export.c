@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/29 18:34:35 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:22:55 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../../minishell.h"
 
 int	is_alpha(char c)
 {
@@ -42,12 +42,12 @@ void	print_all_var(t_env_list *env)
 {
 	while (env)
 	{
-		if (str_cmp(env->content.first, "_") == 0)
+		if (str_cmp(env->content.key, "_") == 0)
 		{
-			if (env->content.last)
-				printf("declare -x %s=\"%s\"\n", env->content.first, env->content.last);
+			if (env->content.value)
+				printf("declare -x %s=\"%s\"\n", env->content.key, env->content.value);
 			else
-				printf("declare -x %s\n", env->content.first);
+				printf("declare -x %s\n", env->content.key);
 		}
 		env = env->next;
 	}
@@ -72,17 +72,17 @@ int	orredy_hav_valu(t_env_list *env, char *arg)
 	st[i] = '\0';
 	while (env)
 	{
-		if (str_cmp(st, env->content.first))
+		if (str_cmp(st, env->content.key))
 		{
 			free(st);
-			free(env->content.last);
+			free(env->content.value);
 			if (arg[i] == '=')
 				i++;
 			st = malloc(ft_strlen(&arg[i]) + 1);
 			while (arg[i])
 				st[j++] = arg[i++];
 			st[j] = '\0';
-			env->content.last = st;
+			env->content.value = st;
 			st = NULL;
 			return (1);
 		}
@@ -101,13 +101,13 @@ void	have_pls_(t_env_list *env, char *arg)
 	if (arg[i] == '+')
 	{
 		arg[i] = '\0';
-		while (env && !str_cmp(env->content.first, arg))
+		while (env && !str_cmp(env->content.key, arg))
 			env = env->next;
 		if (env)
 		{
-			join = str_join(env->content.last, &arg[i + 2], '\0');
-			free(env->content.last);
-			env->content.last = join;
+			join = str_join(env->content.value, &arg[i + 2], '\0');
+			free(env->content.value);
+			env->content.value = join;
 		}
 	}
 	

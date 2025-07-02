@@ -6,21 +6,21 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/05 15:25:53 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:22:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../../minishell.h"
 
 
 void	update_od_nw_pwd(t_env_list *env, char *s)
 {
-	while (env && str_cmp(env->content.first, s) == 0)
+	while (env && str_cmp(env->content.key, s) == 0)
 		env = env->next;
-	if (str_cmp(env->content.first, s))
+	if (str_cmp(env->content.key, s))
 	{
-		free(env->content.last);
-		env->content.last = getcwd(NULL, 0);
+		free(env->content.value);
+		env->content.value = getcwd(NULL, 0);
 	}
 }
 

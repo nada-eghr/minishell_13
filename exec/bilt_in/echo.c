@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:34:03 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/02 16:21:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:23:23 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../../minishell.h"
 
 int	n_line_access(char *str)
 {

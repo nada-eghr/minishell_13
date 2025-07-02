@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/29 18:35:01 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:23:17 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../heder_shell.h"
+#include "../../minishell.h"
 
 void	write_err(char *s, char *arg, char *last)
 {

@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 09:29:12 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/05/28 16:44:31 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "heder_shell.h"
+#include "../minishell.h"
 
 int	word(char *str, char c)
 {

@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/29 18:35:25 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "heder_shell.h"
+#include "../minishell.h"
 
 void	in_file(int type, char *file, int *last_in)
 {

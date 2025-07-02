@@ -6,11 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/06/29 18:34:28 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:20:39 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "heder_shell.h"
+#include "../minishell.h"
 
 int	exit_sta = 0;
 
@@ -57,7 +57,7 @@ int		bilt_in(t_cmd *list, t_env_list **list_env)
 	return(0);	
 }
 
-void	excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
+void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 {
 	int b;
 	char	*path;
@@ -88,6 +88,10 @@ void	excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 			exit_sta = CMD_NOTFIND;
 			return ;
 		}
+		if (var->pipe == 1)
+		{
+			pipe(var->pipe_fd);
+		}
 		b = fork();
 		if (b == 0)
 		{
@@ -116,21 +120,23 @@ void	excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 void	exc(t_cmd *list, t_env_list **list_env)
 {
 	t_var	var;
-//	int	tab[2];
 	
+	var.pipe = 0;
 	if (!list->next)
 	{
 		rederection(list, &var);
 		if (var.last_in == ERORR || var.last_out == ERORR)
 			return;
-		else
-			excut_comand(&var, list, &*list_env);
+		excut_comand(&var, list, &*list_env);
 		return ;
 	}
+	var.pipe = 1;
 	while (list->next)
 	{
 		rederection(list, &var);
 		if (var.last_in == ERORR || var.last_out == ERORR)
 			return;
+		excut_comand(&var, list, &*list_env);
+		list = list->next;
 	}
 }
