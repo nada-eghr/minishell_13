@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 10:18:58 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:08:20 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,10 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		t_cmd *cmd = list_cmd(filter_lst);
-		exc(cmd, &env_list);
-		// filter_lst = NULL;
-		// print_cmd(cmd);
-		
-		// //------------
-		// t_token *current = filter_lst;
-
-		// while (current)
-		// {
-		// 	printf("{token -> %s } ", current->token);
-		// 	printf("{type -> %d } ", current->type);
-		// 	current = current->next;
-		// }
-		// printf("\n");
-
-		// printlinkedlist(filter_lst);
-
-		// // Free memory if needed
-		// free_list(tokens);
+	//	print_cmd(cmd);
+		 exc(cmd, &env_list);
+		// filter_lst = NULL;/
+	
 	}
 	return (0);
 }
