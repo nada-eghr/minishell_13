@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:14:42 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 #include <stdbool.h>
 
 bool	check_pipe(t_token **list)
@@ -20,48 +20,22 @@ bool	check_pipe(t_token **list)
 	tmp = *list;
 	if (!tmp)
 		return (true);
-	if (tmp->type == TOKEN_PIPE)
+	if (tmp->type == T_PIPE)
 	{
 		return (true);
 	}
 	while (tmp)
 	{
-		if (tmp->type == TOKEN_PIPE && tmp->next
-			&& tmp->next->type == TOKEN_PIPE)
+		if (tmp->type == T_PIPE && tmp->next
+			&& tmp->next->type == T_PIPE)
 			return (true);
-		if (tmp->type == TOKEN_PIPE && tmp->next == NULL)
+		if (tmp->type == T_PIPE && tmp->next == NULL)
 			return (true);
 		tmp = tmp->next;
 	}
 	return (false);
 }
 //------------------------------------------------
-
-bool	check_unclosed_quotes(t_token *tokens)
-{
-	t_token	*tmp;
-	int		len;
-	char	first ;
-	char	last;
-
-	tmp = tokens;
-	while (tmp)
-	{
-		len = ft_strlen(tmp->token);
-		if (len >= 1)
-		{
-			first = tmp->token[0];
-			last = tmp->token[len - 1];
-			if ((first == '"' || first == '\'') && last != first)
-			{
-				// opening quote with no matching closing quote
-				return (true);
-			}
-		}
-		tmp = tmp->next;
-	}
-	return (false);
-}
 
 bool	check_redirections(t_token **list)
 {
@@ -72,16 +46,14 @@ bool	check_redirections(t_token **list)
 		return (true);
 	while (tmp)
 	{
-		if ((tmp->type == TOKEN_REDIR_IN || tmp->type == TOKEN_REDIR_OUT
-				|| tmp->type == TOKEN_APPEND || tmp->type == TOKEN_HERDOC))
+		if ((tmp->type == T_RED_IN || tmp->type == T_RED_OUT
+				|| tmp->type == T_APPEND || tmp->type == T_HEREDOC ))
 		{
 			if (tmp->next == NULL)
 				return (true);
-			else if (tmp->next->type != TOKEN_WORD && tmp->next->type != TOKEN_D_QUOTE && tmp->next->type != TOKEN_S_QUOTE && tmp->next->type != TOKEN_ENV_VAR )
+			else if (tmp->next->type != T_WORD && tmp->next->type != T_D_QUOTE && tmp->next->type != T_S_QUOTE && tmp->next->type != T_ENV )
 				return (true);
 		}
-		// if (ft_strcmp(tmp->token, "<>") == 0)
-		// 	return (true);
 		tmp = tmp->next;
 	}
 	return (false);
@@ -99,32 +71,12 @@ bool	check_error(t_token **list)
 		printf("minishell : syntax error near unexpected token `|'\n");
 		return (true);
 	}
-	// if(check_unclosed_quotes(*list))
+	// if ((*list)->type == T_PIPE || (*list)->type == T_RED_IN
+	// 	|| (*list)->type == T_RED_OUT || (*list)->type == T_APPEND
+	// 	|| (*list)->type == T_HEREDOC)
 	// {
-	//     printf("syntaxe error quotes");
-	//     return (true);
-	// }
-	return (false);
-	if (check_redirections(list))
-	{
-		printf("minishell : syntax error near unexpected token `newline'\n");
-		return (true);
-	}
-	if (check_pipe(list) == 1)
-	{
-		printf("minishell : syntax error near unexpected token `|'\n");
-		return (true);
-	}
-	// if(check_unclosed_quotes(*list))
-	// {
-	//     printf("syntaxe error quotes");
-	//     return (true);
+	// 	printf("minishell : syntax error near unexpected token `%s'\n", (*list)->token);
+	// 	return (true);
 	// }
 	return (false);
 }
-// &&  tmp->next && (tmp->next->type != TOKEN_WORD
-// && tmp->next->type != TOKEN_QUOTED) )
-//             return (true);
-// &&  tmp->next && (tmp->next->type != TOKEN_WORD
-// && tmp->next->type != TOKEN_QUOTED) )
-//             return (true);

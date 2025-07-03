@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_param.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:56:54 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:01:15 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	count_args(t_token *list)
 {
@@ -20,15 +20,17 @@ int	count_args(t_token *list)
 
 	count = 0;
 	tmp = list;
-	if (tmp->type == TOKEN_WORD || tmp->type == TOKEN_S_QUOTE || tmp->type == TOKEN_D_QUOTE)
+	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE || tmp->type == T_ENV)
 		count++;
 	prev = tmp;
 	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE)
+	while (tmp && tmp->type != T_PIPE)
 	{
-		if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD
-				|| prev->type == TOKEN_S_QUOTE || prev->type == TOKEN_D_QUOTE) && (tmp->type == TOKEN_WORD
-				|| tmp->type == TOKEN_D_QUOTE || tmp->type == TOKEN_S_QUOTE))
+		if ((prev->type == T_PIPE || prev->type == T_WORD
+				|| prev->type == T_S_QUOTE || prev->type == T_D_QUOTE
+				|| prev->type == T_ENV) && (tmp->type == T_WORD
+				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE
+				|| tmp->type == T_ENV))
 			count++;
 		prev = tmp;
 		tmp = tmp->next;
@@ -36,34 +38,36 @@ int	count_args(t_token *list)
 	return (count);
 }
 
-char **get_args(t_token *token)
+char	**get_args(t_token *token)
 {
-	t_token *tmp = token;
-	t_token *prev ;
-	int i = 0;
-	int count = count_args(token);
-	char **cmd = malloc(sizeof(char*) * (count+2));
+	t_token	*tmp;
+	t_token	*prev;
+	int		i;
+	char	**cmd;
+
+	tmp = token;
+	i = 0;
+	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
 	if (!*cmd)
 		return (NULL);
-	if (tmp->type == TOKEN_WORD || tmp->type == TOKEN_S_QUOTE || tmp->type == TOKEN_D_QUOTE)
+	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE
+		|| tmp->type == T_ENV)
 		cmd[i++] = ft_strdup(tmp->token);
 	prev = tmp;
 	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE)
-	while (tmp && tmp->type != TOKEN_PIPE)
+	while (tmp && tmp->type != T_PIPE)
 	{
-		if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_WORD
-				|| prev->type == TOKEN_S_QUOTE || prev->type == TOKEN_D_QUOTE) && (tmp->type == TOKEN_WORD
-				|| tmp->type == TOKEN_D_QUOTE || tmp->type == TOKEN_S_QUOTE))
+		if ((prev->type == T_PIPE || prev->type == T_WORD
+				|| prev->type == T_S_QUOTE || prev->type == T_D_QUOTE
+				|| prev->type == T_ENV) && (tmp->type == T_WORD
+				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE
+				|| tmp->type == T_ENV))
 			cmd[i++] = ft_strdup(tmp->token);
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	cmd[i] = NULL;
-	return (cmd);
+	return (cmd[i] = NULL , cmd);
 }
 
-	// int		count;
-	// count = count_args(token);
-	// int		count;
-	// count = count_args(token);
+// int		count;
+// count = count_args(token);

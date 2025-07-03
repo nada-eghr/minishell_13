@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:52:54 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_cmd	*creat_cmd(t_token *list)
 {
@@ -25,7 +25,6 @@ t_cmd	*creat_cmd(t_token *list)
 	cmd->next = NULL;
 	return (cmd);
 }
-
 
 void	add_back_cmd(t_cmd **head, t_cmd *node)
 {
@@ -59,7 +58,7 @@ t_cmd	*list_cmd(t_token *tokens)
 	curr = curr->next;
 	while (curr)
 	{
-		if (prev->type == TOKEN_PIPE)
+		if (prev->type == T_PIPE)
 		{
 			node_cmd = creat_cmd(curr);
 			add_back_cmd(&head, node_cmd);
@@ -87,23 +86,21 @@ void	print_node_cmd(t_cmd *node_cmd)
 
 void	print_cmd(t_cmd *node_cmd)
 {
-	int	i ;
-	int j = 0;
+	int	i;
+	int	j;
+
+	j = 0;
 	while (node_cmd)
 	{
-		 i = 0;
+		i = 0;
 		printf("command [%d] -->", j);
 		while (node_cmd->arg[i])
 		{
 			printf(" [ %s ] ", node_cmd->arg[i++]);
-			printf(" [ %s ] ", node_cmd->arg[i++]);
 		}
 		printf("\n");
 		while (node_cmd->redi)
-		while (node_cmd->redi)
 		{
-			printf("type : [ %d ] <-------> file : [ %s ] \n",
-				node_cmd->redi->type, node_cmd->redi->file);
 			printf("type : [ %d ] <-------> file : [ %s ] \n",
 				node_cmd->redi->type, node_cmd->redi->file);
 			node_cmd->redi = node_cmd->redi->next;
@@ -112,4 +109,3 @@ void	print_cmd(t_cmd *node_cmd)
 		j++;
 	}
 }
-

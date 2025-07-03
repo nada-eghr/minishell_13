@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_files.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:33:08 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_redirection	*add_new(int type, char *file_name)
 {
@@ -22,7 +22,6 @@ t_redirection	*add_new(int type, char *file_name)
 	node->next = NULL;
 	return (node);
 }
-
 
 void	ft_add_back_redi(t_redirection **head, t_redirection *node)
 {
@@ -39,28 +38,28 @@ void	ft_add_back_redi(t_redirection **head, t_redirection *node)
 	tmp->next = node;
 	node->next = NULL;
 }
+
 t_redirection	*get_files(t_token *token)
 {
-	t_token *tmp = token;
-	t_redirection *head ;
-	t_redirection *node;
+	t_token			*tmp;
+	t_redirection	*head;
+	t_redirection	*node;
+	t_token			*prev;
 
+	tmp = token;
 	head = NULL;
 	node = NULL;
-	t_token *prev;
-
 	prev = tmp;
 	tmp = tmp->next;
-	while (tmp && tmp->type != TOKEN_PIPE)
+	while (tmp && tmp->type != T_PIPE)
 	{
-		if ((prev->type == TOKEN_REDIR_OUT || prev->type == TOKEN_APPEND
-				|| prev->type == TOKEN_REDIR_IN || prev->type == TOKEN_HERDOC)
-			&& (tmp->type == TOKEN_WORD || tmp->type == TOKEN_D_QUOTE ||  tmp->type == TOKEN_S_QUOTE ))
+		if ((prev->type == T_RED_OUT || prev->type == T_APPEND
+				|| prev->type == T_RED_IN || prev->type == T_HEREDOC)
+			&& (tmp->type == T_WORD || tmp->type == T_D_QUOTE
+				|| tmp->type == T_S_QUOTE || tmp->type == T_ENV))
 			ft_add_back_redi(&head, add_new(prev->type, tmp->token));
 		prev = tmp;
 		tmp = tmp->next;
 	}
-
 	return (head);
 }
-

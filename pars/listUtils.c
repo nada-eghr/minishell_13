@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   listUtils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:03:37 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_token	*creattoken(char *data)
 {
@@ -22,8 +22,6 @@ t_token	*creattoken(char *data)
 		return (NULL);
 	newnode->token = ft_strdup(data);
 	len = ft_strlen(newnode->token);
-	// printf("token [0] = %c\n", newnode->token[0]);
-	// printf("token [len - 1] = %c\n", newnode->token[len - 1]);
 	newnode->type = get_token_type(data);
 	newnode->next = NULL;
 	return (newnode);
@@ -58,9 +56,10 @@ void	printlinkedlist(t_token *head)
 	printf("NULL\n");
 }
 
-
-
-
+void	ll(void)
+{
+	system("leaks -q a.out");
+}
 
 void	free_list(t_token *head)
 {
@@ -76,4 +75,3 @@ void	free_list(t_token *head)
 		current = next_node;
 	}
 }
-
