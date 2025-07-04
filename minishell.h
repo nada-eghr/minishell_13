@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 10:34:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:34:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef	struct variabel
 	int		sav_in;
 	int		sav_out;
 	int		pipe;
-	int		pipe_fd[1];
+	int		pipe_fd[2];
+	int		sav_rd_fd;
 }t_var;
 
 typedef enum e_token_type

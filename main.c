@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 11:08:20 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/03 22:17:16 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		t_cmd *cmd = list_cmd(filter_lst);
-	//	print_cmd(cmd);
-		 exc(cmd, &env_list);
+		exc(cmd, &env_list);
+		//print_cmd(cmd);
 		// filter_lst = NULL;/
 	
 	}
 	return (0);
 }
-
