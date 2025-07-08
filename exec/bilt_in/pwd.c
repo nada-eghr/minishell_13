@@ -6,20 +6,20 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:44:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:22:29 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:20:11 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	my_pwd(void)
+void	my_pwd(int *exit_sta)
 {
 	char *path;
 
 	path = getcwd(NULL, 1);
 	if (!path)
-		return (ERORR); 
+		return ;
 	printf("%s\n", path);
 	free(path);
-	return (SUCCESS);
+	*exit_sta = 0;
 }	

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 22:17:16 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:46:27 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac , char **av, char **env)
 	(void)av;
 	t_env_list *env_list;
 	env_list = get_list_env(env);
+	
 	while (1)
 	{
 		
@@ -43,5 +44,6 @@ int	main(int ac , char **av, char **env)
 		// filter_lst = NULL;/
 	
 	}
+	
 	return (0);
 }

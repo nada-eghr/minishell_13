@@ -6,13 +6,13 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:00:50 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:22:37 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:21:02 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	my_env(t_env_list *env)
+void	my_env(t_env_list *env, int	*exit_st)
 {
 	while (env)
 	{
@@ -20,6 +20,5 @@ int	my_env(t_env_list *env)
 			printf("%s=%s\n", env->content.key, env->content.value);
 		env = env->next;
 	}
-	exit_sta = 0;
-	return (0);
+	*exit_st = 0;
 }
