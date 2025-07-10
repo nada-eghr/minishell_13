@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:56:54 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:22:28 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:18:44 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	count_args(t_token *list)
 
 	count = 0;
 	tmp = list;
-	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE || tmp->type == T_ENV )
+	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE
+		|| tmp->type == T_ENV)
 		count++;
 	prev = tmp;
 	tmp = tmp->next;
@@ -38,36 +39,65 @@ int	count_args(t_token *list)
 	return (count);
 }
 
+// char	**get_args(t_token *token)
+// {
+// 	t_token	*tmp;
+// 	t_token	*prev;
+// 	int		i;
+// 	char	**cmd;
+
+// 	if (!token)
+// 		return (NULL);
+// 	tmp = token;
+// 	i = 0;
+// 	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
+// 	if (!*cmd)
+// 		return (NULL);
+// 	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE
+// 		|| tmp->type == T_ENV)
+// 		cmd[i++] = ft_strdup(tmp->token);
+// 	prev = tmp;
+// 	tmp = tmp->next;
+// 	while (tmp && tmp->type != T_PIPE)
+// 	{
+// 		if ((prev->type == T_PIPE || prev->type == T_WORD
+// 				|| prev->type == T_S_QUOTE || prev->type == T_D_QUOTE
+// 				|| prev->type == T_ENV) && (tmp->type == T_WORD
+// 				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE
+// 				|| tmp->type == T_ENV))
+// 			cmd[i++] = ft_strdup(tmp->token);
+// 		prev = tmp;
+// 		tmp = tmp->next;
+// 	}
+// 	return (cmd[i] = NULL, cmd);
+// }
+static int	is_arg_token(t_token *t)
+{
+	return (t && (t->type == T_WORD || t->type == T_S_QUOTE
+			|| t->type == T_D_QUOTE || t->type == T_ENV));
+}
+
 char	**get_args(t_token *token)
 {
-	t_token	*tmp;
-	t_token	*prev;
-	int		i;
 	char	**cmd;
+	int		i;
+	t_token	*tmp;
 
-	if(!token)
-		return NULL;
-
-	tmp = token;
-	i = 0;
-	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
-	if (!*cmd)
+	if (!token)
 		return (NULL);
-	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE
-		|| tmp->type == T_ENV)
+	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	tmp = token;
+	if (is_arg_token(tmp))
 		cmd[i++] = ft_strdup(tmp->token);
-	prev = tmp;
-	tmp = tmp->next;
-	while (tmp && tmp->type != T_PIPE)
+	while (tmp && tmp->next && tmp->next->type != T_PIPE)
 	{
-		if ((prev->type == T_PIPE || prev->type == T_WORD
-				|| prev->type == T_S_QUOTE || prev->type == T_D_QUOTE
-				|| prev->type == T_ENV) && (tmp->type == T_WORD
-				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE
-				|| tmp->type == T_ENV))
-			cmd[i++] = ft_strdup(tmp->token);
-		prev = tmp;
+		if (is_arg_token(tmp) && is_arg_token(tmp->next))
+			cmd[i++] = ft_strdup(tmp->next->token);
 		tmp = tmp->next;
 	}
-	return (cmd[i] = NULL , cmd);
+	cmd[i] = NULL;
+	return (cmd);
 }

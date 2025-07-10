@@ -6,13 +6,36 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 14:52:39 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:03:22 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 #include <readline/readline.h>
+
+
+
+bool	is_space(char c)
+{
+	return (c == ' ' || c == '\t');
+}
+
+bool	is_line_empty(const char *line)
+{
+	int	i;
+
+	if (!line)
+		return (true);
+	i = 0;
+	while (line[i])
+	{
+		if (!is_space(line[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int	main(int ac , char **av, char **env)
 {
@@ -44,6 +67,12 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		char *s=  filter_token(filter_lst);
+		if (!s || is_line_empty(s))
+		{
+			free(s);
+			free_list(tokens);
+			continue;
+		}
 		t_token *toke = convert_to_token(s);
 		if (check_error1(&toke) == 1)
 		{

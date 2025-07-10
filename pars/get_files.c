@@ -46,9 +46,9 @@ t_redirection	*get_files(t_token *token)
 	t_redirection	*node;
 	t_token			*prev;
 
-	if(!token)
+	if (!token)
 	{
-		return NULL;
+		return (NULL);
 	}
 	tmp = token;
 	head = NULL;

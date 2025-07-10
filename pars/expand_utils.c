@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:08:50 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/04 10:22:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:07:15 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,16 @@ char	*ft_itoa(int n)
 	if (n < 0)
 		str[0] = '-';
 	return (str);
+}
+
+void	ft_free_exp(char *s1, char *s2, char *s3)
+{
+	free(s1);
+	free(s2);
+	free(s3);
+}
+
+int	is_end_of_key(char c)
+{
+	return (c == '$' || c == '\0' || c == ' ' || c == '\'' || c == '"');
 }

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:54:06 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:31:00 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,21 +138,18 @@ t_cmd						*list_cmd(t_token *tokens);
 void						print_cmd(t_cmd *node_cmd);
 
 //-------------------------    get_files     ------------------------------
-//-------------------------    get_files     ------------------------------
 
 t_redirection				*add_new(int type, char *file_name);
 void						ft_add_back_redi(t_redirection **head, t_redirection *node);
 t_redirection				*get_files(t_token *token);
 
 //--------------------------    get_param    ------------------------------
-//--------------------------    get_param    ------------------------------
 
 int							count_args(t_token *list);
 char						**get_args(t_token *token);
 int							count_args(t_token *list);
 char						**get_args(t_token *token);
 
-// ---------------------------- herdoc ------------------------------------
 // ---------------------------- herdoc ------------------------------------
 
 int							check(t_token *token);
@@ -171,7 +168,6 @@ void						print_node_cmd(t_cmd *node_cmd);
 void						free_list(t_token *head);
 
 //--------------------------   tokenization  ------------------------------
-//--------------------------   tokenization  ------------------------------
 
 t_token_type				get_token_type(char *token);
 t_token						*convert_to_node(char *data);
@@ -184,7 +180,13 @@ char	*ft_itoa(int n);
 // void ll();
 // void ll();
 char *expand_line(char *input , t_env_list *env_list);
-//--------------------------    utils    ----------------------------------
+//--------------------------    pars.c   ----------------------------------
+t_token	*parse_operator_token(const char *data, int *i);
+t_token	*parse_quoted_token(const char *data, int *i);
+t_token	*parse_word_token(const char *data, int *i);
+t_token	*handle_spaces(const char *data, int *i);
+t_token	*handle_quotes(const char *data, int *i);
+
 //--------------------------    utils    ----------------------------------
 
 int							ft_strcmp(char *s1, char *s2);
@@ -202,9 +204,34 @@ char	*ft_strchr(char *s, int c);
 
 //---------------------------	expand    ------------------------------
 
-t_token *expand_token(t_token *token , t_env_list *env);
-char *get_value(char *str , t_env_list *env);
+// t_token *expand_token(t_token *token , t_env_list *env);
+// char *get_value(char *str , t_env_list *env);
+// int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void expand_env_token(t_token *tmp, t_env_list *env);
+void expand_double_quote(t_token *tmp, t_env_list *env);
+void expand_single_quote(t_token *tmp);
+void expand_word_token(t_token *tmp, t_env_list *env);
+t_token *expand_token(t_token *token, t_env_list *env);
+//-------------------------  expand1  --------------------------------	
+void	skip_quoted_text(char *str, int *i, char **s);
+char	*join_empty_and_skip(char *str, int *i, char *s);
+char *get_env_or_empty(char *key, t_env_list *env);
+void expand_env_variable(t_token *tmp, t_env_list *env);
+void remove_quotes(t_token *tmp);
+
+//-------------------------  expand_utils  --------------------------------
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_itoa(int n);
+void ft_free_exp(char *s1, char *s2 , char *s3 );
+int	is_end_of_key(char c);
+
+//-------------------------  get_value  ----------------------------------
+char	*handle_special_dollar(char *s, int *i);
+char	*extract_var_value(char *str, int *i, t_env_list *env, char *s);
+char	*handle_empty_or_space_after_dollar(char *s, int *i, char next);
+char	*append_char_to_str(char *s, char c);
+char	*get_value1(char *str, t_env_list *env);
 ///////////////////////////////exc/////////////////////////////////////////
 
 char *filter_token(t_token *filter_lst);
@@ -236,5 +263,7 @@ void	exc(t_cmd *list, t_env_list **list_env);
 int		bilt_in(int *exit_st, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 ///////////////////rediraction/////////////////
 void	rederection(t_cmd *list, t_var *var);
+
+
 
 #endif

@@ -1,5 +1,6 @@
 # Compiler and flags
-CC      = gcc -fsanitize=address -g
+CC      = gcc 
+#-fsanitize=address -g
 
 CFLAGS  = -Wall -Wextra -Werror 
 LIBS    = -lreadline
@@ -9,6 +10,9 @@ NAME    = minishell
 SRCS    =  ./pars/expand.c  \
 			./pars/utils1.c  \
 			./pars/utils.c \
+			./pars/pars.c \
+			./pars/get_value.c \
+			./pars/expand1.c \
 			./pars/cmd.c main.c \
 			./pars/herdoc.c  \
 			./pars/filter_token.c  \

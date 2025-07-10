@@ -48,8 +48,8 @@ t_cmd	*list_cmd(t_token *tokens)
 	t_token	*curr;
 	t_token	*prev;
 
-	if(!tokens)
-		return NULL;
+	if (!tokens)
+		return (NULL);
 	node_cmd = NULL;
 	head = NULL;
 	curr = tokens;
@@ -103,7 +103,8 @@ void	print_cmd(t_cmd *node_cmd)
 		while (node_cmd->redi)
 		{
 			printf("type : [ %d ] <-------> file : [ %s ]  ,------> is %d\n",
-				node_cmd->redi->type, node_cmd->redi->file, node_cmd->redi->her_doc);
+				node_cmd->redi->type, node_cmd->redi->file,
+				node_cmd->redi->her_doc);
 			node_cmd->redi = node_cmd->redi->next;
 		}
 		node_cmd = node_cmd->next;
