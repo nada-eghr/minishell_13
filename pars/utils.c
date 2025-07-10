@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:08:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 17:05:50 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:23:33 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

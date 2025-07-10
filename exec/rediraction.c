@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:29:27 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	in_file(int type, char *file, int *last_in)
 {
-	if (type == TOKEN_REDIR_IN)
+	if (type == T_RED_IN)
 	{
 		if (*last_in >= 0)
 			close(*last_in);
@@ -31,7 +31,7 @@ void	in_file(int type, char *file, int *last_in)
                                                                                                                                      
 void	out_file(int type, char *file , int *last_out)
 {
-		 if (type == TOKEN_REDIR_OUT)
+		 if (type == T_RED_OUT)
 		{
 			if (last_out >= 0)
 				close(*last_out);
@@ -43,7 +43,7 @@ void	out_file(int type, char *file , int *last_out)
 				*last_out = ERORR;
 			}
 		}
-		else if (type == TOKEN_APPEND)
+		else if (type == T_APPEND)
 		{
 			if (last_out >= 0)
 				close(*last_out);

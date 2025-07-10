@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/01 12:03:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:47:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*creattoken(char *data)
 {
@@ -50,7 +50,7 @@ void	printlinkedlist(t_token *head)
 	current = head;
 	while (current != NULL)
 	{
-		printf("%s -> ", current->token);
+		printf(" %s -> ", current->token);
 		current = current->next;
 	}
 	printf("NULL\n");

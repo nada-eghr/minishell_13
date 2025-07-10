@@ -6,18 +6,20 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 09:27:54 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:25:28 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token_type	get_token_type(char *token)
 {
 	int	len;
 
 	len = ft_strlen(token);
-	if (!token)
+	if (!ft_strcmp(token," "))
+		return (T_SPACE);
+	if (!token || !ft_strcmp(token," "))
 		return (T_UNKNOWN);
 	if (ft_strcmp(token, "|") == 0)
 		return (T_PIPE);
@@ -65,17 +67,7 @@ t_token	*parse_quoted_token(const char *data, int *i, __unused t_token **head)
 	start = (*i)++;
 	while (data[*i] && data[*i] != quote)
 		(*i)++;
-	// if (!data[*i])
-	// {
-	// 	printf("minishell: syntax error: unclosed quote\n");
-	// 	return (free_list(*head) , NULL);
-	// }
 	(*i)++; // move past closing quote
-	if (!ft_space(data[*i]) && data[*i])
-	{
-		while (ft_isprint(data[*i]) && data[*i] && !ft_space(data[*i]))
-			(*i)++;
-	}
 	end = *i;
 	new = substr(data, start, end - start);
 	token = creattoken(new);
@@ -85,7 +77,6 @@ t_token	*parse_quoted_token(const char *data, int *i, __unused t_token **head)
 t_token	*parse_word_token(const char *data, int *i)
 {
 	int		start;
-	char	quote;
 	int		end;
 	char	*new;
 	t_token	*token;
@@ -93,18 +84,7 @@ t_token	*parse_word_token(const char *data, int *i)
 	start = *i;
 	while (data[*i] && !ft_space(data[*i]) && data[*i] != '>' && data[*i] != '<'
 		&& data[*i] != '|' && data[*i] != '\"' && data[*i] != '\'')
-	{
-		if ((data[*i + 1] == '\"' && data[*i]) || (data[*i + 1] == '\''
-				&& data[*i]))
-		{
-			(*i)++;
-			quote = data[*i];
-			(*i)++;
-			while (data[*i] != quote)
-				(*i)++;
-		}
 		(*i)++;
-	}
 	end = *i;
 	new = substr(data, start, end - start);
 	token = creattoken(new);
@@ -123,9 +103,13 @@ t_token	*convert_to_node(char *data)
 	token = NULL;
 	while (data[i])
 	{
-		while (ft_space(data[i]))
-			i++;
-		if (data[i] == '>' || data[i] == '<' || data[i] == '|')
+		if(ft_space(data[i])){
+			token = creattoken(ft_strdup(" "));
+			while (ft_space(data[i]))
+				i++;
+		}
+		
+		else if (data[i] == '>' || data[i] == '<' || data[i] == '|')
 			token = parse_operator_token(data, &i);
 		else if (data[i] == '\'' || data[i] == '"')
 		{
@@ -133,8 +117,10 @@ t_token	*convert_to_node(char *data)
 			if (!token)
 				return (NULL);
 		}
-		else
+		else {
 			token = parse_word_token(data, &i);
+		}
+			
 		if (token)
 			add_back(&head, token);
 	}

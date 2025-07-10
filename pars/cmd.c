@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/01 22:52:54 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:23:58 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_cmd	*creat_cmd(t_token *list)
 {
@@ -21,7 +21,6 @@ t_cmd	*creat_cmd(t_token *list)
 		return (NULL);
 	cmd->arg = get_args(list);
 	cmd->redi = get_files(list);
-	cmd->herdoc = check(list);
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -49,6 +48,8 @@ t_cmd	*list_cmd(t_token *tokens)
 	t_token	*curr;
 	t_token	*prev;
 
+	if(!tokens)
+		return NULL;
 	node_cmd = NULL;
 	head = NULL;
 	curr = tokens;
@@ -101,8 +102,8 @@ void	print_cmd(t_cmd *node_cmd)
 		printf("\n");
 		while (node_cmd->redi)
 		{
-			printf("type : [ %d ] <-------> file : [ %s ] \n",
-				node_cmd->redi->type, node_cmd->redi->file);
+			printf("type : [ %d ] <-------> file : [ %s ]  ,------> is %d\n",
+				node_cmd->redi->type, node_cmd->redi->file, node_cmd->redi->her_doc);
 			node_cmd->redi = node_cmd->redi->next;
 		}
 		node_cmd = node_cmd->next;

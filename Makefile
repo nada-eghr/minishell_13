@@ -9,14 +9,17 @@ NAME    = minishell
 SRCS    =  ./pars/expand.c  \
 			./pars/utils1.c  \
 			./pars/utils.c \
+			./pars/expand_line.c \
 			./pars/cmd.c main.c \
 			./pars/herdoc.c  \
+			./pars/filter_token.c  \
 			./pars/get_files.c \
 			./pars/get_param.c \
 			./pars/tokenization.c \
 			./pars/listUtils.c \
 			./pars/check_error.c \
 			./pars/expand_utils.c \
+			./pars/quotes.c \
 			./exec/small_libft.c ./exec/exc.c ./exec/helper.c ./exec/free_fun.c ./exec/linkd_list.c ./exec/all_env.c \
 			./exec/bilt_in/pwd.c ./exec/bilt_in/env.c ./exec/bilt_in/cd.c ./exec/bilt_in/unset.c ./exec/bilt_in/export.c ./exec/bilt_in/exit.c ./exec/bilt_in/echo.c \
 			./exec/ignor_fun_now.c ./exec/rediraction.c 

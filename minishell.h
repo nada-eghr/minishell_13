@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 10:34:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:17:41 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,62 @@ typedef	struct variabel
 	int		pipe;
 	int		pipe_fd[1];
 }t_var;
+typedef struct p_var
+{
+	bool s_quote;
+	bool d_quote;
+	char *input_line;
+	
+}t_p_var ;
 
+// typedef enum e_token_type
+// {
+// 	T_WORD,      
+// 	T_PIPE,      /* | */
+// 	T_RED_IN,  /* < */
+// 	T_RED_OUT, /* > */
+// 	T_APPEND,    /* >> */
+// 	T_HEREDOC,    /* << */
+// 	T_ENV,   /* $.. */
+// 	T_S_QUOTE,	 /* '...' */
+// 	T_D_QUOTEE,	 /* "..." */
+// 	T_UNKNOWN
+// }							t_token_type;
 typedef enum e_token_type
 {
-	TOKEN_WORD,      
-	TOKEN_PIPE,      /* | */
-	TOKEN_REDIR_IN,  /* < */
-	TOKEN_REDIR_OUT, /* > */
-	TOKEN_APPEND,    /* >> */
-	TOKEN_HERDOC,    /* << */
-	TOKEN_ENV_VAR,   /* $.. */
-	TOKEN_S_QUOTE,	 /* '...' */
-	TOKEN_D_QUOTE,	 /* "..." */
-	TOKEN_UNKNOWN
-}							t_token_type;
+	T_WORD,
+	T_PIPE,      /* | */
+	T_RED_IN,  /* < */
+	T_RED_OUT, /* > */
+	T_APPEND,    /* >> */
+	T_HEREDOC,    /* << */
+	T_ENV,   /* $.. */
+	T_S_QUOTE,   /* '...' */
+	T_D_QUOTE,   /* "..." */
+	T_UNKNOWN,
+	T_SPACE
+}t_token_type;
 
 typedef struct s_token
 {
 	char					*token;
 	t_token_type			type;
 	struct s_token			*next;
-
+	bool 					is_quoted;
 }							t_token;
 //---------------------------  cmd struct  -------------------------------
 typedef struct s_redirection
 {
 	char					*file;
 	int						type;
+	int 					her_doc;
 	struct s_redirection	*next;
 }							t_redirection;
 
 typedef struct s_cmd
 {
 	char					**arg;
-	int herdoc; // 0 for no herdoc, 1 for herdoc
+	bool 					herdoc; // 0 for no herdoc, 1 for herdoc
 	t_redirection			*redi;
 	struct s_cmd *next; // next command in pipeline
 }							t_cmd;
@@ -97,10 +119,11 @@ typedef struct s_list
 
 //-----------------------    check_syntaxe    -----------------------------
 
-bool						check_pipe(t_token **list);
+// bool						check_pipe(t_token **list);
 bool						check_unclosed_quotes(t_token *tokens);
-bool						check_redirections(t_token **list);
+// bool						check_redirections(t_token **list);
 bool						check_error(t_token **list);
+bool	check_error1(t_token **list);
 //-------------------------      cmd        -------------------------------
 
 t_cmd						*creat_cmd(t_token *list);
@@ -152,13 +175,14 @@ void						free_list(t_token *head);
 t_token_type				get_token_type(char *token);
 t_token						*convert_to_node(char *data);
 int							ft_isprint(int c);
-t_token_type				get_token_type(char *token);
+// t_token_type				get_token_type(char *token);
 t_token						*convert_to_node(char *data);
 int							ft_isprint(int c);
-
+int check_quotes(char *str);
+char	*ft_itoa(int n);
 // void ll();
 // void ll();
-
+char *expand_line(char *input , t_env_list *env_list);
 //--------------------------    utils    ----------------------------------
 //--------------------------    utils    ----------------------------------
 
@@ -179,13 +203,15 @@ char	*ft_strchr(char *s, int c);
 
 t_token *expand_token(t_token *token , t_env_list *env);
 char *get_value(char *str , t_env_list *env);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 ///////////////////////////////exc/////////////////////////////////////////
 
-
+char *filter_token(t_token *filter_lst);
+t_token	*convert_to_token(char *data);
 //-----------------------------------------
 t_env_list	*get_list_env(char **env);
 t_env_list	*ft_lstnew_env(void *content);
-void		ft_lstadd_back(t_env_list **lst, t_env_list *new);
+void		ft_lstadd_back(t_env_list **lst, t_env_list *n);
 int			ft_strlen(char *str);
 int			str_cmp(char *s1, char *s2);
 char		**ft_split(char *str, char sep);

@@ -6,14 +6,14 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 10:14:42 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:23:33 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #include <stdbool.h>
 
-bool	check_pipe(t_token **list)
+static bool	check_pipe(t_token **list)
 {
 	t_token	*tmp;
 
@@ -35,9 +35,8 @@ bool	check_pipe(t_token **list)
 	}
 	return (false);
 }
-//------------------------------------------------
 
-bool	check_redirections(t_token **list)
+static bool	check_redirections(t_token **list)
 {
 	t_token	*tmp;
 
@@ -51,7 +50,7 @@ bool	check_redirections(t_token **list)
 		{
 			if (tmp->next == NULL)
 				return (true);
-			else if (tmp->next->type != T_WORD && tmp->next->type != T_D_QUOTE && tmp->next->type != T_S_QUOTE && tmp->next->type != T_ENV )
+			else if (tmp->next->type != T_WORD && tmp->next->type != T_D_QUOTE && tmp->next->type != T_S_QUOTE && tmp->next->type != T_ENV && tmp->next->type != T_SPACE )
 				return (true);
 		}
 		tmp = tmp->next;
@@ -63,7 +62,7 @@ bool	check_error(t_token **list)
 {
 	if (check_redirections(list))
 	{
-		printf("minishell : syntax error near unexpected token `newline'\n");
+		printf("minishell : syntax error near unexpected token --------`newline'\n");
 		return (true);
 	}
 	if (check_pipe(list) == 1)
@@ -71,12 +70,5 @@ bool	check_error(t_token **list)
 		printf("minishell : syntax error near unexpected token `|'\n");
 		return (true);
 	}
-	// if ((*list)->type == T_PIPE || (*list)->type == T_RED_IN
-	// 	|| (*list)->type == T_RED_OUT || (*list)->type == T_APPEND
-	// 	|| (*list)->type == T_HEREDOC)
-	// {
-	// 	printf("minishell : syntax error near unexpected token `%s'\n", (*list)->token);
-	// 	return (true);
-	// }
 	return (false);
 }

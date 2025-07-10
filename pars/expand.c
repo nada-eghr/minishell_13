@@ -6,12 +6,12 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/02 20:15:47 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:14:40 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include"minishell.h"
+#include "../minishell.h"
 
 char *get_value(char *str, t_env_list *env)
 {
@@ -38,23 +38,26 @@ char *get_value(char *str, t_env_list *env)
             str++;
             if (*str == '\'' || *str == '"')
             {
+                char quote = *str;
                 str++;
-                while ( *str && *str != '\'' && *str != '"')
+                while ( *str && *str != quote)
                 {
                     char *temp = ft_strjoin(s, (char[]){*str, '\0'});
                     free(s);
                     s = temp;
                     str++;
                 }
+
             }
             tmp = env;
             if (env == NULL)
                 return ft_strdup("");
             while (tmp)
             {
+                // printf("c3 = %c\n", *str);
                 if (ft_strncmp(str, tmp->content.key, ft_strlen(tmp->content.key)) == 0)
                 {
-                    if (*(str + ft_strlen(tmp->content.key)) == '$' || *(str + ft_strlen(tmp->content.key)) == '\0' || *(str + ft_strlen(tmp->content.key)) == ' ')
+                    if (*(str + ft_strlen(tmp->content.key)) == '$' || *(str + ft_strlen(tmp->content.key)) == '\0' || *(str + ft_strlen(tmp->content.key)) == ' ' || *(str + ft_strlen(tmp->content.key)) == '\'' || *(str + ft_strlen(tmp->content.key)) == '"')
                     {
                         found = 1;
                         content = tmp->content.value;
@@ -66,12 +69,17 @@ char *get_value(char *str, t_env_list *env)
                     }
                     else
                     {
-                        while (*str && *str != '$' && *str != ' ')
+                        while (*str && *str != '$' && *str != ' ' && *str != '\'' && *str != '"')
                             str++;
                         char *temp = ft_strjoin(s, ft_strdup(""));
+                        while (*str && *str != '$' && *str != ' '  && *str != '"')
+                        {
+                            temp = ft_strjoin(temp, (char[]){*str, '\0'});
+                            str++;
+                        }
+                        
                             free(s);
                             s = temp;
-                        break;
                     }
                 }
                 tmp = tmp->next;
@@ -104,7 +112,6 @@ char *get_value(char *str, t_env_list *env)
         }
         else
         {
-
             char *temp = ft_strjoin(s, (char[]){*str, '\0'});
             free(s); 
             s = temp; 

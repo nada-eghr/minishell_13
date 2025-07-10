@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:56:17 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ t_env_list	*ft_lstnew_env(void *content)
 	return (nod);
 }
 
-void	ft_lstadd_back(t_env_list **lst, t_env_list *new)
+void	ft_lstadd_back(t_env_list **lst, t_env_list *n)
 {
 	t_env_list	*list;
 
-	if (!lst || !new)
+	if (!lst || !n)
 		return ;
 	list = *lst;
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = n;
 		return ;
 	}
 	while (list->next)
 		list = list->next;
-	list->next = new;
+	list->next = n;
 }
 char	*my_get_env(char *str, t_env_list *env)
 {

@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:56:54 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/01 22:01:15 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:22:28 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	count_args(t_token *list)
 {
@@ -20,7 +20,7 @@ int	count_args(t_token *list)
 
 	count = 0;
 	tmp = list;
-	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE || tmp->type == T_ENV)
+	if (tmp->type == T_WORD || tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE || tmp->type == T_ENV )
 		count++;
 	prev = tmp;
 	tmp = tmp->next;
@@ -45,6 +45,9 @@ char	**get_args(t_token *token)
 	int		i;
 	char	**cmd;
 
+	if(!token)
+		return NULL;
+
 	tmp = token;
 	i = 0;
 	cmd = malloc(sizeof(char *) * (count_args(token) + 1));
@@ -68,6 +71,3 @@ char	**get_args(t_token *token)
 	}
 	return (cmd[i] = NULL , cmd);
 }
-
-// int		count;
-// count = count_args(token);

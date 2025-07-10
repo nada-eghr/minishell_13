@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/01 12:33:08 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:17:49 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_redirection	*add_new(int type, char *file_name)
 {
@@ -46,6 +46,10 @@ t_redirection	*get_files(t_token *token)
 	t_redirection	*node;
 	t_token			*prev;
 
+	if(!token)
+	{
+		return NULL;
+	}
 	tmp = token;
 	head = NULL;
 	node = NULL;

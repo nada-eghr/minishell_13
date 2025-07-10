@@ -6,11 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:19:23 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/03 09:44:14 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:23:21 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int check_quotes(char *str)
 {
