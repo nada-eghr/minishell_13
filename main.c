@@ -6,9 +6,10 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:29:41 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:52:39 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include <readline/readline.h>
@@ -44,18 +45,12 @@ int	main(int ac , char **av, char **env)
 		}
 		char *s=  filter_token(filter_lst);
 		t_token *toke = convert_to_token(s);
-		t_token *c = toke;
-		printlinkedlist(c);
 		if (check_error1(&toke) == 1)
 		{
 			free_list(tokens);
 			continue;
 		}
-		
-		
-		printf("\n");
 		t_cmd *cmd = list_cmd(toke);
-		print_cmd(cmd);
 		exc(cmd, &env_list);
 		filter_lst = NULL;
 		
@@ -63,4 +58,3 @@ int	main(int ac , char **av, char **env)
 	}
 	return (0);
 }
-

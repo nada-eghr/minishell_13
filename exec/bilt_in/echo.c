@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:34:03 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:23:23 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:37:28 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	n_line_access(char *str)
 	}
 	return (0);
 }
-void	my_echo(char **args)
+void	my_echo(char **args, int *exit_st)
 {
 	int	n_line;
 	int	i;
@@ -50,5 +50,5 @@ void	my_echo(char **args)
 	}
 	if (n_line == 0)
 		write(1, "\n", 1);
-	exit_sta = 0;
+	 *exit_st = 0;
 }

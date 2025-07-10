@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/03 09:49:15 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:33:08 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_od_nw_pwd(t_env_list *env, char *s)
 	}
 }
 
-int	my_cd(t_env_list *env, char **arg) 
+void	my_cd(t_env_list *env, char **arg, int *exit_st) 
 {
 	char *path;
 	int err;
@@ -36,12 +36,15 @@ int	my_cd(t_env_list *env, char **arg)
 		if (!path)
 		{
 		 	write (2, "Minishell: cd: HOME not set\n", 24);
-			return (1);
+			*exit_st = 1;
 		}
 		err = chdir(path);
 		if (err != 0)
-			return (perror("cd"), 1);
-		return (0);
+		{
+			perror("cd");
+			
+		}
+		return;
 	}
 	err = chdir(arg[1]);
 	update_od_nw_pwd(env, "PWD");
@@ -50,7 +53,6 @@ int	my_cd(t_env_list *env, char **arg)
 		write(2,"Minishell: cd: ", 15);
 		write(2, arg[1], ft_strlen(arg[1]));
 		write(2, ": ", 2);
-		return (perror(NULL), 1);
+		perror(NULL);
 	}
-	return (0);
 }

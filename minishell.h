@@ -6,9 +6,10 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:17:41 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:54:06 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -23,8 +24,10 @@
 #include <limits.h>
 #include <fcntl.h>
 #define	ERORR	-1
-#define SUCCESS 0
 #define NO_REDERCT -2 
+#define  FIRST_CMD -3
+#define  NO_PIP -4
+#define SUCCESS 1
 #define CMD_NOTFIND 127
 
 extern int	exit_sta;
@@ -32,15 +35,14 @@ extern int	exit_sta;
 typedef	struct variabel
 {
 	int		i;
-	char	*path;
-	char	*new_path;
-	char	**split_path;
+	int		rd_fd;
 	int		last_in;
 	int		last_out;
-	int		sav_in;
-	int		sav_out;
-	int		pipe;
-	int		pipe_fd[1];
+	int		id_pros;
+	int		exit_stat;
+	int		*arr_id;
+	int		num_cmd;
+	int		pip_fd[2];
 }t_var;
 typedef struct p_var
 {
@@ -154,7 +156,6 @@ char						**get_args(t_token *token);
 // ---------------------------- herdoc ------------------------------------
 
 int							check(t_token *token);
-int							check(t_token *token);
 
 //---------------------------  listUtils  ---------------------------------
 
@@ -222,16 +223,17 @@ char		*my_get_env(char *str, t_env_list *env);
 char		**return_list_to_arg(t_env_list *list_env);
 int			is_alpha(char c);
 void	write_err(char *s, char *arg, char *last);
+char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env);
 //////----BILT_IN----///////
-int		my_pwd(void);
-int		my_env(t_env_list *env);
-int		my_cd(t_env_list *ev, char **arg);
+void		my_pwd(int *exit_sta);
+void	my_env(t_env_list *env, int	*exit_st);
+void	my_cd(t_env_list *env, char **arg, int *exit_st);
 int		my_unset(t_env_list **en, char **args);
 int		my_export(t_env_list *env, char **args);
-void		my_exit(char **args);
-void	my_echo(char **args);
+void		my_exit(char **args, int *exit_st);
+void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env);
-int		bilt_in(t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
+int		bilt_in(int *exit_st, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 ///////////////////rediraction/////////////////
 void	rederection(t_cmd *list, t_var *var);
 

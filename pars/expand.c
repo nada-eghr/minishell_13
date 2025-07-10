@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/09 16:14:40 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:53:15 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ char *get_value(char *str, t_env_list *env)
     t_env_list *tmp;
     char *s = ft_strdup(""); 
     char *content;
-    int nb = 127;
     char *status;
     int found = 0;
+    
+    
 
     while (*str)
     {
         if (*str == '$' && (*(str + 1) == '$' || *(str + 1) == '?'))
         {
-            status = ft_itoa(nb); 
+            // printf("status %d\n", exit_sta);
+            status = ft_itoa(exit_sta); 
             str += 2; 
             char *temp = ft_strjoin(s, status);
             free(s); 

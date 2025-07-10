@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:23:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:35:51 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ int	another_alpha(char *s)
 	return (0);
 }
 
-void	alon_exit(void)
+void	alon_exit(int *exit_st)
 {
 	write(2, "exit\n", 6);
-	exit(exit_sta);
+	exit(*exit_st);
 }
-void	my_exit(char **args)
+void	my_exit(char **args, int *exit_st)
 {
 	int	num;
 	int	eror;
 
 	eror = 1;
 	if (args[1] == NULL)
-		alon_exit();
+		alon_exit(exit_st);
 	if (another_alpha(args[1]))
 	{
 		write_err("exit\nMinishell: exit: ", args[1],
@@ -97,7 +97,7 @@ void	my_exit(char **args)
 	{
 		write_err("exit\nMinishell:exit: ", NULL,
 		"too many arguments\n");
-		exit_sta = 1;
+		*exit_st = 1;
 		return ;
 	}
 	num = ft_atoi(args[1], &eror);
