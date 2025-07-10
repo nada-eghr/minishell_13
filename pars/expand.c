@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 14:53:15 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:58:32 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char *get_value(char *str, t_env_list *env)
     char *status;
     int found = 0;
     
-    
+    int exit_sta = 0;
 
     while (*str)
     {
