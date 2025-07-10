@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 19:03:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 22:46:22 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ int	main(int ac , char **av, char **env)
 	while (1)
 	{
 		char *input = readline("minishell$ ");
+		if (!input || is_line_empty(input))
+		{
+			free(input);
+			continue;
+		}
 		add_history(input);
 		if(check_quotes(input))
 		{
@@ -66,14 +71,7 @@ int	main(int ac , char **av, char **env)
 			free_list(tokens);
 			continue;
 		}
-		char *s=  filter_token(filter_lst);
-		if (!s || is_line_empty(s))
-		{
-			free(s);
-			free_list(tokens);
-			continue;
-		}
-		t_token *toke = convert_to_token(s);
+		t_token *toke = convert_to_token(filter_lst);
 		if (check_error1(&toke) == 1)
 		{
 			free_list(tokens);

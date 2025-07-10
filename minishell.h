@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 19:31:00 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/10 22:30:30 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void						print_cmd(t_cmd *node_cmd);
 
 //-------------------------    get_files     ------------------------------
 
-t_redirection				*add_new(int type, char *file_name);
+t_redirection	*add_new(int type, char *file_name, int her_doc);
 void						ft_add_back_redi(t_redirection **head, t_redirection *node);
 t_redirection				*get_files(t_token *token);
 
@@ -233,9 +233,9 @@ char	*handle_empty_or_space_after_dollar(char *s, int *i, char next);
 char	*append_char_to_str(char *s, char c);
 char	*get_value1(char *str, t_env_list *env);
 ///////////////////////////////exc/////////////////////////////////////////
-
+t_token *convert_to_token(t_token *token);
 char *filter_token(t_token *filter_lst);
-t_token	*convert_to_token(char *data);
+
 //-----------------------------------------
 t_env_list	*get_list_env(char **env);
 t_env_list	*ft_lstnew_env(void *content);

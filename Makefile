@@ -1,6 +1,5 @@
 # Compiler and flags
 CC      = gcc 
-#-fsanitize=address -g
 
 CFLAGS  = -Wall -Wextra -Werror 
 LIBS    = -lreadline
