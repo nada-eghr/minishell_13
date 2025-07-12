@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 13:26:54 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:47:37 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #define SUCCESS 1
 #define CMD_NOTFIND 127
 
-extern int	exit_sta;
+
 //---------------------------------------------------------
 typedef	struct variabel
 {
@@ -222,16 +222,16 @@ char	*ft_strchr(char *s, int c);
 // t_token *expand_token(t_token *token , t_env_list *env);
 // char *get_value(char *str , t_env_list *env);
 // int	ft_strncmp(const char *s1, const char *s2, size_t n);
-void expand_env_token(t_token *tmp, t_env_list *env);
-void expand_double_quote(t_token *tmp, t_env_list *env);
+void	expand_env_token(t_token *tmp, t_env_list *env , int *exit_stat);
+void expand_double_quote(t_token *tmp, t_env_list *env , int *exit_stat);
 void expand_single_quote(t_token *tmp);
-void expand_word_token(t_token *tmp, t_env_list *env);
-t_token *expand_token(t_token *token, t_env_list *env);
+void expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat);
+t_token	*expand_token(t_token *token, t_env_list *env,int *exit_stat);
 //-------------------------  expand1  --------------------------------	
 void	skip_quoted_text(char *str, int *i, char **s);
 char	*join_empty_and_skip(char *str, int *i, char *s);
-char *get_env_or_empty(char *key, t_env_list *env);
-void expand_env_variable(t_token *tmp, t_env_list *env);
+char *get_env_or_empty(char *key, t_env_list *env , int *exit_stat);
+void expand_env_variable(t_token *tmp, t_env_list *env, int *exit_stat);
 void remove_quotes(t_token *tmp);
 
 //-------------------------  expand_utils  --------------------------------
@@ -242,11 +242,11 @@ void ft_free_exp(char *s1, char *s2 , char *s3 );
 int	is_end_of_key(char c);
 
 //-------------------------  get_value  ----------------------------------
-char	*handle_special_dollar(char *s, int *i);
+char	*handle_special_dollar(char *s, int *i , int *exit_stat);
 char	*extract_var_value(char *str, int *i, t_env_list *env, char *s);
 char	*handle_empty_or_space_after_dollar(char *s, int *i, char next);
 char	*append_char_to_str(char *s, char c);
-char	*get_value1(char *str, t_env_list *env);
+char	*get_value1(char *str, t_env_list *env , int *exit_stat);
 ///////////////////////////////exc/////////////////////////////////////////
 t_token *convert_to_token(t_token *token);
 char *filter_token(t_token *filter_lst);

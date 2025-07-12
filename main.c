@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 13:25:08 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:34:54 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac , char **av, char **env)
 	t_env_list *env_list;
 	env_list = get_list_env(env);
 
-	// t_var var;
+	t_var var;
 	
 	while (1)
 	{
@@ -62,7 +62,7 @@ int	main(int ac , char **av, char **env)
 		}
 	
 		t_token *tokens = convert_to_node(input);
-		t_token *filter_lst= expand_token(tokens , env_list);
+		t_token *filter_lst= expand_token(tokens , env_list, &var.exit_stat);
 		t_second_token *second_tokens = second_tokinization(filter_lst);
 		if (!tokens)
 		{

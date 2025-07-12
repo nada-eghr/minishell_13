@@ -6,22 +6,22 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 19:29:50 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:50:28 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	expand_env_token(t_token *tmp, t_env_list *env)
+void	expand_env_token(t_token *tmp, t_env_list *env , int *exit_stat)
 {
 	char	*new_data;
 
-	new_data = get_env_or_empty(tmp->token, env);
+	new_data = get_env_or_empty(tmp->token, env, exit_stat);
 	free(tmp->token);
 	tmp->token = new_data;
 }
 
-void	expand_double_quote(t_token *tmp, t_env_list *env)
+void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
 {
 	int		j;
 	char	*s1;
@@ -36,7 +36,7 @@ void	expand_double_quote(t_token *tmp, t_env_list *env)
 			j++;
 		s1 = substr(tmp->token, 1, j - 1);
 		s2 = substr(tmp->token, j, ft_strlen(tmp->token) - j - 1);
-		joined = ft_strjoin(s1, get_env_or_empty(s2, env));
+		joined = ft_strjoin(s1, get_env_or_empty(s2, env, exit_stat));
 		free(tmp->token);
 		tmp->token = ft_strdup(joined);
 		ft_free_exp(s1, s2, joined);
@@ -60,15 +60,15 @@ void	expand_single_quote(t_token *tmp)
 	free(new_data);
 }
 
-void	expand_word_token(t_token *tmp, t_env_list *env)
+void	expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat)
 {
 	if (ft_strchr(tmp->token, '$'))
-		expand_env_variable(tmp, env);
+		expand_env_variable(tmp, env, exit_stat);
 	else if (ft_strchr(tmp->token, '\'') || ft_strchr(tmp->token, '"'))
 		remove_quotes(tmp);
 }
 
-t_token	*expand_token(t_token *token, t_env_list *env)
+t_token	*expand_token(t_token *token, t_env_list *env,int *exit_stat)
 {
 	t_token	*tmp;
 	t_token	*prev;
@@ -78,13 +78,13 @@ t_token	*expand_token(t_token *token, t_env_list *env)
 	while (tmp)
 	{
 		if (tmp->type == T_ENV && prev->type != T_HEREDOC)
-			expand_env_token(tmp, env);
+			expand_env_token(tmp, env, exit_stat);
 		else if (tmp->type == T_D_QUOTE && prev->type != T_HEREDOC)
-			expand_double_quote(tmp, env);
+			expand_double_quote(tmp, env , exit_stat);
 		else if (tmp->type == T_S_QUOTE)
 			expand_single_quote(tmp);
 		else if (tmp->type == T_WORD)
-			expand_word_token(tmp, env);
+			expand_word_token(tmp, env, exit_stat);
 		prev = tmp;
 		tmp = tmp->next;
 	}
