@@ -1,5 +1,5 @@
 # Compiler and flags
-CC      = gcc 
+CC      = gcc -g -fsanitize=address
 
 CFLAGS  = -Wall -Wextra -Werror 
 LIBS    = -lreadline
@@ -13,11 +13,13 @@ SRCS    =  ./pars/expand.c  \
 			./pars/get_value.c \
 			./pars/expand1.c \
 			./pars/cmd.c main.c \
-			./pars/herdoc.c  \
+			./pars/check_error2.c  \
 			./pars/filter_token.c  \
 			./pars/get_files.c \
 			./pars/get_param.c \
 			./pars/tokenization.c \
+			./pars/second_tokinization.c \
+			./pars/lst_utils1.c \
 			./pars/listUtils.c \
 			./pars/check_error.c \
 			./pars/expand_utils.c \

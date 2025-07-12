@@ -6,13 +6,13 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:23:58 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:09:12 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*creat_cmd(t_token *list)
+t_cmd	*creat_cmd(t_second_token *list)
 {
 	t_cmd	*cmd;
 
@@ -41,12 +41,12 @@ void	add_back_cmd(t_cmd **head, t_cmd *node)
 	node->next = NULL;
 }
 
-t_cmd	*list_cmd(t_token *tokens)
+t_cmd	*list_cmd(t_second_token *tokens)
 {
 	t_cmd	*node_cmd;
 	t_cmd	*head;
-	t_token	*curr;
-	t_token	*prev;
+	t_second_token	*curr;
+	t_second_token	*prev;
 
 	if (!tokens)
 		return (NULL);

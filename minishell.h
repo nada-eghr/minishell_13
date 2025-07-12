@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 22:30:30 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:26:54 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ typedef struct s_token
 	struct s_token			*next;
 	bool 					is_quoted;
 }							t_token;
+
+typedef struct s_second_token
+{
+	char					*token;
+	t_token_type			type;
+	struct s_second_token			*next;
+}							t_second_token;
+
 //---------------------------  cmd struct  -------------------------------
 typedef struct s_redirection
 {
@@ -99,7 +107,6 @@ typedef struct s_redirection
 typedef struct s_cmd
 {
 	char					**arg;
-	bool 					herdoc; // 0 for no herdoc, 1 for herdoc
 	t_redirection			*redi;
 	struct s_cmd *next; // next command in pipeline
 }							t_cmd;
@@ -128,27 +135,25 @@ bool						check_error(t_token **list);
 bool	check_error1(t_token **list);
 //-------------------------      cmd        -------------------------------
 
-t_cmd						*creat_cmd(t_token *list);
+t_cmd						*creat_cmd(t_second_token *list);
 void						add_back_cmd(t_cmd **head, t_cmd *node);
-t_cmd						*list_cmd(t_token *tokens);
 void						print_cmd(t_cmd *node_cmd);
-t_cmd						*creat_cmd(t_token *list);
 void						add_back_cmd(t_cmd **head, t_cmd *node);
-t_cmd						*list_cmd(t_token *tokens);
+t_cmd						*list_cmd(t_second_token *tokens);
 void						print_cmd(t_cmd *node_cmd);
 
 //-------------------------    get_files     ------------------------------
 
 t_redirection	*add_new(int type, char *file_name, int her_doc);
 void						ft_add_back_redi(t_redirection **head, t_redirection *node);
-t_redirection				*get_files(t_token *token);
+t_redirection				*get_files(t_second_token *token);
 
 //--------------------------    get_param    ------------------------------
 
-int							count_args(t_token *list);
-char						**get_args(t_token *token);
-int							count_args(t_token *list);
-char						**get_args(t_token *token);
+int							count_args(t_second_token *list);
+char						**get_args(t_second_token *token);
+int							count_args(t_second_token *list);
+char						**get_args(t_second_token *token);
 
 // ---------------------------- herdoc ------------------------------------
 
@@ -194,6 +199,16 @@ int							ft_strlen(char *str);
 char						*ft_strncpy(char *dst, const char *src, size_t n);
 char						*substr(const char *src, int start, int len);
 char						*ft_strdup(char *s);
+
+//--------------------------list_Utils1-------------------------------
+t_second_token	*creat_second_token(char *data, t_token_type type);
+void	add_b(t_second_token **head, t_second_token *node);
+void	printlinkedlist1(t_second_token *head);
+void	free_list1(t_second_token *head);
+
+//------------------------ second_tokinization -----------------------------
+
+t_second_token	*second_tokinization(t_token *token);
 
 //--------------------------    utils1    ----------------------------------
 

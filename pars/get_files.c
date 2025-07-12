@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 22:34:07 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:54:04 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ static int is_redirection_token(int type)
             type == T_RED_IN || type == T_HEREDOC);
 }
 
-t_redirection *get_files(t_token *token)
+t_redirection *get_files(t_second_token *token)
 {
-    t_token *tmp;
+    t_second_token *tmp;
     t_redirection *head;
     t_redirection *node;
-    t_token *prev;
+    t_second_token *prev;
 
     if (!token)
         return (NULL);

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 22:46:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:25:08 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int	main(int ac , char **av, char **env)
 	(void)av;
 	t_env_list *env_list;
 	env_list = get_list_env(env);
+
+	// t_var var;
+	
 	while (1)
 	{
 		char *input = readline("minishell$ ");
@@ -59,8 +62,8 @@ int	main(int ac , char **av, char **env)
 		}
 	
 		t_token *tokens = convert_to_node(input);
-		
 		t_token *filter_lst= expand_token(tokens , env_list);
+		t_second_token *second_tokens = second_tokinization(filter_lst);
 		if (!tokens)
 		{
 			free(tokens);
@@ -77,7 +80,8 @@ int	main(int ac , char **av, char **env)
 			free_list(tokens);
 			continue;
 		}
-		t_cmd *cmd = list_cmd(toke);
+		t_cmd *cmd = list_cmd(second_tokens);
+		print_cmd(cmd);
 		exc(cmd, &env_list);
 		filter_lst = NULL;
 		

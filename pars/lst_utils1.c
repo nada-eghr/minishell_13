@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listUtils.c                                        :+:      :+:    :+:   */
+/*   lst_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 12:12:54 by naessgui         ###   ########.fr       */
+/*   Created: 2025/07/12 11:48:36 by naessgui          #+#    #+#             */
+/*   Updated: 2025/07/12 13:17:37 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token	*creattoken(char *data)
+t_second_token	*creat_second_token(char *data, t_token_type type)
 {
-	t_token	*newnode;
+	t_second_token	*newnode;
 
-	newnode = (t_token *)malloc(sizeof(t_token));
+	newnode = (t_second_token *)malloc(sizeof(t_second_token));
 	if (!newnode)
 		return (NULL);
 	newnode->token = ft_strdup(data);
-	newnode->type = get_token_type(data);
+	newnode->type = type;
 	newnode->next = NULL;
 	return (newnode);
 }
 
-void	add_back(t_token **head, t_token *node)
+void	add_b(t_second_token **head, t_second_token *node)
 {
-	t_token	*tmp;
+	t_second_token	*tmp;
 
 	if (!*head)
 	{
@@ -41,9 +41,9 @@ void	add_back(t_token **head, t_token *node)
 	node->next = NULL;
 }
 
-void	printlinkedlist(t_token *head)
+void	printlinkedlist1(t_second_token *head)
 {
-	t_token	*current;
+	t_second_token	*current;
 
 	current = head;
 	while (current != NULL)
@@ -56,10 +56,10 @@ void	printlinkedlist(t_token *head)
 
 
 
-void	free_list(t_token *head)
+void	free_list1(t_second_token *head)
 {
-	t_token	*current;
-	t_token	*next_node;
+	t_second_token	*current;
+	t_second_token	*next_node;
 
 	current = head;
 	while (current != NULL)
