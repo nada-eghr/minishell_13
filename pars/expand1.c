@@ -31,7 +31,7 @@ char	*join_empty_and_skip(char *str, int *i, char *s)
 	return (ft_strjoin("", ""));
 }
 
-char	*get_env_or_empty(char *key, t_env_list *env,int *exit_stat)
+char	*get_env_or_empty(char *key, t_env_list *env, int *exit_stat)
 {
 	char	*new_data;
 	char	*value;
@@ -52,7 +52,6 @@ void	expand_env_variable(t_token *tmp, t_env_list *env, int *exit_stat)
 	char	*s2;
 	char	*val;
 	char	*joined;
-	
 
 	j = 0;
 	while (tmp->token[j] && tmp->token[j] != '$')

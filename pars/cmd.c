@@ -43,8 +43,8 @@ void	add_back_cmd(t_cmd **head, t_cmd *node)
 
 t_cmd	*list_cmd(t_second_token *tokens)
 {
-	t_cmd	*node_cmd;
-	t_cmd	*head;
+	t_cmd			*node_cmd;
+	t_cmd			*head;
 	t_second_token	*curr;
 	t_second_token	*prev;
 

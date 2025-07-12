@@ -12,11 +12,10 @@
 
 #include "../minishell.h"
 
-char	*handle_special_dollar(char *s, int *i , int *exit_stat)
+char	*handle_special_dollar(char *s, int *i, int *exit_stat)
 {
 	char	*status;
 	char	*temp;
-
 
 	status = ft_itoa(*exit_stat);
 	temp = ft_strjoin(s, status);
@@ -81,7 +80,7 @@ char	*append_char_to_str(char *s, char c)
 	return (temp);
 }
 
-char	*get_value1(char *str, t_env_list *env,int *exit_stat)
+char	*get_value1(char *str, t_env_list *env, int *exit_stat)
 {
 	int		i;
 	char	*s;
@@ -91,7 +90,7 @@ char	*get_value1(char *str, t_env_list *env,int *exit_stat)
 	while (str[i])
 	{
 		if (str[i] == '$' && (str[i + 1] == '$' || str[i + 1] == '?'))
-			s = handle_special_dollar( s, &i, exit_stat);
+			s = handle_special_dollar(s, &i, exit_stat);
 		else if (str[i] == '$' && (isalpha(str[i + 1]) || str[i + 1]))
 		{
 			i++;

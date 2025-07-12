@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:48:36 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 13:17:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:16:09 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	printlinkedlist1(t_second_token *head)
 	}
 	printf("NULL\n");
 }
-
-
 
 void	free_list1(t_second_token *head)
 {

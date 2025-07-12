@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void	expand_env_token(t_token *tmp, t_env_list *env , int *exit_stat)
+void	expand_env_token(t_token *tmp, t_env_list *env, int *exit_stat)
 {
 	char	*new_data;
 
@@ -27,7 +27,7 @@ void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
 	char	*s1;
 	char	*s2;
 	char	*joined;
-	char	*new_data; 
+	char	*new_data;
 
 	if (ft_strchr(tmp->token, '$'))
 	{
@@ -68,7 +68,7 @@ void	expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat)
 		remove_quotes(tmp);
 }
 
-t_token	*expand_token(t_token *token, t_env_list *env,int *exit_stat)
+t_token	*expand_token(t_token *token, t_env_list *env, int *exit_stat)
 {
 	t_token	*tmp;
 	t_token	*prev;
@@ -80,7 +80,7 @@ t_token	*expand_token(t_token *token, t_env_list *env,int *exit_stat)
 		if (tmp->type == T_ENV && prev->type != T_HEREDOC)
 			expand_env_token(tmp, env, exit_stat);
 		else if (tmp->type == T_D_QUOTE && prev->type != T_HEREDOC)
-			expand_double_quote(tmp, env , exit_stat);
+			expand_double_quote(tmp, env, exit_stat);
 		else if (tmp->type == T_S_QUOTE)
 			expand_single_quote(tmp);
 		else if (tmp->type == T_WORD)
