@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 13:34:54 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:14:12 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	main(int ac , char **av, char **env)
 			free(input);
 			continue;
 		}
-	
 		t_token *tokens = convert_to_node(input);
 		t_token *filter_lst= expand_token(tokens , env_list, &var.exit_stat);
 		t_second_token *second_tokens = second_tokinization(filter_lst);
@@ -69,23 +68,15 @@ int	main(int ac , char **av, char **env)
 			free(tokens);
 			continue;
 		}
-		if (check_error(&tokens) == 1)
+		if (check_error(&second_tokens) == 1)
 		{
-			free_list(tokens);
+			free_list1(second_tokens);
 			continue;
 		}
-		t_token *toke = convert_to_token(filter_lst);
-		if (check_error1(&toke) == 1)
-		{
-			free_list(tokens);
-			continue;
-		}
+		// t_token *toke = convert_to_token(filter_lst);// u need to work with this linked list in herdoc
 		t_cmd *cmd = list_cmd(second_tokens);
-		print_cmd(cmd);
 		exc(cmd, &env_list);
 		filter_lst = NULL;
-		
-	
 	}
 	return (0);
 }

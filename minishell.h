@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 14:47:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:08:32 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,8 @@ typedef struct s_list
 
 //-----------------------    check_syntaxe    -----------------------------
 
-// bool						check_pipe(t_token **list);
 bool						check_unclosed_quotes(t_token *tokens);
-// bool						check_redirections(t_token **list);
-bool						check_error(t_token **list);
+bool						check_error(t_second_token **list);
 bool	check_error1(t_token **list);
 //-------------------------      cmd        -------------------------------
 
@@ -164,13 +162,8 @@ int							check(t_token *token);
 t_token						*creattoken(char *data);
 void						add_back(t_token **head, t_token *node);
 void						printlinkedlist(t_token *head);
-void						print_node_cmd(t_cmd *node_cmd);
 void						free_list(t_token *head);
-t_token						*creattoken(char *data);
-void						add_back(t_token **head, t_token *node);
-void						printlinkedlist(t_token *head);
 void						print_node_cmd(t_cmd *node_cmd);
-void						free_list(t_token *head);
 
 //--------------------------   tokenization  ------------------------------
 
@@ -184,7 +177,7 @@ int check_quotes(char *str);
 char	*ft_itoa(int n);
 // void ll();
 // void ll();
-char *expand_line(char *input , t_env_list *env_list);
+// char *expand_line(char *input , t_env_list *env_list);
 //--------------------------    pars.c   ----------------------------------
 t_token	*parse_operator_token(const char *data, int *i);
 t_token	*parse_quoted_token(const char *data, int *i);
