@@ -6,36 +6,13 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 16:14:12 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/13 11:25:30 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-#include <readline/readline.h>
-
-
-
-bool	is_space(char c)
-{
-	return (c == ' ' || c == '\t');
-}
-
-bool	is_line_empty(const char *line)
-{
-	int	i;
-
-	if (!line)
-		return (true);
-	i = 0;
-	while (line[i])
-	{
-		if (!is_space(line[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
+// #include <readline/readline.h>
 
 int	main(int ac , char **av, char **env)
 {

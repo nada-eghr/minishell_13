@@ -24,9 +24,22 @@ SRCS    =  ./pars/expand.c  \
 			./pars/check_error.c \
 			./pars/expand_utils.c \
 			./pars/quotes.c \
-			./exec/small_libft.c ./exec/exc.c ./exec/helper.c ./exec/free_fun.c ./exec/linkd_list.c ./exec/all_env.c \
-			./exec/bilt_in/pwd.c ./exec/bilt_in/env.c ./exec/bilt_in/cd.c ./exec/bilt_in/unset.c ./exec/bilt_in/export.c ./exec/bilt_in/exit.c ./exec/bilt_in/echo.c \
-			./exec/ignor_fun_now.c ./exec/rediraction.c ./exec/path.c
+			./exec/small_libft.c \
+			./exec/exc.c \
+			./exec/helper.c \
+			./exec/free_fun.c \
+			./exec/linkd_list.c \
+			./exec/all_env.c \
+			./exec/bilt_in/pwd.c \
+			./exec/bilt_in/env.c \
+			./exec/bilt_in/cd.c \
+			./exec/bilt_in/unset.c \
+			./exec/bilt_in/export.c \
+			./exec/bilt_in/exit.c \
+			./exec/bilt_in/echo.c \
+			./exec/ignor_fun_now.c \
+			./exec/rediraction.c \
+			./exec/path.c
 OBJS    = $(SRCS:.c=.o)
 
 # Build target

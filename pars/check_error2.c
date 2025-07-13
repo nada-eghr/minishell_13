@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:44:47 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 16:52:14 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:39:02 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static bool	check_pipe(t_token **list)
 	return (false);
 }
 
-bool	check_error1(t_token **list)
+bool	check_error2(t_token **list)
 {
 	t_token	*save;
 
