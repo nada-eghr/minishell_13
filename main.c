@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/13 11:25:30 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:49:04 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int ac , char **av, char **env)
 		// t_token *toke = convert_to_token(filter_lst);// u need to work with this linked list in herdoc
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list);
+		print_cmd(cmd);
 		filter_lst = NULL;
 	}
 	return (0);

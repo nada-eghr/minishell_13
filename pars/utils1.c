@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/13 11:24:45 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:46:07 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (NULL);
 }
+
 bool	is_line_empty(const char *line)
 {
 	int	i;

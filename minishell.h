@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/13 11:25:07 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:41:05 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ typedef struct variabel
 	int						num_cmd;
 	int						pip_fd[2];
 }							t_var;
-typedef struct p_var
-{
-	bool					s_quote;
-	bool					d_quote;
-	char					*input_line;
+// typedef struct p_var
+// {
+// 	bool					s_quote;
+// 	bool					d_quote;
+// 	char					*input_line;
 
-}							t_p_var;
+// }							t_p_var;
 
 typedef enum e_token_type
 {
@@ -92,6 +92,7 @@ typedef struct s_redirection
 typedef struct s_cmd
 {
 	char					**arg;
+	int herdoc;
 	t_redirection			*redi;
 	struct s_cmd *next; // next command in pipeline
 }							t_cmd;
