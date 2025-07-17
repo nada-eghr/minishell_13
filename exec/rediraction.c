@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/04 10:29:27 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:49:28 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,15 @@ void	rederection(t_cmd *list, t_var *var)
 	int fd_in;
 	int	fd_out;
 
-	// if (list->herdoc == 1)
-	// 	//open_herdok()
 	rid = list->redi;
 	fd_in = NO_REDERCT;
 	fd_out = NO_REDERCT;
+
+	if (list->herdoc == 1)
+	{
+		open_herdok(list->redi, var);
+		fd_in = var->last_in;
+	}
 	while (rid)
 	{
 		in_file(rid->type, rid->file, &fd_in);

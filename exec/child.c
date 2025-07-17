@@ -1,0 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
+/*   Updated: 2025/07/15 18:22:53 by slamhaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	arr_id_pross(t_var *var, t_cmd *list)
+{
+	int		counter;
+
+	counter = 0;
+	while (list)
+	{
+		counter++;
+		list = list->next;
+	}
+	if (counter == 0)
+		return;
+	var->num_cmd = counter;
+	var->arr_id = malloc(sizeof(pid_t) * counter);
+}
+
+void	wait_child(t_var *var)
+{
+	int i;
+	int	stat;
+
+	i = 0;
+	while (i < var->num_cmd)
+	{
+		waitpid(var->arr_id[i], &stat, 0);
+		if (i == var->num_cmd - 1)
+			var->exit_stat =  WEXITSTATUS(stat);
+		i++;
+	}
+}
+
+void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
+{
+	char	**env_arr;
+	char	*path;
+	
+	if (bilt_in(&var->exit_stat,list, &*list_env) == 0)
+	{
+		path = it_correct_comnd(&var->exit_stat,list->arg[0], *list_env);
+		if (!path)
+			exit (var->exit_stat);
+		env_arr = return_list_to_arg(*list_env);
+		if (var->rd_fd != NO_PIP) // if we have PIPE
+		{
+			if (var->rd_fd != FIRST_CMD)
+			{
+				dup2(var->rd_fd, 0);
+				close(var->rd_fd);
+			}
+			if (var->i < var->num_cmd - 1)
+			{
+				dup2(var->pip_fd[1], 1);
+				close(var->pip_fd[1]);
+			}
+		}
+	}
+	if (var->last_in >= 0)
+	{
+		dup2(var->last_in, 0);
+		close(var->last_in);
+	}
+	if (var->last_out >= 0)
+	{
+		dup2(var->last_out, 1);
+		close(var->last_out);
+	}
+	if (execve(path, list->arg, env_arr) < 0)
+	{
+		free_tab(env_arr);
+		exit (127);
+	}
+}
+
