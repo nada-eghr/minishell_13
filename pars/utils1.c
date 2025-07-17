@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/04 10:23:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:46:07 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,20 @@ char	*ft_strchr(char *s, int c)
 		i++;
 	}
 	return (NULL);
+}
+
+bool	is_line_empty(const char *line)
+{
+	int	i;
+
+	if (!line)
+		return (true);
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_space(line[i]))
+			return (false);
+		i++;
+	}
+	return (true);
 }

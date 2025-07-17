@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_error.c                                      :+:      :+:    :+:   */
+/*   check_error2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:44:47 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 16:46:59 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:39:02 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static bool	check_redirections(t_second_token **list)
+static bool	check_redirections(t_token **list)
 {
-	t_second_token	*current;
+	t_token	*current;
 
 	current = *list;
 	if (!current)
@@ -37,9 +37,9 @@ static bool	check_redirections(t_second_token **list)
 	return (false);
 }
 
-static bool	check_pipe(t_second_token **list)
+static bool	check_pipe(t_token **list)
 {
-	t_second_token	*current;
+	t_token	*current;
 
 	current = *list;
 	if (current && current->type == T_PIPE)
@@ -62,9 +62,9 @@ static bool	check_pipe(t_second_token **list)
 	return (false);
 }
 
-bool	check_error(t_second_token **list)
+bool	check_error2(t_token **list)
 {
-	t_second_token	*save;
+	t_token	*save;
 
 	save = *list;
 	if (check_pipe(list))

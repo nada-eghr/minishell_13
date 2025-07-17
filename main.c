@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/17 18:53:50 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/17 19:13:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ bool	is_space(char c)
 	return (c == ' ' || c == '\t');
 }
 
-bool	is_line_empty(const char *line)
-{
-	int	i;
+// bool	is_line_empty(const char *line)
+// {
+// 	int	i;
 
-	if (!line)
-		return (true);
-	i = 0;
-	while (line[i])
-	{
-		if (!is_space(line[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
+// 	if (!line)
+// 		return (true);
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		if (!is_space(line[i]))
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
 void	handler(int s)
 {
 	if (s == SIGINT)
@@ -59,7 +59,6 @@ int	main(int ac , char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	char *input;
 	t_env_list	*env_list;
 	t_var		var;
 
@@ -68,11 +67,16 @@ int	main(int ac , char **av, char **env)
 	env_list = get_list_env(env);
 	while (1)
 	{
-		input = readline("minishell$ ");
+		char *input = readline("minishell$ ");
 		if (!input)
 		{
 			write(1, "exit\n", 5);
-			break;
+			exit (0);
+		}
+		if (is_line_empty(input))
+		{
+			free(input);
+			continue;
 		}
 		add_history(input);
 		if(check_quotes(input))
@@ -81,31 +85,20 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		t_token *tokens = convert_to_node(input);
-		t_token *filter_lst= expand_token(tokens , env_list);
+		t_token *filter_lst= expand_token(tokens , env_list, &var.exit_stat);
+		t_second_token *second_tokens = second_tokinization(filter_lst);
 		if (!tokens)
 		{
 			free(tokens);
 			continue;
 		}
-		if (check_error(&tokens) == 1)
+		if (check_error(&second_tokens) == 1)
 		{
-			free_list(tokens);
+			free_list1(second_tokens);
 			continue;
 		}
-		char *s=  filter_token(filter_lst);
-		if (!s || is_line_empty(s))
-		{
-			free(s);
-			free_list(tokens);
-			continue;
-		}
-		t_token *toke = convert_to_token(s);
-		if (check_error1(&toke) == 1)
-		{
-			free_list(tokens);
-			continue;
-		}
-		t_cmd *cmd = list_cmd(toke);
+		// t_token *toke = convert_to_token(filter_lst);// u need to work with this linked list in herdoc
+		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
 		//print_cmd(cmd);
 		filter_lst = NULL;

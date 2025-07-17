@@ -6,20 +6,18 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:38:46 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 19:31:16 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:47:59 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*handle_special_dollar(char *s, int *i)
+char	*handle_special_dollar(char *s, int *i, int *exit_stat)
 {
 	char	*status;
 	char	*temp;
-	int		exit_sta;
 
-	exit_sta = 0;
-	status = ft_itoa(exit_sta);
+	status = ft_itoa(*exit_stat);
 	temp = ft_strjoin(s, status);
 	free(s);
 	free(status);
@@ -82,7 +80,7 @@ char	*append_char_to_str(char *s, char c)
 	return (temp);
 }
 
-char	*get_value1(char *str, t_env_list *env)
+char	*get_value1(char *str, t_env_list *env, int *exit_stat)
 {
 	int		i;
 	char	*s;
@@ -92,7 +90,7 @@ char	*get_value1(char *str, t_env_list *env)
 	while (str[i])
 	{
 		if (str[i] == '$' && (str[i + 1] == '$' || str[i + 1] == '?'))
-			s = handle_special_dollar( s, &i);
+			s = handle_special_dollar(s, &i, exit_stat);
 		else if (str[i] == '$' && (isalpha(str[i + 1]) || str[i + 1]))
 		{
 			i++;

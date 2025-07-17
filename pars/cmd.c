@@ -6,13 +6,33 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/10 13:23:58 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:49:15 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_cmd	*creat_cmd(t_token *list)
+int	check(t_second_token *token)
+{
+	t_second_token	*tmp;
+	t_second_token	*prev;
+	int		herdoc;
+
+	herdoc = 0;
+	tmp = token;
+	prev = tmp;
+	tmp = tmp->next;
+	while (tmp && tmp->type != T_PIPE)
+	{
+		if ((prev->type == T_HEREDOC) && (tmp->type == T_WORD
+				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE))
+			herdoc = 1;
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	return (herdoc);
+}
+t_cmd	*creat_cmd(t_second_token *list)
 {
 	t_cmd	*cmd;
 
@@ -21,6 +41,7 @@ t_cmd	*creat_cmd(t_token *list)
 		return (NULL);
 	cmd->arg = get_args(list);
 	cmd->redi = get_files(list);
+	cmd->herdoc = check(list);
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -41,12 +62,12 @@ void	add_back_cmd(t_cmd **head, t_cmd *node)
 	node->next = NULL;
 }
 
-t_cmd	*list_cmd(t_token *tokens)
+t_cmd	*list_cmd(t_second_token *tokens)
 {
-	t_cmd	*node_cmd;
-	t_cmd	*head;
-	t_token	*curr;
-	t_token	*prev;
+	t_cmd			*node_cmd;
+	t_cmd			*head;
+	t_second_token	*curr;
+	t_second_token	*prev;
 
 	if (!tokens)
 		return (NULL);
@@ -70,20 +91,20 @@ t_cmd	*list_cmd(t_token *tokens)
 	return (head);
 }
 
-void	print_node_cmd(t_cmd *node_cmd)
-{
-	int		i;
-	t_cmd	*tmp;
+// void	print_node_cmd(t_cmd *node_cmd)
+// {
+// 	int		i;
+// 	t_cmd	*tmp;
 
-	i = 0;
-	tmp = node_cmd;
-	while (tmp->arg[i])
-	{
-		printf("%s\n", tmp->arg[i]);
-		i++;
-	}
-	printf("NULL");
-}
+// 	i = 0;
+// 	tmp = node_cmd;
+// 	while (tmp->arg[i])
+// 	{
+// 		printf("%s\n", tmp->arg[i]);
+// 		i++;
+// 	}
+// 	printf("NULL");
+// }
 
 void	print_cmd(t_cmd *node_cmd)
 {
