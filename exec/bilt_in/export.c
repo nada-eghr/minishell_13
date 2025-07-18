@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:22:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:31:45 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@ int	is_alpha(char c)
 		return (1);
 	return (0);
 }
+// int	chake_args(char *str, int *pls)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if ((str[i] <= '9' && str[i] >= '0') || (is_alpha(str[i]) == 0))
+// 		if (str[i] != '_')
+// 		return (1);
+// 	printf ("this first arg -> [%s]\n", str);
+	
+// 	while (str[i])
+// 	{
+// 		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
+// 			if (str[i] != '=' && str[i] != '_' && str[i] != '+')
+// 				return (1);
+// 		if (str[i] == '+' && is_alpha(str[i - 1]) && str[i + 1] == '=')
+// 			*pls = 1;
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
 int	chake_args(char *str, int *pls)
 {
 	int	i;
@@ -26,7 +48,9 @@ int	chake_args(char *str, int *pls)
 	if ((str[i] <= '9' && str[i] >= '0') || (is_alpha(str[i]) == 0))
 		if (str[i] != '_')
 		return (1);
-	while (str[i])
+	printf ("this first arg -> [%s]\n", str);
+	
+	while (str[i] != '=')
 	{
 		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
 			if (str[i] != '=' && str[i] != '_' && str[i] != '+')
@@ -35,9 +59,17 @@ int	chake_args(char *str, int *pls)
 			*pls = 1;
 		i++;
 	}
+	if (str[i] == '=')
+	{
+		while (str[i])
+		{
+			if (str[i] == '!')
+				return (1);
+			i++;
+		}
+	}
 	return (0);
 }
-
 void	print_all_var(t_env_list *env)
 {
 	while (env)
