@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 14:44:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:43:24 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ char *expand_herdoc(char *input, t_env_list *env)
 	expand_double_quote(&tok,env, &exits);
 	return (tok.token);
 }
-
+void	hand(int a)
+{
+	a = 0;
+	exit(0);
+}
 void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 {
 	int	herdoc[2];
@@ -71,6 +75,7 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 	id = fork();
 	if (id == 0)
 	{
+		signal(SIGINT, hand);
 		close (herdoc[0]);
 		while (i < j - 1)
 		{
@@ -88,8 +93,6 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 			input = readline("> ");
 			if (!input || serch_del(input, arr_hrd[j - 1]) == 1)
 			{
-				//printf ("coco\n");
-				//write(1, "halo\n", 5);
 				break;
 			}
 			//input = expand_herdoc(input, env);
@@ -105,7 +108,7 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 	waitpid(id,&st, 0);
 }
 
-void	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
+int	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
 {
 	int her;
 	char **arr;
@@ -129,4 +132,5 @@ void	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
 	}
 	arr[her] = NULL;
 	creat_child_herdoc(arr, var, env);
+	return (var->last_in);
 }

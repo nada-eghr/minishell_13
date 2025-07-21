@@ -6,31 +6,31 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/20 13:43:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:35:02 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <sys/stat.h>
 
-int		bilt_in(int	*exit_sta, t_cmd *list, t_env_list **list_env)
+int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 {
 	if (!list->arg[0])
 		return (1);
 	if (str_cmp(list->arg[0], "pwd")|| str_cmp(list->arg[0], "PWD"))
-		return(my_pwd(exit_sta), 1);
+		return(my_pwd(&var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "env"))
-		return (my_env(*list_env, exit_sta), 1);
+		return (my_env(*list_env, &var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "cd"))
-		return(my_cd(*list_env,list->arg, exit_sta), 1);
+		return(my_cd(*list_env,list->arg, &var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "unset"))
-		return(my_unset(list_env,list->arg), 1);
-	else if (str_cmp(list->arg[0], "export"))
-		return(my_export(*list_env,list->arg), 1);
-	else if (str_cmp(list->arg[0], "exit"))
-		my_exit(list->arg, exit_sta);
-	else if (str_cmp(list->arg[0], "echo"))
-		return (my_echo(list->arg, exit_sta), 1);
+		return(my_unset(list_env,list->arg, &var->exit_stat), 1);
+	// else if (str_cmp(list->arg[0], "export"))
+	// 	return(my_export(*list_env,list->arg, &var.exit_sta), 1);
+	// else if (str_cmp(list->arg[0], "exit"))
+	// 	my_exit(list->arg, exit_sta);
+	// else if (str_cmp(list->arg[0], "echo"))
+	// 	return (my_echo(list->arg, exit_sta), 1);
 	return(0);	
 }
 
@@ -38,8 +38,11 @@ void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 {
 	char *sv_er;
 	
-	if (var->rd_fd == NO_PIP && bilt_in(&var->exit_stat,list, &*list_env))
+	if (var->rd_fd == NO_PIP && bilt_in(var,list, &*list_env))
+	{
+		printf ("coco ->> %d\n", var->exit_stat);// bhawel asaleh aker exit stat
 		return ;
+	}
 	if (var->i < var->num_cmd - 1)
 		pipe(var->pip_fd);
 	var->arr_id[var->i] = fork();
@@ -79,7 +82,10 @@ void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	{
 		rederection(list, var, *list_env);
 		if (var->last_in == ERORR || var->last_out == ERORR)
+		{
+			free(var->arr_id);
 			return;
+		}
 		excut_comand(var, list, &*list_env);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/20 13:08:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:25:04 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	wait_child(t_var *var)
 			var->exit_stat =  WEXITSTATUS(stat);
 		i++;
 	}
+	free(var->arr_id);
 }
 
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
@@ -72,7 +73,7 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 		dup2(var->last_out, 1);
 		close(var->last_out);
 	}
-	b = bilt_in(&var->exit_stat,list, &*list_env);
+	b = bilt_in(var,list, &*list_env);
 	if (b == 1)
 	{
 		write(1, "cc\n", 3);
