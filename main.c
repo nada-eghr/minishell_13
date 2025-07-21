@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/17 19:13:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:26:32 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ void signal_handel(int *exit)
 	*exit = 0;
 }
 
+void	defult_env(t_env_list **env)
+{
+	char *pwd;
+	int i;
+	
+	i = 0;
+	pwd = getcwd(NULL, 0);
+	*env = ft_lstnew_env(ft_strjoin("PATH=", pwd));
+	free(pwd);
+	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("SHLVL=", "1")));
+	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
+	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
+}
 int	main(int ac , char **av, char **env)
 {
 	(void)ac;
@@ -62,9 +75,12 @@ int	main(int ac , char **av, char **env)
 	t_env_list	*env_list;
 	t_var		var;
 
+	if (!env[0])
+		defult_env(&env_list);
+	else
+		env_list = get_list_env(env);
 	rl_catch_signals = 0;
 	signal_handel(&var.exit_stat);
-	env_list = get_list_env(env);
 	while (1)
 	{
 		char *input = readline("minishell$ ");

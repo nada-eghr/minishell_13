@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/17 19:03:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/20 13:40:01 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,11 +270,11 @@ void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(int *exit_st, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 ///////////////////rediraction/////////////////
-void	rederection(t_cmd *list, t_var *var);
+void	rederection(t_cmd *list, t_var *var, t_env_list *env);
 void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
 void	arr_id_pross(t_var *var, t_cmd *list);
-void	open_herdok(t_redirection *red, t_var *var);
+void	open_herdok(t_redirection *red, t_var *var, t_env_list *list_env);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/17 18:46:16 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:44:14 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	serch_del(char *str, char *del)
 	int	j;
 	int len;
 
-	//printf ("this is str -> [%s], und del -> [%s] \n", str, del);
 	if (!str)
 		return (0);
 	i = 0;
@@ -39,8 +38,21 @@ int	serch_del(char *str, char *del)
 	return (0);
 }
 
+char *expand_herdoc(char *input, t_env_list *env)
+{
+	t_token	tok;
+	int exits;
+	
+	exits = 0;
+	tok.token = input;
+	tok.type = 0;
+	tok.next = NULL;
+	tok.is_quoted = NULL;
+	expand_double_quote(&tok,env, &exits);
+	return (tok.token);
+}
 
-void	creat_child_herdoc(char **arr_hrd, t_var *var)
+void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 {
 	int	herdoc[2];
 	int id;
@@ -49,6 +61,7 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var)
 	int j;
 	char *input;
 
+	(void)env;
 	i = 0;
 	j = 0;
 	input = NULL;
@@ -63,7 +76,6 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var)
 		{
 			while (serch_del(input, arr_hrd[i]) == 0)
 			{
-				// printf("this input -> %s and this arr -> %s\n", input, arr_hrd[i]);
 				input = readline("> ");
 				if (!input)
 					break;
@@ -73,10 +85,14 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var)
 		}
 		while (1)
 		{
-				 //printf("this input -> %s and this arr -> %s\n", input, arr_hrd[i]);
 			input = readline("> ");
 			if (!input || serch_del(input, arr_hrd[j - 1]) == 1)
+			{
+				//printf ("coco\n");
+				//write(1, "halo\n", 5);
 				break;
+			}
+			//input = expand_herdoc(input, env);
 			write(herdoc[1], input, ft_strlen(input));
 			write(herdoc[1], "\n", 1);
 			free(input);
@@ -88,7 +104,8 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var)
 	var->last_in = herdoc[0];
 	waitpid(id,&st, 0);
 }
-void	open_herdok(t_redirection *red, t_var *var)
+
+void	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
 {
 	int her;
 	char **arr;
@@ -111,5 +128,5 @@ void	open_herdok(t_redirection *red, t_var *var)
 		r = r->next;
 	}
 	arr[her] = NULL;
-	creat_child_herdoc(arr, var);
+	creat_child_herdoc(arr, var, env);
 }

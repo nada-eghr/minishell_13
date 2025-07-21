@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/17 18:49:28 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/20 13:37:18 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	out_file(int type, char *file , int *last_out)
 		}
 }
 
-void	rederection(t_cmd *list, t_var *var)
+void	rederection(t_cmd *list, t_var *var, t_env_list *list_env)
 {
 	t_redirection *rid;
 	int fd_in;
@@ -69,7 +69,7 @@ void	rederection(t_cmd *list, t_var *var)
 
 	if (list->herdoc == 1)
 	{
-		open_herdok(list->redi, var);
+		open_herdok(list->redi, var, list_env);
 		fd_in = var->last_in;
 	}
 	while (rid)

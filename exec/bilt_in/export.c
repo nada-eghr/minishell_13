@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/18 13:31:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:36:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ int	chake_args(char *str, int *pls)
 
 	i = 0;
 	if ((str[i] <= '9' && str[i] >= '0') || (is_alpha(str[i]) == 0))
+	{
 		if (str[i] != '_')
 		return (1);
-	printf ("this first arg -> [%s]\n", str);
-	
-	while (str[i] != '=')
+		
+	}
+	while (str[i] && str[i] != '=')
 	{
 		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
 			if (str[i] != '=' && str[i] != '_' && str[i] != '+')
@@ -59,7 +60,7 @@ int	chake_args(char *str, int *pls)
 			*pls = 1;
 		i++;
 	}
-	if (str[i] == '=')
+	if (str[i] && str[i] == '=')
 	{
 		while (str[i])
 		{
