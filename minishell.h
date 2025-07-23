@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/21 18:23:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:08:50 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct variabel
 	int						*arr_id;
 	int						num_cmd;
 	int						pip_fd[2];
+	int						its_bilt;
 }							t_var;
 // typedef struct p_var
 // {
@@ -264,7 +265,7 @@ void		my_pwd(int *exit_sta);
 void	my_env(t_env_list *env, int	*exit_st);
 void	my_cd(t_env_list *env, char **arg, int *exit_st);
 void	my_unset(t_env_list **en, char **args, int *exit_st);
-int		my_export(t_env_list *env, char **args);
+void	my_export(t_env_list *env, char **args, int *exit_st);
 void		my_exit(char **args, int *exit_st);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);

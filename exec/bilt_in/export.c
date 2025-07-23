@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/20 11:36:35 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:15:38 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	chake_args(char *str, int *pls)
 	{
 		if (str[i] != '_')
 		return (1);
-		
 	}
 	while (str[i] && str[i] != '=')
 	{
@@ -58,6 +57,8 @@ int	chake_args(char *str, int *pls)
 				return (1);
 		if (str[i] == '+' && is_alpha(str[i - 1]) && str[i + 1] == '=')
 			*pls = 1;
+		if (str[i] == '+' && str[i+1] != '=')
+			return (1);
 		i++;
 	}
 	if (str[i] && str[i] == '=')
@@ -71,7 +72,7 @@ int	chake_args(char *str, int *pls)
 	}
 	return (0);
 }
-void	print_all_var(t_env_list *env)
+void	print_all_var(t_env_list *env, int *exit_st)
 {
 	while (env)
 	{
@@ -84,6 +85,7 @@ void	print_all_var(t_env_list *env)
 		}
 		env = env->next;
 	}
+	*exit_st = 0;
 }
 int	orredy_hav_valu(t_env_list *env, char *arg)
 {
@@ -145,24 +147,22 @@ void	have_pls_(t_env_list *env, char *arg)
 	}
 	
 }
-int	my_export(t_env_list *env, char **args)
+void	my_export(t_env_list *env, char **args, int *exit_st)
 {
 	int	i;
-	int ret;
 	int pls;
 	
 	i = 1;  
-	ret = 0;
 	pls = 0;
 	if (args[i] == NULL)
-		print_all_var(env);
+		print_all_var(env, exit_st);
 	while (args[i])
 	{
 		if (chake_args(args[i], &pls))
 		{
 			write_err("Minishell: export: `", args[i], "': not a valid identifier\n");
-			ret = 1;
-			return ret;
+			*exit_st = 1;
+			return ;
 		}
 		if (pls == 1)
 			have_pls_(env, args[i]);
@@ -170,5 +170,5 @@ int	my_export(t_env_list *env, char **args)
 				ft_lstadd_back(&env,ft_lstnew_env(args[i]));
 		i++;
 	}
-	return (0);
+	*exit_st = 0;
 }

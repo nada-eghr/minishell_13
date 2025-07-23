@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 18:25:04 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:52:22 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void	wait_child(t_var *var)
 	while (i < var->num_cmd)
 	{
 		waitpid(var->arr_id[i], &stat, 0);
-		if (i == var->num_cmd - 1)
-			var->exit_stat =  WEXITSTATUS(stat);
+		if (i == var->num_cmd - 1 && var->its_bilt == 0)
+		{
+				var->exit_stat =  WEXITSTATUS(stat);
+		}
 		i++;
 	}
 	free(var->arr_id);
@@ -75,10 +77,7 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	}
 	b = bilt_in(var,list, &*list_env);
 	if (b == 1)
-	{
-		write(1, "cc\n", 3);
 		exit (0);
-	}
 	path = it_correct_comnd(&var->exit_stat,list->arg[0], *list_env);
 	if (!path)
 		exit (var->exit_stat);

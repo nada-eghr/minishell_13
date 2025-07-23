@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 18:35:02 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:08:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 		return(my_cd(*list_env,list->arg, &var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "unset"))
 		return(my_unset(list_env,list->arg, &var->exit_stat), 1);
-	// else if (str_cmp(list->arg[0], "export"))
-	// 	return(my_export(*list_env,list->arg, &var.exit_sta), 1);
+	else if (str_cmp(list->arg[0], "export"))
+		return(my_export(*list_env,list->arg, &var->exit_stat), 1);
 	// else if (str_cmp(list->arg[0], "exit"))
 	// 	my_exit(list->arg, exit_sta);
 	// else if (str_cmp(list->arg[0], "echo"))
@@ -40,7 +40,7 @@ void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 	
 	if (var->rd_fd == NO_PIP && bilt_in(var,list, &*list_env))
 	{
-		printf ("coco ->> %d\n", var->exit_stat);// bhawel asaleh aker exit stat
+		var->its_bilt = 1;
 		return ;
 	}
 	if (var->i < var->num_cmd - 1)
@@ -76,6 +76,7 @@ void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
 {
 	var->i = 0;
+	var->its_bilt = 0;
 	var->rd_fd = NO_PIP;
 	arr_id_pross(var, list);
 	if (!list->next)
