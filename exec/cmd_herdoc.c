@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 17:43:24 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:33:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,7 @@ char *expand_herdoc(char *input, t_env_list *env)
 	expand_double_quote(&tok,env, &exits);
 	return (tok.token);
 }
-void	hand(int a)
-{
-	a = 0;
-	exit(0);
-}
+
 void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 {
 	int	herdoc[2];
@@ -75,7 +71,7 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 	id = fork();
 	if (id == 0)
 	{
-		signal(SIGINT, hand);
+		signal(SIGINT, SIG_DFL);
 		close (herdoc[0]);
 		while (i < j - 1)
 		{
@@ -113,6 +109,7 @@ int	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
 	int her;
 	char **arr;
 	t_redirection *r;
+
 
 	r = red;
 	her = 0;

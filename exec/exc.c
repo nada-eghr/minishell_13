@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 13:08:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:55:15 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,32 @@ int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 		return(my_unset(list_env,list->arg, &var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "export"))
 		return(my_export(*list_env,list->arg, &var->exit_stat), 1);
-	// else if (str_cmp(list->arg[0], "exit"))
-	// 	my_exit(list->arg, exit_sta);
-	// else if (str_cmp(list->arg[0], "echo"))
-	// 	return (my_echo(list->arg, exit_sta), 1);
+	else if (str_cmp(list->arg[0], "exit"))
+		my_exit(list->arg, &var->exit_stat,var->rd_fd);
+	else if (str_cmp(list->arg[0], "echo"))
+		return (my_echo(list->arg, &var->exit_stat), 1);
 	return(0);	
 }
 
-void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
+int	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 {
 	char *sv_er;
 	
 	if (var->rd_fd == NO_PIP && bilt_in(var,list, &*list_env))
 	{
 		var->its_bilt = 1;
-		return ;
+		return 0;
 	}
 	if (var->i < var->num_cmd - 1)
-		pipe(var->pip_fd);
+	{
+		if (pipe(var->pip_fd))
+		{
+			write_err("Minishell: ", "pipe error: ", NULL);
+			perror(NULL);
+			return 1;
+		}
+		
+	}
 	var->arr_id[var->i] = fork();
 	if (var->arr_id[var->i] < 0)
 	{
@@ -52,7 +60,8 @@ void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 		sv_er = strerror(errno);
 		write_err("Minishell: ", "fork", ": ");
 		perror(NULL);
-		return ;
+		var->exit_stat = 1;
+		return 1;
 	}
 	if (var->arr_id[var->i] == 0)
 		my_child(var, list, list_env);
@@ -71,6 +80,7 @@ void	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 		}
 
 	}
+	return (0);
 }
 
 void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
@@ -79,6 +89,7 @@ void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	var->its_bilt = 0;
 	var->rd_fd = NO_PIP;
 	arr_id_pross(var, list);
+	
 	if (!list->next)
 	{
 		rederection(list, var, *list_env);
@@ -97,7 +108,8 @@ void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
 			rederection(list, var, *list_env);
 			if (var->last_in == ERORR || var->last_out == ERORR)
 				return ;
-			excut_comand(var, list, &*list_env);
+			if (excut_comand(var, list, &*list_env))
+				return ;
 			list = list->next;
 			var->i++;
 		}

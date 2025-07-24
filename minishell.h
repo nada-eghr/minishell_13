@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/23 13:08:50 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:08:54 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ void	my_env(t_env_list *env, int	*exit_st);
 void	my_cd(t_env_list *env, char **arg, int *exit_st);
 void	my_unset(t_env_list **en, char **args, int *exit_st);
 void	my_export(t_env_list *env, char **args, int *exit_st);
-void		my_exit(char **args, int *exit_st);
+void		my_exit(char **args, int *exit_st, int pip);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha

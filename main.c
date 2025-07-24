@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/23 12:50:25 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:31:30 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	main(int ac , char **av, char **env)
 	(void)av;
 	t_env_list	*env_list;
 	t_var		var;
-
+	char	*input;
+	
 	if (!env[0])
 		defult_env(&env_list);
 	else
@@ -83,7 +84,7 @@ int	main(int ac , char **av, char **env)
 	signal_handel(&var.exit_stat);
 	while (1)
 	{
-		char *input = readline("minishell$ ");
+		input = readline("minishell$ ");
 		if (!input)
 		{
 			write(1, "exit\n", 5);

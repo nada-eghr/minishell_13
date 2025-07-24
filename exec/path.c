@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 12:55:11 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:35:49 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 		else
 		{
 			write_err("Minishell: ", cmd, ": ");
-			return (*exit_st = 126, perror(NULL), NULL);
+			return (*exit_st = 127, perror(NULL), NULL);
 		}
-		write_err("Minishell: ", cmd, ": No such file or directory\n");
-		return(*exit_st = 127, NULL);
+		// write_err("Minishell: ", cmd, ": No such file or directory\n");
+		// return(*exit_st = 127, NULL);
 	}
 	else
 	return (serch_path_env(cmd, env, exit_st));
