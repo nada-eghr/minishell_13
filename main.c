@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/23 18:31:30 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:25:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ bool	is_space(char c)
 // }
 void	handler(int s)
 {
-	if (s == SIGINT)
-	{
-		sigg = 1;
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay(); 
-		return;
-	}
+	(void)s;
+		
+	//printf("coco\n");
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay(); 
 }
 void signal_handel(int *exit)
 {

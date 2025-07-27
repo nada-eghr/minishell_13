@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/23 17:08:54 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:51:26 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #define  NO_PIP -4
 #define SUCCESS 1
 #define CMD_NOTFIND 127
-
+ extern int sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -44,6 +44,7 @@ typedef struct variabel
 	int						num_cmd;
 	int						pip_fd[2];
 	int						its_bilt;
+	int						her_s;
 }							t_var;
 // typedef struct p_var
 // {
@@ -276,7 +277,8 @@ void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
 void	arr_id_pross(t_var *var, t_cmd *list);
 int	open_herdok(t_redirection *red, t_var *var, t_env_list *list_env);
-
+void signal_handel(int *exit);
+char *get_next_line(int fd);
 
 
 

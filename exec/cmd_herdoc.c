@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 18:33:56 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:50:38 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	serch_del(char *str, char *del)
 			i++;
 			j++;
 		}
-		if (!del[j] && !str[i])
+		if (!del[j] && str[i] == '\n' && !str[i + 1])
 			return (1);
 		i = i - j;
 		i++;
@@ -52,13 +52,21 @@ char *expand_herdoc(char *input, t_env_list *env)
 	return (tok.token);
 }
 
+void	herdk(int s)
+{
+	(void)s;
+	sigg = 4;
+	write(1, "\n", 1);
+	exit (1);
+}
+
+
 void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 {
 	int	herdoc[2];
-	int id;
-	int st;
 	int	i;
 	int j;
+	int inform;
 	char *input;
 
 	(void)env;
@@ -68,16 +76,18 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 	pipe(herdoc);
 	while (arr_hrd[j])
 		j++;
-	id = fork();
+	signal(SIGINT, SIG_IGN);
+	int id = fork();
 	if (id == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, herdk);
 		close (herdoc[0]);
 		while (i < j - 1)
 		{
 			while (serch_del(input, arr_hrd[i]) == 0)
 			{
-				input = readline("> ");
+				write(1, "> ", 2);
+				input = get_next_line(0);
 				if (!input)
 					break;
 				free(input);
@@ -86,30 +96,37 @@ void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
 		}
 		while (1)
 		{
-			input = readline("> ");
+			write(1, "> ", 2);
+			input = get_next_line(0);
 			if (!input || serch_del(input, arr_hrd[j - 1]) == 1)
 			{
-				break;
+				if (!input)
+					write(1, "\n", 1);
+				if (input)
+					free(input);
+				exit(0);
 			}
 			//input = expand_herdoc(input, env);
 			write(herdoc[1], input, ft_strlen(input));
-			write(herdoc[1], "\n", 1);
 			free(input);
 		}
-		close(herdoc[1]);
-		exit(0);
 	}
+	waitpid(id, &inform, 0);
 	close (herdoc[1]);
+	int exit_code = WEXITSTATUS(inform);
+	if (exit_code)
+	{
+		close (herdoc[0]);
+		var->her_s = 1;
+	}
 	var->last_in = herdoc[0];
-	waitpid(id,&st, 0);
+	signal_handel(&var->exit_stat);
 }
-
 int	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
 {
 	int her;
 	char **arr;
 	t_redirection *r;
-
 
 	r = red;
 	her = 0;
