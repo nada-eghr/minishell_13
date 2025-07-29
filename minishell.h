@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 19:12:37 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:13:22 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_list
 
 //-----------------------    check_syntaxe    -----------------------------
 
-bool						check_error(t_second_token **list);
+// bool						check_error(t_second_token **list);
 bool						check_error2(t_token **list);
 //-------------------------      cmd        -------------------------------
 
@@ -213,7 +213,7 @@ t_token						*handle_quotes(const char *data, int *i);
 
 //---------------------------  quotes  ---------------------------------
 
-int							check_quotes(char *str);
+// int							check_quotes(char *str);
 
 //------------------------ second_tokinization -----------------------------
 
@@ -241,7 +241,8 @@ char						*ft_strchr(char *s, int c);
 bool						is_line_empty(const char *line);
 
 //–----------------------------------------------------------------------------
-
+int	check_quotes(char *str, t_var *var);
+bool	check_error(t_second_token **list , t_var *var);
 // void ll();
 // char *expand_line(char *input , t_env_list *env_list);
 
