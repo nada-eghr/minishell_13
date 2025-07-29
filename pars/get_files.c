@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:48:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 19:05:03 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:28:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,22 @@ t_redirection	*get_files(t_second_token *token)
 	head = NULL;
 	prev = token;
 	tmp = token->next;
+
+	//exit (0);
 	while (tmp && tmp->type != T_PIPE)
 	{
 		if (is_redirection_token(prev->type) && is_file_token(tmp->type))
 		{
 			h = 0;
-			if (prev->type == T_HEREDOC && (tmp->type == T_S_QUOTE
-					|| tmp->type == T_D_QUOTE))
-				h = 1;
+			// exit (0);
+			if (prev->type == T_HEREDOC )
+			{
+				if (tmp->type == T_S_QUOTE || tmp->type == T_D_QUOTE)
+				{
+					
+					h = 1;
+				}
+			}
 			ft_add_back_redi(&head, add_new(prev->type, tmp->token, h));
 		}
 		prev = tmp;

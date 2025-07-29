@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/07 15:03:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:35:49 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	str_chr(char *cmd, char c)
 	}
 	return (0);
 }
-char *serch_path_env(char *cmd, t_env_list *env)
+char *serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 {
 	char	*path;
 	char	**split_path;
@@ -51,6 +51,7 @@ char *serch_path_env(char *cmd, t_env_list *env)
 	if (split_path)
 		free_tab(split_path);
 	write_err("Minishell: ", cmd, ": command not found\n");
+	*exit_st = 127;
 	return (NULL);
 }
 
@@ -70,11 +71,11 @@ char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 		else
 		{
 			write_err("Minishell: ", cmd, ": ");
-			return (*exit_st = 126, perror(NULL), NULL);
+			return (*exit_st = 127, perror(NULL), NULL);
 		}
-		write_err("Minishell: ", cmd, ": No such file or directory\n");
-		return(*exit_st = 127, NULL);
+		// write_err("Minishell: ", cmd, ": No such file or directory\n");
+		// return(*exit_st = 127, NULL);
 	}
 	else
-	return (serch_path_env(cmd, env));
+	return (serch_path_env(cmd, env, exit_st));
 }

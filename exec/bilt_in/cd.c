@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/07 14:33:08 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:06:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ void	my_cd(t_env_list *env, char **arg, int *exit_st)
 		write(2, arg[1], ft_strlen(arg[1]));
 		write(2, ": ", 2);
 		perror(NULL);
+		*exit_st = 1;
 	}
+	*exit_st = 0;
 }

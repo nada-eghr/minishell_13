@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/15 15:41:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:12:37 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 # define MINISHELL_H
 
 # include <ctype.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <readline/readline.h>
-# include <stdbool.h>
 # include <stdio.h>
+#include <errno.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
+#include <signal.h>
 # include <unistd.h>
-# define ERORR -1
-# define NO_REDERCT -2
-# define FIRST_CMD -3
-# define NO_PIP -4
-# define SUCCESS 1
-# define CMD_NOTFIND 127
-
+#include <limits.h>
+#include <fcntl.h>
+#define	ERORR	-1
+#define NO_REDERCT -2 
+#define  FIRST_CMD -3
+#define  NO_PIP -4
+#define SUCCESS 1
+#define CMD_NOTFIND 127
+ extern int sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -41,6 +44,8 @@ typedef struct variabel
 	int						*arr_id;
 	int						num_cmd;
 	int						pip_fd[2];
+	int						its_bilt;
+	int						her_s;
 }							t_var;
 // typedef struct p_var
 // {
@@ -70,6 +75,7 @@ typedef struct s_token
 	char					*token;
 	t_token_type			type;
 	struct s_token			*next;
+	
 	bool					is_quoted;
 }							t_token;
 
@@ -258,17 +264,24 @@ void						write_err(char *s, char *arg, char *last);
 char						*it_correct_comnd(int *exit_st, char *cmd,
 								t_env_list *env);
 //////----BILT_IN----///////
-void						my_pwd(int *exit_sta);
-void						my_env(t_env_list *env, int *exit_st);
-void						my_cd(t_env_list *env, char **arg, int *exit_st);
-int							my_unset(t_env_list **en, char **args);
-int							my_export(t_env_list *env, char **args);
-void						my_exit(char **args, int *exit_st);
-void						my_echo(char **args, int *exit_st);
-void						exc(t_cmd *list, t_env_list **list_env);
-int	bilt_in(int *exit_st, t_cmd *list, t_env_list **list_env);
-		// hydeha ger katesty beha
+void		my_pwd(int *exit_sta);
+void	my_env(t_env_list *env, int	*exit_st);
+void	my_cd(t_env_list *env, char **arg, int *exit_st);
+void	my_unset(t_env_list **en, char **args, int *exit_st);
+void	my_export(t_env_list *env, char **args, int *exit_st);
+void		my_exit(char **args, int *exit_st, int pip);
+void	my_echo(char **args, int *exit_st);
+void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
+int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 ///////////////////rediraction/////////////////
-void						rederection(t_cmd *list, t_var *var);
+void	rederection(t_cmd *list, t_var *var, t_env_list *env);
+void	wait_child(t_var *var);
+void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
+void	arr_id_pross(t_var *var, t_cmd *list);
+int	open_herdok(t_redirection *red, t_var *var, t_env_list *list_env);
+void signal_handel(int *exit);
+char *get_next_line(int fd);
+
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:15:41 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 17:08:58 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:19:49 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	delete_specific_node(t_token **head, t_token *nodeToDelete)
 	if (*head == nodeToDelete)
 	{
 		*head = (*head)->next;
-		free(nodeToDelete);
+		// free(nodeToDelete);
 		return ;
 	}
 	current = *head;
@@ -34,7 +34,7 @@ void	delete_specific_node(t_token **head, t_token *nodeToDelete)
 	if (current != NULL)
 	{
 		current->next = nodeToDelete->next;
-		free(nodeToDelete);
+		// free(nodeToDelete);
 	}
 }
 

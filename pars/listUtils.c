@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 17:14:42 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:09:26 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_token	*creattoken(char *data)
 	newnode->token = ft_strdup(data);
 	newnode->type = get_token_type(data);
 	newnode->next = NULL;
+	//exit (0);
 	return (newnode);
 }
 

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 11:05:01 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:36:18 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_token_type	get_token_type(char *token)
 	return (T_WORD);
 }
 
+
 t_token	*convert_to_node(char *data)
 {
 	int		i;
@@ -54,6 +55,7 @@ t_token	*convert_to_node(char *data)
 	{
 		if (ft_space(data[i]))
 			token = handle_spaces(data, &i);
+		
 		else if (data[i] == '>' || data[i] == '<' || data[i] == '|')
 			token = parse_operator_token(data, &i);
 		else if (data[i] == '\'' || data[i] == '"')

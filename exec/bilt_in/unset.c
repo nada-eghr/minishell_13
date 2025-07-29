@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:22:50 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:32:26 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,20 @@ void	delet_list(t_env_list **en, char *var)
 	}
 }
 
-int	my_unset(t_env_list **en, char **args)
+void	my_unset(t_env_list **en, char **args, int *exit_st)
 {
 	int			i;
-	int			ret;
-	
+
 	i = 1;
-	ret = 0;
 	while (args[i])
 	{
 		if (chake_arg(args[i]))
 		{
-			// write_erorr("Minishell: unset: ", args[i]);
-			// write_erorr(" not a valid identifier\n", NULL);
-			ret = 1;
+			write_err("Minishell: unset: `", args[i], "': not a valid identifier\n");
+			*exit_st = 1;
 		}
 		delet_list(en, args[i]);
 		i++;
 	}
-	return (ret);
+	*exit_st = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rediraction.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/04 10:29:27 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:37:11 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,43 +31,43 @@ void	in_file(int type, char *file, int *last_in)
                                                                                                                                      
 void	out_file(int type, char *file , int *last_out)
 {
-		 if (type == T_RED_OUT)
+	 if (type == T_RED_OUT)
+	{
+		if (last_out >= 0)
+			close(*last_out);
+		*last_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0664);
+		if (*last_out < 0)
 		{
-			if (last_out >= 0)
-				close(*last_out);
-			*last_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0664);
-			if (*last_out < 0)
-			{
-				write_err("Minishell: ", file, ": ");
-				perror(NULL);
-				*last_out = ERORR;
-			}
+			write_err("Minishell: ", file, ": ");
+			perror(NULL);
+			*last_out = ERORR;
 		}
-		else if (type == T_APPEND)
+	}
+	else if (type == T_APPEND)
+	{
+		if (last_out >= 0)
+			close(*last_out);
+		*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY,0664);
+		if (*last_out < 0)
 		{
-			if (last_out >= 0)
-				close(*last_out);
-			*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY,0664);
-			if (*last_out < 0)
-			{
-				write_err("Minishell: ", file,": ");
-				perror(NULL);
-				*last_out = ERORR;
-			}
+			write_err("Minishell: ", file,": ");
+			perror(NULL);
+			*last_out = ERORR;
 		}
+	}
 }
 
-void	rederection(t_cmd *list, t_var *var)
+void	rederection(t_cmd *list, t_var *var, t_env_list *list_env)
 {
-	t_redirection *rid;
-	int fd_in;
-	int	fd_out;
+	t_redirection	*rid;
+	int				fd_in;
+	int				fd_out;
 
-	// if (list->herdoc == 1)
-	// 	//open_herdok()
 	rid = list->redi;
 	fd_in = NO_REDERCT;
 	fd_out = NO_REDERCT;
+	if (list->herdoc == 1)
+		fd_in = open_herdok(list->redi, var, list_env);
 	while (rid)
 	{
 		in_file(rid->type, rid->file, &fd_in);
@@ -78,6 +78,10 @@ void	rederection(t_cmd *list, t_var *var)
 			break;
 		rid = rid->next;
 	}
+	if (fd_in == ERORR)
+		var->exit_stat = 1;
+	if (fd_out == ERORR)	
+		var->exit_stat = 1;
 	var->last_in = fd_in;
 	var->last_out = fd_out;
 }
