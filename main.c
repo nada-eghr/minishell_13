@@ -249,11 +249,11 @@ int	main(int ac , char **av, char **env)
 			continue;
 		}
 		// t_token *toke = convert_to_token(filter_lst);// u need to work with this linked list in herdoc
-		t_second_token *t = second_tokens;
-		while(t){
-			printf("token = %s\n",t->token);
-			t = t->next;
-		}
+		// t_second_token *t = second_tokens;
+		// while(t){
+		// 	printf("token = %s\n",t->token);
+		// 	t = t->next;
+		// }
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
 		// print_cmd(cmd);
