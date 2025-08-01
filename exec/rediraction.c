@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/26 10:37:11 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:06:14 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,10 @@ void	rederection(t_cmd *list, t_var *var, t_env_list *list_env)
 	int				fd_in;
 	int				fd_out;
 
+	(void)list_env;
 	rid = list->redi;
-	fd_in = NO_REDERCT;
+	fd_in = var->last_in;
 	fd_out = NO_REDERCT;
-	if (list->herdoc == 1)
-		fd_in = open_herdok(list->redi, var, list_env);
 	while (rid)
 	{
 		in_file(rid->type, rid->file, &fd_in);

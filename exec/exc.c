@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/26 10:30:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/01 10:26:50 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,14 @@ int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 
 int	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 {
-	char *sv_er;
-	
 	if (var->rd_fd == NO_PIP && bilt_in(var,list, &*list_env))
-	{
-		var->its_bilt = 1;
-		return 0;
-	}
+		return (var->its_bilt = 1, 0);
 	if (var->i < var->num_cmd - 1)
 	{
 		if (pipe(var->pip_fd))
 		{
 			write_err("Minishell: ", "pipe error: ", NULL);
 			perror(NULL);
-			//wait(0);
 			return (var->exit_stat = 1, 1);
 		}
 	}
@@ -57,7 +51,6 @@ int	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 	if (var->arr_id[var->i] < 0)
 	{
 		wait_child(var);
-		sv_er = strerror(errno);
 		write_err("Minishell: ", "fork", ": ");
 		perror(NULL);
 		var->exit_stat = 1;
@@ -82,37 +75,50 @@ int	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 	return (0);
 }
 
-void	 exc(t_cmd *list, t_env_list **list_env, t_var *var)
+void	more_comnd(t_cmd *list, t_env_list **list_env, t_var *var, int *arr_f)
 {
-	var->i = 0;
-	var->its_bilt = 0;
-	var->rd_fd = NO_PIP;
-	var->her_s = 0;
-	sigg = 0;
-	arr_id_pross(var, list);
-	if (!list->next)
+	int	j;
+
+	j = 0;
+	var->rd_fd = FIRST_CMD;
+	while (list)
 	{
+		var->last_in = NO_REDERCT;
+		if (list->herdoc)
+			var->last_in = arr_f[j++];
 		rederection(list, var, *list_env);
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
-		{		
+			return ;
+		if (excut_comand(var, list, &*list_env))
+			return ;
+		list = list->next;
+		var->i++;
+	}
+}
+
+void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
+{
+	int	*arr_fd_h;
+
+	var->i = 0;
+	var->her_s = 0;
+	var->its_bilt = 0;
+	var->rd_fd = NO_PIP;
+	arr_id_pross(var, list);
+	arr_fd_h = open_all_heredoc(list, var, *list_env);
+	if (!list->next)
+	{
+		if (arr_fd_h)
+			var->last_in = arr_fd_h[0];
+		rederection(list, var, *list_env);
+		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
+		{	
 			free(var->arr_id);
-			return;
+			return ;
 		}
 		excut_comand(var, list, &*list_env);
 	}
 	else
-	{
-		var->rd_fd = FIRST_CMD;
-		while (list)
-		{
-			rederection(list, var, *list_env);
-			if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
-				return ;
-			if (excut_comand(var, list, &*list_env))
-				return ;
-			list = list->next;
-			var->i++;
-		}
-	}
+		more_comnd(list, list_env, var, arr_fd_h);
 	wait_child(var);
 }

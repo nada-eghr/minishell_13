@@ -176,13 +176,6 @@ void	handler(int s)
 		return;
 	}
 }
-void signal_handel(int *exit)
-{
-
-	signal(SIGQUIT, SIG_IGN);
-	signal (SIGINT, handler);
-	*exit = 0;
-}
 
 void	defult_env(t_env_list **env)
 {
@@ -205,14 +198,21 @@ int	main(int ac , char **av, char **env)
 	t_var		var;
 	char	*input;
 	
+	sigg = NO_SIG_NAL;
 	if (!env[0])
 		defult_env(&env_list);
 	else
 		env_list = get_list_env(env);
 	rl_catch_signals = 0;
-	signal_handel(&var.exit_stat);
+	signal(SIGQUIT, SIG_IGN);
+	signal (SIGINT, handler);
 	while (1)
 	{
+		if (sigg !=  NO_SIG_NAL)
+		{
+			var.exit_stat = sigg;
+			sigg = NO_SIG_NAL;
+		}
 		input = readline("minishell$ ");
 		if (!input)
 		{
@@ -256,6 +256,7 @@ int	main(int ac , char **av, char **env)
 		// }
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
+	//	printf ("this is exit stat -> %d\n", var.exit_stat );
 		// print_cmd(cmd);
 		filter_lst = NULL;
 	}

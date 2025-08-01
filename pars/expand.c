@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/29 11:24:50 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:13:08 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
 	return;
 }
 
-
 	if (ft_strchr(tmp->token, '$'))
 	{
 		j = 0;
@@ -57,9 +56,6 @@ void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
 		free(new_data);
 	}
 }
-
-
-
 
 void	expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat)
 {

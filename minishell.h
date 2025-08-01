@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/29 11:13:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/01 12:45:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 #define  FIRST_CMD -3
 #define  NO_PIP -4
 #define SUCCESS 1
+#define OUT_SIG_INT 1
+#define HERDC_IN_LIST 2
+#define HERDC_IN_CMD 3
+#define  NO_SIG_NAL 4
 #define CMD_NOTFIND 127
  extern int sigg;
 //---------------------------------------------------------
@@ -46,6 +50,8 @@ typedef struct variabel
 	int						pip_fd[2];
 	int						its_bilt;
 	int						her_s;
+	int						num_her;
+	int						len_hrd;
 }							t_var;
 // typedef struct p_var
 // {
@@ -274,14 +280,21 @@ void		my_exit(char **args, int *exit_st, int pip);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
-///////////////////rediraction/////////////////
+//------------------- rediraction --------------------
 void	rederection(t_cmd *list, t_var *var, t_env_list *env);
 void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
 void	arr_id_pross(t_var *var, t_cmd *list);
-int	open_herdok(t_redirection *red, t_var *var, t_env_list *list_env);
-void signal_handel(int *exit);
-char *get_next_line(int fd);
+//------------------------ heredoc ------------------
+void	signal_handel(int *exit);
+char	*get_next_line(int fd);
+int		*open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env);
+int		serch(char *romind, int c);
+void	handler_sig_herd(int s);
+int		size_herd_in_comand(t_redirection *red);
+char	*expand_herdoc(char *input, t_env_list *env);
+void	wait_heredoc(int *herdoc, t_var *var, int id);
+int		serch_del(char *str, char *del);
 
 
 

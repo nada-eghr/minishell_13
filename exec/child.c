@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 18:46:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:12:53 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	arr_id_pross(t_var *var, t_cmd *list)
 {
-	int		counter;
+	int	counter;
 
 	counter = 0;
 	while (list)

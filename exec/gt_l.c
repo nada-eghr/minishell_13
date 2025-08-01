@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 11:46:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/26 14:41:03 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/07/30 12:01:57 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*str_j(char *rem, char *buff)
 		return(NULL);
 	i = 0;
 	j = 0;
-	new = malloc(1 *  (ft_strlen(rem) + ft_strlen(buff) + 1));
+	new = malloc(1 * (ft_strlen(rem) + ft_strlen(buff) + 1));
 	while (rem[i])
 		new[j++] = rem[i++];
 	i = 0;
@@ -61,7 +61,7 @@ char	*str_j(char *rem, char *buff)
 	free(rem);
 	return(new);
 }
-int	serch(char *romind)
+int	serch(char *romind, int c)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ int	serch(char *romind)
 	i = 0;
 	while (romind[i])
 	{
-		if (romind[i] == '\n')
+		if (romind[i] == c)
 			return(1);
 		i++;
 	}
@@ -122,7 +122,7 @@ char	*get_linee(int fd, char *buffer)
 	int	i;
 
 	i = 0;
-	while (serch(romind) == 0)
+	while (serch(romind, '\n') == 0)
 	{
 		red = read(fd, buffer, BUFFER_SIZE);
 		if (red < 0 || errno == EINTR)
