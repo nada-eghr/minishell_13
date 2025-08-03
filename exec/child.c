@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/29 19:12:53 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/03 13:32:25 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	wait_child(t_var *var)
 		}
 		i++;
 	}
-	//free(var->arr_id);
+	free(var->arr_id);
 }
 
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
@@ -51,8 +51,13 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	char	**env_arr;
 	char	*path;
 	int		b;
-	
+
 	signal(SIGQUIT, SIG_DFL);
+	if (var->last_in == ERORR)
+	{
+		close (var->pip_fd[1]);
+		exit (0);
+	}
 	if (var->rd_fd != NO_PIP)
 	{
 		if (var->rd_fd != FIRST_CMD)

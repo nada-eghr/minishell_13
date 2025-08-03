@@ -149,32 +149,15 @@ bool	is_space(char c)
 	return (c == ' ' || c == '\t');
 }
 
-// bool	is_line_empty(const char *line)
-// {
-// 	int	i;
-
-// 	if (!line)
-// 		return (true);
-// 	i = 0;
-// 	while (line[i])
-// 	{
-// 		if (!is_space(line[i]))
-// 			return (false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
 void	handler(int s)
 {
-	if (s == SIGINT)
-	{
-		sigg = 1;
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay(); 
-		return;
-	}
+	(void)s;
+	sigg = 1;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay(); 
+	return;
 }
 
 void	defult_env(t_env_list **env)
@@ -199,6 +182,7 @@ int	main(int ac , char **av, char **env)
 	char	*input;
 	
 	sigg = NO_SIG_NAL;
+	var.exit_stat = 0;
 	if (!env[0])
 		defult_env(&env_list);
 	else
@@ -208,12 +192,12 @@ int	main(int ac , char **av, char **env)
 	signal (SIGINT, handler);
 	while (1)
 	{
+		input = readline("minishell$ ");
 		if (sigg !=  NO_SIG_NAL)
 		{
 			var.exit_stat = sigg;
 			sigg = NO_SIG_NAL;
 		}
-		input = readline("minishell$ ");
 		if (!input)
 		{
 			write(1, "exit\n", 5);
@@ -233,11 +217,6 @@ int	main(int ac , char **av, char **env)
 		t_token *tokens = convert_to_node(input);
 		t_token *filter_lst= expand_token(tokens , env_list, &var.exit_stat);
 		t_second_token *second_tokens = second_tokinization(filter_lst);
-		//t_second_token *t = second_tokens;
-		// while(t){
-		// 	printf("token = %s\n",t->token);
-		// 	t = t->next;
-		// }
 		if (!tokens)
 		{
 			free(tokens);
@@ -248,17 +227,9 @@ int	main(int ac , char **av, char **env)
 			free_list1(second_tokens);
 			continue;
 		}
-		// t_token *toke = convert_to_token(filter_lst);// u need to work with this linked list in herdoc
-		// t_second_token *t = second_tokens;
-		// while(t){
-		// 	printf("token = %s\n",t->token);
-		// 	t = t->next;
-		// }
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
-	//	printf ("this is exit stat -> %d\n", var.exit_stat );
-		// print_cmd(cmd);
-		filter_lst = NULL;
+		//filter_lst = NULL;
 	}
 	return (0);
 }

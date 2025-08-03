@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/01 12:06:43 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:44:04 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	handler_sig_herd(int s)
 {
 	(void)s;
+	write(1, "\n", 1);
 	exit (1);
 }
 

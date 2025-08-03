@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:38:46 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/29 09:48:08 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/01 18:35:20 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*handle_special_dollar(char *s, int *i, int *exit_stat)
 	char	*status;
 	char	*temp;
 
+//	printf ("this what i resev -> %d\n", *exit_stat);
 	status = ft_itoa(*exit_stat);
 	temp = ft_strjoin(s, status);
 	free(s);

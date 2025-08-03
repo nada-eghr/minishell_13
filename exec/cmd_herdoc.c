@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/01 12:03:35 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/03 11:19:32 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	type_of_red_is_heredoc(t_redirection *red, t_var *var, t_env_list *env, int
 		}
 		if (var->len_hrd == 0)
 		{
-		//	printf ("red -> %d\n", red->her_doc);
 			if (serch(input, '$') && red->her_doc)
 				input = expand_herdoc(input, env);
 			write(fd, input, ft_strlen(input));
@@ -70,6 +69,9 @@ void	child_heredoc(int *herdoc, t_redirection *red, t_var *var, t_env_list *env)
 {
 	signal(SIGINT, handler_sig_herd);
 	close (herdoc[0]);
+	int	len;
+
+	len = var->len_hrd;
 	while (red)
 	{
 		if (red->type == T_HEREDOC)
@@ -77,6 +79,7 @@ void	child_heredoc(int *herdoc, t_redirection *red, t_var *var, t_env_list *env)
 		type_of_red_is_heredoc(red, var, env, herdoc[1]);
 		red = red->next;
 	}
+	var->len_hrd = len;
 	exit (0);
 }
 
@@ -93,7 +96,7 @@ void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
 		var->exit_stat = 1;
 		return ;
 	}
-	//signal(SIGINT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	id = fork();
 	if (id < 0)
 	{
@@ -105,8 +108,7 @@ void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
 	if (id == 0)
 		child_heredoc(herdoc, list->redi, var, env);
 	wait_heredoc(herdoc, var, id);
-	//signal_handel(NULL);
-	printf ("var -> %d\n", var->exit_stat);
+	signal (SIGINT, handler);;
 }
 
 int *open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env)
@@ -117,6 +119,7 @@ int *open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env)
 
 	i = 0;
 	len_cmd_her = len_heredoc(list, HERDC_IN_LIST);
+	var->len_hrd = len_cmd_her;
 	if (len_cmd_her == 0)
 		return (NULL);
 	arr_fd_herdoc = malloc(sizeof(int) * len_cmd_her);

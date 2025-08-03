@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 17:23:32 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/02 18:36:40 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_atoi(char *str, int *err)
 	int	sin;
 	unsigned long long	n;
 
-	
 	i = 0;
 	n = 0;
 	sin = 1;
@@ -51,11 +50,11 @@ int	ft_atoi(char *str, int *err)
 		if (((sin == 1 ) && n > LLONG_MAX ) || ((sin == -1) && n > (unsigned long long )LLONG_MAX + 1))
 		{
 				*err = -1;
-			return((int)n);
+			return((int)n * sin);
 		}
 		i++;
 	}
-	return ((int)n);
+	return ((int)n * sin);
 }
 
 int	another_alpha(char *s)
@@ -96,7 +95,7 @@ void	my_exit(char **args, int *exit_st, int pip)
 	}
 	if	(args[2] != NULL)
 	{
-		write_err("exit\nMinishell:exit: ", NULL,
+		write_err("exit\nMinishell: exit: ", NULL,
 		"too many arguments\n");
 		*exit_st = 1;
 		return ;

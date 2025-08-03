@@ -6,32 +6,35 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/29 11:06:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/03 15:38:19 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	in_file(int type, char *file, int *last_in)
+void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
 {
-	if (type == T_RED_IN)
+	if (red->type == T_RED_IN)
 	{
-		if (*last_in >= 0)
-			close(*last_in);
-		*last_in = open(file, O_RDONLY);
-		if (*last_in < 0)
+		if (var->last_in >= 0)
+			close(var->last_in);
+		var->last_in = open(red->file, O_RDONLY);
+		if (var->last_in < 0)
 		{
-			write_err("Minishell: ", file, ": ");
+			write_err("Minishell: ", red->file, ": ");
 			perror(NULL);
-			*last_in = ERORR;
+			var->last_in = ERORR;
 			return ;
 		}
 	}
+	if (red->type == T_HEREDOC)
+		var->last_in = arr_fd_h[index];
+	
 }
                                                                                                                                      
 void	out_file(int type, char *file , int *last_out)
 {
-	 if (type == T_RED_OUT)
+	if (type == T_RED_OUT)
 	{
 		if (last_out >= 0)
 			close(*last_out);
@@ -57,30 +60,23 @@ void	out_file(int type, char *file , int *last_out)
 	}
 }
 
-void	rederection(t_cmd *list, t_var *var, t_env_list *list_env)
+void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx)
 {
 	t_redirection	*rid;
-	int				fd_in;
-	int				fd_out;
 
-	(void)list_env;
 	rid = list->redi;
-	fd_in = var->last_in;
-	fd_out = NO_REDERCT;
 	while (rid)
 	{
-		in_file(rid->type, rid->file, &fd_in);
-		if (fd_in == ERORR)
+		in_file(rid, var, arr_f_h, indx);
+		if (var->last_in == ERORR)
 		 	break;
-		out_file(rid->type, rid->file, &fd_out);
-		if (fd_out == ERORR)
+		out_file(rid->type, rid->file, &var->last_out);
+		if (var->last_out == ERORR)
 			break;
 		rid = rid->next;
 	}
-	if (fd_in == ERORR)
+	if (var->last_in == ERORR)
 		var->exit_stat = 1;
-	if (fd_out == ERORR)	
+	if (var->last_out == ERORR)	
 		var->exit_stat = 1;
-	var->last_in = fd_in;
-	var->last_out = fd_out;
 }

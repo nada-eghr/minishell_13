@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/01 12:45:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/03 15:34:27 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct variabel
 	int						pip_fd[2];
 	int						its_bilt;
 	int						her_s;
-	int						num_her;
 	int						len_hrd;
 }							t_var;
 // typedef struct p_var
@@ -281,7 +280,7 @@ void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
 //------------------- rediraction --------------------
-void	rederection(t_cmd *list, t_var *var, t_env_list *env);
+void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx);
 void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
 void	arr_id_pross(t_var *var, t_cmd *list);
@@ -295,7 +294,8 @@ int		size_herd_in_comand(t_redirection *red);
 char	*expand_herdoc(char *input, t_env_list *env);
 void	wait_heredoc(int *herdoc, t_var *var, int id);
 int		serch_del(char *str, char *del);
-
+void	close_reder(t_var * var, int *arr_fd);
+void	handler(int s);
 
 
 #endif
