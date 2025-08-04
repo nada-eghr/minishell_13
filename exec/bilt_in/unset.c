@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 18:32:26 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:24:28 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	chake_arg(char *str)
 {
 	int	i;
 
-	i = 0;
-	if (str[i] <= '9' && str[i] >= '0')
+	if (str[0] <= '9' && str[0] >= '0')
 		return (1);
+	i = 1;
 	while (str[i])
 	{
-		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
+		if (is_alpha(str[i]) == 0 && !(str[i] >= '0' && str[i] <= '9'))
 			if (str[i] != '_')
 				return (1);
 		i++;
@@ -64,6 +64,7 @@ void	my_unset(t_env_list **en, char **args, int *exit_st)
 	int			i;
 
 	i = 1;
+	*exit_st = 0;
 	while (args[i])
 	{
 		if (chake_arg(args[i]))
@@ -71,8 +72,8 @@ void	my_unset(t_env_list **en, char **args, int *exit_st)
 			write_err("Minishell: unset: `", args[i], "': not a valid identifier\n");
 			*exit_st = 1;
 		}
+		//printf ("arg %s \n", args[1]);
 		delet_list(en, args[i]);
 		i++;
 	}
-	*exit_st = 0;
 }

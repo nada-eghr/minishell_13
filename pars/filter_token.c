@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:15:41 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 22:19:49 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:44:20 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,4 @@ t_token	*convert_to_token(t_token *token)
 	}
 	return (token);
 }
+

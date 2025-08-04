@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 18:46:17 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:53:25 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	arr_id_pross(t_var *var, t_cmd *list)
 {
-	int		counter;
+	int	counter;
 
 	counter = 0;
 	while (list)
@@ -34,25 +34,37 @@ void	wait_child(t_var *var)
 	int	stat;
 
 	i = 0;
+
 	while (i < var->num_cmd)
 	{
 		waitpid(var->arr_id[i], &stat, 0);
 		if (i == var->num_cmd - 1 && var->its_bilt == 0)
 		{
+			if (var->last_in != ERORR && var->last_out != ERORR)
 				var->exit_stat =  WEXITSTATUS(stat);
 		}
 		i++;
 	}
-	//free(var->arr_id);
+	free(var->arr_id);
 }
-
+void	h(int s)
+{
+	(void)s;
+	exit(0);
+}
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 {
 	char	**env_arr;
 	char	*path;
 	int		b;
-	
-	signal(SIGQUIT, SIG_DFL);
+
+	signal(SIGQUIT, h);
+	if (var->last_in == ERORR || var->last_out == ERORR)
+	{
+		close (var->pip_fd[1]);
+		var->exit_stat = 1;
+		exit (0);
+	}
 	if (var->rd_fd != NO_PIP)
 	{
 		if (var->rd_fd != FIRST_CMD)
@@ -78,7 +90,7 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	}
 	b = bilt_in(var,list, &*list_env);
 	if (b == 1)
-		exit (0);
+		exit (var->exit_stat);
 	path = it_correct_comnd(&var->exit_stat,list->arg[0], *list_env);
 	if (!path)
 		exit (var->exit_stat);

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:05:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 17:16:33 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/03 17:52:56 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_token	*parse_quoted_token(const char *data, int *i)
 	end = *i;
 	new = substr(data, start, end - start);
 	token = creattoken(new);
-	return (free(new), token);
+	free(new);
+	return (token);
 }
 
 t_token	*parse_word_token(const char *data, int *i)
@@ -67,7 +68,7 @@ t_token	*handle_spaces(const char *data, int *i)
 {
 	t_token	*token;
 
-	token = creattoken(ft_strdup(" "));
+	token = creattoken(" ");
 	while (ft_space(data[*i]))
 		(*i)++;
 	return (token);

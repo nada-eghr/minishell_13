@@ -6,145 +6,133 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/29 10:57:12 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:01:41 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	serch_del(char *str, char *del)
+int	len_heredoc(t_cmd *list, int n)
 {
-	int i;
-	int	j;
-	int len;
+	int	count;
+	t_redirection	*red;
 
-	if (!str)
-		return (0);
-	i = 0;
-	len =  ft_strlen(del);
-	while (i < len)
+	red = list->redi;
+	count = 0;
+	if (n == HERDC_IN_LIST)
 	{
-		j = 0;
-		while (str[i] && del[j] && str[i] == del[j])
+		while (list)
 		{
-			i++;
-			j++;
+			if (list->herdoc)
+				count++;
+			list = list->next;
 		}
-		if (!del[j] && str[i] == '\n' && !str[i + 1])
-			return (1);
-		i = i - j;
-		i++;
 	}
-	return (0);
+	if (n == HERDC_IN_CMD)
+	{
+		while (red)
+		{
+			if (red->type == T_HEREDOC)
+				count++;
+			red = red->next;
+		}
+	}
+	return (count);
 }
-
-char *expand_herdoc(char *input, t_env_list *env)
+void	type_of_red_is_heredoc(t_redirection *red, t_var *var, t_env_list *env, int fd)
 {
-	t_token	tok;
-	int exits;
-	
-	exits = 0;
-	tok.token = input;
-	tok.type = 0;
-	tok.next = NULL;
-	tok.is_quoted = NULL;
-	expand_double_quote(&tok,env, &exits);
-	return (tok.token);
-}
-
-void	herdk(int s)
-{
-	(void)s;
-	sigg = 4;
-	write(1, "\n", 1);
-	exit (1);
-}
-
-
-void	creat_child_herdoc(char **arr_hrd, t_var *var, t_env_list *env)
-{
-	int	herdoc[2];
-	int	i;
-	int j;
-	int inform;
 	char *input;
-
-	//(void)env;
-	i = 0;
-	j = 0;
-	input = NULL;
-	pipe(herdoc);
-	while (arr_hrd[j])
-		j++;
-	signal(SIGINT, SIG_IGN);
-	int id = fork();
-	if (id == 0)
+	
+	while (red->type == T_HEREDOC)
 	{
-		signal(SIGINT, herdk);
-		close (herdoc[0]);
-		while (i < j - 1)
+		write(1, "> ", 2);
+		input = get_next_line(0);
+		if (!input || serch_del(input, red->file))
 		{
-			while (serch_del(input, arr_hrd[i]) == 0)
-			{
-				write(1, "> ", 2);
-				input = get_next_line(0);
-				if (!input)
-					break;
+			if (input)
 				free(input);
-			}
-			i++;
+			if (!input)
+				var->exit_stat = 0;
+			break;
 		}
-		while (1)
+		if (var->len_hrd == 0)
 		{
-			write(1, "> ", 2);
-			input = get_next_line(0);
-			if (!input || serch_del(input, arr_hrd[j - 1]) == 1)
-			{
-				if (!input)
-					write(1, "\n", 1);
-				if (input)
-					free(input);
-				exit(0);
-			}
-			input = expand_herdoc(input, env);
-			write(herdoc[1], input, ft_strlen(input));
-			free(input);
+			if (serch(input, '$') && red->her_doc == 0)
+				input = expand_herdoc(input, env);
+			write(fd, input, ft_strlen(input));
 		}
+		free(input);
 	}
-	waitpid(id, &inform, 0);
-	close (herdoc[1]);
-	int exit_code = WEXITSTATUS(inform);
-	if (exit_code)
-	{
-		close (herdoc[0]);
-		var->her_s = 1;
-	}
-	var->last_in = herdoc[0];
-	signal_handel(&var->exit_stat);
 }
-int	open_herdok(t_redirection *red, t_var *var, t_env_list *env)
-{
-	int her;
-	char **arr;
-	t_redirection *r;
 
-	r = red;
-	her = 0;
+void	child_heredoc(int *herdoc, t_redirection *red, t_var *var, t_env_list *env)
+{
+	signal(SIGINT, handler_sig_herd);
+	close (herdoc[0]);
+	int	len;
+
+	len = var->len_hrd;
 	while (red)
 	{
 		if (red->type == T_HEREDOC)
-			her++;
-		red = red->next;	
+			var->len_hrd--;
+		type_of_red_is_heredoc(red, var, env, herdoc[1]);
+		red = red->next;
 	}
-	arr = malloc(sizeof(char *) * (her + 1));
-	her = 0;
-	while (r)
+	var->len_hrd = len;
+	exit (0);
+}
+
+void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
+{
+	int	id;
+	int	herdoc[2];
+
+	var->len_hrd = len_heredoc(list, HERDC_IN_CMD);
+	if (pipe(herdoc))
 	{
-		if (r->type == T_HEREDOC)
-			arr[her++] = r->file;
-		r = r->next;
+		write_err("Minishell: ", "pipe error: ", NULL);
+		perror(NULL);
+		var->exit_stat = 1;
+		return ;
 	}
-	arr[her] = NULL;
-	creat_child_herdoc(arr, var, env);
-	return (var->last_in);
+	signal(SIGINT, SIG_IGN);
+	id = fork();
+	if (id < 0)
+	{
+		write_err("Minishell: ", "fork: ", NULL);
+		perror(NULL);
+		var->exit_stat = 1;
+		return ;
+	}
+	if (id == 0)
+		child_heredoc(herdoc, list->redi, var, env);
+	wait_heredoc(herdoc, var, id);
+	signal (SIGINT, handler);
+}
+
+int *open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env)
+{
+	int	i;
+	int	*arr_fd_herdoc;
+	int	len_cmd_her;
+
+	i = 0;
+	len_cmd_her = len_heredoc(list, HERDC_IN_LIST);
+	var->len_hrd = len_cmd_her;
+	if (len_cmd_her == 0)
+		return (NULL);
+	arr_fd_herdoc = malloc(sizeof(int) * len_cmd_her);
+	if (!arr_fd_herdoc)
+		return (NULL);
+	while (list)
+	{
+		if (list->herdoc)
+		{
+			creat_child_herdoc(list, var, env);
+			arr_fd_herdoc[i++] = var->last_in;
+		}
+		list = list->next;
+	}
+	return (arr_fd_herdoc);
 }

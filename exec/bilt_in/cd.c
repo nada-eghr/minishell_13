@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/21 18:06:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:07:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	my_cd(t_env_list *env, char **arg, int *exit_st)
 		if (err != 0)
 		{
 			perror("cd");
-			
+			*exit_st = 1;
 		}
 		return;
+		
 	}
 	err = chdir(arg[1]);
 	update_od_nw_pwd(env, "PWD");

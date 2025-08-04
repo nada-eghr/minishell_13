@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:08:55 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/04 10:23:33 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:24:48 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (1);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
@@ -56,32 +58,18 @@ char	*ft_strncpy(char *dst, const char *src, size_t n)
 	return (dst);
 }
 
-char	*substr(const char *src, int start, int len)
+char	*ft_strchr(char *s, int c)
 {
-	char	*res;
-
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (NULL);
-	ft_strncpy(res, src + start, len);
-	res[len] = '\0';
-	return (res);
-}
-
-char	*ft_strdup(char *s)
-{
-	int		i;
-	char	*cp;
+	int	i;
+	int	len;
 
 	i = 0;
-	cp = malloc(sizeof(char) * (strlen(s) + 1));
-	if (!cp)
-		return (NULL);
-	while (s[i])
+	len = ft_strlen(s);
+	while (i <= len)
 	{
-		cp[i] = s[i];
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
 		i++;
 	}
-	cp[i] = '\0';
-	return (cp);
+	return (NULL);
 }

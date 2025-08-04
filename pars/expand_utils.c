@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:08:50 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 16:55:21 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:35:17 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,4 @@ void	ft_free_exp(char *s1, char *s2, char *s3)
 	free(s1);
 	free(s2);
 	free(s3);
-}
-
-int	is_end_of_key(char c)
-{
-	return (c == '$' || c == '\0' || c == ' ' || c == '\'' || c == '"');
 }

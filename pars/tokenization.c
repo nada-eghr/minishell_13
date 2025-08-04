@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 22:36:18 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:38:26 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ t_token_type	get_token_type(char *token)
 {
 	int	len;
 
-	len = ft_strlen(token);
-	if (!ft_strcmp(token, " "))
-		return (T_SPACE);
 	if (!token || !ft_strcmp(token, " "))
 		return (T_UNKNOWN);
+	len = ft_strlen(token);
+	if (ft_strcmp(token, " ") == 0)
+		return (T_SPACE);
 	if (ft_strcmp(token, "|") == 0)
 		return (T_PIPE);
 	if (ft_strcmp(token, "<") == 0)
@@ -35,12 +35,11 @@ t_token_type	get_token_type(char *token)
 		return (T_D_QUOTE);
 	if (token[0] == '\'' && token[len - 1] == '\'')
 		return (T_S_QUOTE);
-	if (token[0] == '$' && len > 1 && (isalpha(token[1]) || token[1] == '_'
+	if (token[0] == '$' && len > 1 && (ft_isalpha(token[1]) || token[1] == '_'
 			|| token[1] == '?'))
 		return (T_ENV);
 	return (T_WORD);
 }
-
 
 t_token	*convert_to_node(char *data)
 {
@@ -55,14 +54,13 @@ t_token	*convert_to_node(char *data)
 	{
 		if (ft_space(data[i]))
 			token = handle_spaces(data, &i);
-		
 		else if (data[i] == '>' || data[i] == '<' || data[i] == '|')
 			token = parse_operator_token(data, &i);
 		else if (data[i] == '\'' || data[i] == '"')
 		{
 			token = handle_quotes(data, &i);
 			if (!token)
-				return (NULL);
+				return ( free_list(head), NULL);
 		}
 		else
 			token = parse_word_token(data, &i);

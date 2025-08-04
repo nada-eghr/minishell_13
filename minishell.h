@@ -6,21 +6,21 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/29 11:13:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:05:42 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <ctype.h>
+// # include <ctype.h>
 # include <stdio.h>
 #include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include <string.h>
+// # include <string.h>
 #include <signal.h>
 # include <unistd.h>
 #include <limits.h>
@@ -30,6 +30,10 @@
 #define  FIRST_CMD -3
 #define  NO_PIP -4
 #define SUCCESS 1
+#define OUT_SIG_INT 130
+#define HERDC_IN_LIST 2
+#define HERDC_IN_CMD 3
+#define  NO_SIG_NAL 4
 #define CMD_NOTFIND 127
  extern int sigg;
 //---------------------------------------------------------
@@ -46,6 +50,7 @@ typedef struct variabel
 	int						pip_fd[2];
 	int						its_bilt;
 	int						her_s;
+	int						len_hrd;
 }							t_var;
 // typedef struct p_var
 // {
@@ -75,7 +80,7 @@ typedef struct s_token
 	char					*token;
 	t_token_type			type;
 	struct s_token			*next;
-	
+	struct s_token			*prev;
 	bool					is_quoted;
 }							t_token;
 
@@ -239,12 +244,24 @@ int							ft_space(char c);
 char						*ft_strjoin(char *s1, char *s2);
 char						*ft_strchr(char *s, int c);
 bool						is_line_empty(const char *line);
+int							ft_isalnum(int c);
+int							ft_isdigit(int c);
+int	ft_isalpha(int c);
 
 //–----------------------------------------------------------------------------
 int	check_quotes(char *str, t_var *var);
 bool	check_error(t_second_token **list , t_var *var);
-// void ll();
+void ll(void);
 // char *expand_line(char *input , t_env_list *env_list);
+char	*ft_strjoin_free(char *s1, char *s2);
+
+char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s);
+void	free_cmd_list(t_cmd *cmd);
+// void	free_second_tokens(t_second_token *head);
+void	free_second_tokens(t_second_token **head);
+
+void	delete_empty_node(t_second_token **head, t_second_token *nodeToDelete);
+void	remove_empty_node(t_second_token **second_tokens);
 
 ///////////////////////////////exc/////////////////////////////////////////
 
@@ -274,15 +291,23 @@ void		my_exit(char **args, int *exit_st, int pip);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
-///////////////////rediraction/////////////////
-void	rederection(t_cmd *list, t_var *var, t_env_list *env);
+//------------------- rediraction --------------------
+void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx);
 void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
 void	arr_id_pross(t_var *var, t_cmd *list);
-int	open_herdok(t_redirection *red, t_var *var, t_env_list *list_env);
-void signal_handel(int *exit);
-char *get_next_line(int fd);
-
+//------------------------ heredoc ------------------
+void	signal_handel(int *exit);
+char	*get_next_line(int fd);
+int		*open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env);
+int		serch(char *romind, int c);
+void	handler_sig_herd(int s);
+int		size_herd_in_comand(t_redirection *red);
+char	*expand_herdoc(char *input, t_env_list *env);
+void	wait_heredoc(int *herdoc, t_var *var, int id);
+int		serch_del(char *str, char *del);
+void	close_reder(t_var * var, int *arr_fd);
+void	handler(int s);
 
 
 #endif

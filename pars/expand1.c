@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:25:38 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/12 13:48:42 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:40:26 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	remove_quotes(t_token *tmp)
 	j = 0;
 	while (tmp->token[i])
 	{
-		if (tmp->token[i] != '\'' && tmp->token[i] != '"')
+		if (tmp->token[i] != '"')
 			str[j++] = tmp->token[i];
 		i++;
 	}

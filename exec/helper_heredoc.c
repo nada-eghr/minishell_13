@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/01 12:06:43 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:06:12 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	handler_sig_herd(int s)
 {
 	(void)s;
-	exit (1);
+	write(1, "\n", 1);
+	exit (130);
 }
 
 char	*expand_herdoc(char *input, t_env_list *env)
@@ -28,7 +29,7 @@ char	*expand_herdoc(char *input, t_env_list *env)
 	tok.type = 0;
 	tok.next = NULL;
 	tok.is_quoted = NULL;
-	//printf("what i get : -> %s", input);
+
 	expand_word_token(&tok,env, &exits);
 	input = NULL;
 	return (tok.token);
@@ -44,7 +45,7 @@ void	wait_heredoc(int *herdoc, t_var *var, int id)
 	{
 		close (herdoc[0]);
 		var->her_s = 1;
-		var->exit_stat = 1;
+		var->exit_stat = 130;
 	}
 	else
 		var->exit_stat = 0;

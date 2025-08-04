@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:33:36 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 16:30:13 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:38:11 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_second_token	*merge_word_tokens(t_token **tmp)
 	t_second_token	*new_node;
 	char			*tmp_join;
 	t_token_type	sav_tp;
-	
+
 	str = ft_strdup("");
 	while (*tmp && ((*tmp)->type == T_WORD || (*tmp)->type == T_ENV
 			|| (*tmp)->type == T_S_QUOTE || (*tmp)->type == T_D_QUOTE))
@@ -51,14 +51,11 @@ t_second_token	*second_tokinization(t_token *token)
 
 	head = NULL;
 	tmp = token;
-
 	while (tmp)
 	{
 		if (tmp->type == T_WORD || tmp->type == T_ENV || tmp->type == T_S_QUOTE
 			|| tmp->type == T_D_QUOTE)
-		{
 			new_node = merge_word_tokens(&tmp);
-		}
 		else if (tmp->type == T_PIPE || tmp->type == T_RED_IN
 			|| tmp->type == T_RED_OUT || tmp->type == T_APPEND
 			|| tmp->type == T_HEREDOC)

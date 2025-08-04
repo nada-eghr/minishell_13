@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 19:12:31 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/02 09:54:31 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check(t_second_token *token)
 {
 	t_second_token	*tmp;
 	t_second_token	*prev;
-	int		herdoc;
+	int				herdoc;
 
 	herdoc = 0;
 	tmp = token;
@@ -25,13 +25,15 @@ int	check(t_second_token *token)
 	while (tmp && tmp->type != T_PIPE)
 	{
 		if ((prev->type == T_HEREDOC) && (tmp->type == T_WORD
-				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE))
+				|| tmp->type == T_D_QUOTE || tmp->type == T_S_QUOTE
+				|| tmp->type == T_ENV))
 			herdoc = 1;
 		prev = tmp;
 		tmp = tmp->next;
 	}
 	return (herdoc);
 }
+
 t_cmd	*creat_cmd(t_second_token *list)
 {
 	t_cmd	*cmd;
@@ -90,22 +92,6 @@ t_cmd	*list_cmd(t_second_token *tokens)
 	}
 	return (head);
 }
-
-// void	print_node_cmd(t_cmd *node_cmd)
-// {
-// 	int		i;
-// 	t_cmd	*tmp;
-
-// 	i = 0;
-// 	tmp = node_cmd;
-// 	while (tmp->arg[i])
-// 	{
-// 		printf("%s\n", tmp->arg[i]);
-// 		i++;
-// 	}
-// 	printf("NULL");
-// }
-
 void	print_cmd(t_cmd *node_cmd)
 {
 	int	i;

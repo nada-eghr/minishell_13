@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/14 11:46:07 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:28:05 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,60 +25,26 @@ int	ft_space(char c)
 	return (c == ' ' || c == '\n' || c == '\t');
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_isalnum(int c)
 {
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (s1 && !s2)
-		return (ft_strdup(s1));
-	if (!s1 && s2)
-		return (ft_strdup(s2));
-	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	return (str);
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A'
+			&& c <= 'Z'))
+		return (1);
+	else
+		return (0);
+}
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }
 
-char	*ft_strchr(char *s, int c)
+int	ft_isalpha(int c)
 {
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(s);
-	while (i <= len)
-	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i++;
-	}
-	return (NULL);
-}
-
-bool	is_line_empty(const char *line)
-{
-	int	i;
-
-	if (!line)
-		return (true);
-	i = 0;
-	while (line[i])
-	{
-		if (!ft_space(line[i]))
-			return (false);
-		i++;
-	}
-	return (true);
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
 }

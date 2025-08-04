@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/23 17:23:32 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:38:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 void	write_err(char *s, char *arg, char *last)
 {
 	write(2, s, ft_strlen(s));
-
-	// if (up && arg)
-	// {
-	// 	write(2, &up, 1);
-	// 	write(2, arg, ft_strlen(arg));
-	// 	write(2, &up, 1);
-	// }
 	 if (arg)
 		write(2, arg, ft_strlen(arg));
 	if (last)
@@ -33,7 +26,6 @@ int	ft_atoi(char *str, int *err)
 	int	sin;
 	unsigned long long	n;
 
-	
 	i = 0;
 	n = 0;
 	sin = 1;
@@ -51,11 +43,11 @@ int	ft_atoi(char *str, int *err)
 		if (((sin == 1 ) && n > LLONG_MAX ) || ((sin == -1) && n > (unsigned long long )LLONG_MAX + 1))
 		{
 				*err = -1;
-			return((int)n);
+			return((int)n * sin);
 		}
 		i++;
 	}
-	return ((int)n);
+	return ((int)n * sin);
 }
 
 int	another_alpha(char *s)
@@ -90,13 +82,13 @@ void	my_exit(char **args, int *exit_st, int pip)
 		alon_exit(exit_st, pip);
 	if (another_alpha(args[1]))
 	{
-		write_err("exit\nMinishell: exit: ", args[1],
+		write_err("Minishell: exit: ", args[1],
 		 ": numeric argument required\n");
 		exit (255);
 	}
 	if	(args[2] != NULL)
 	{
-		write_err("exit\nMinishell:exit: ", NULL,
+		write_err("exit\nMinishell: exit: ", NULL,
 		"too many arguments\n");
 		*exit_st = 1;
 		return ;
