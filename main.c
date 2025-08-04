@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 13:13:44 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:56:11 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	defult_env(t_env_list **env)
 }
 int	main(int ac , char **av, char **env)
 {
-	t_env_list	*env_list;
-	t_var		var;
-	char*input;
-
 	(void)ac;
 	(void)av;
+	t_env_list	*env_list;
+	t_var		var;
+	char	*input;
+	
 	sigg = NO_SIG_NAL;
 	var.exit_stat = 0;
 	if (!env[0])
@@ -101,6 +101,8 @@ int	main(int ac , char **av, char **env)
 		}
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
+		//print_cmd(cmd);
+		filter_lst = NULL;
 	}
 	return (0);
 }
