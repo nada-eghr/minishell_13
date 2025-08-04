@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/04 12:53:25 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/08/04 10:55:07 by slamhaou         ###   ########.fr       */
+>>>>>>> 66167f95af7cec6f4594e5494386c9cc6e1f7834
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +62,11 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	char	*path;
 	int		b;
 
+<<<<<<< HEAD
 	signal(SIGQUIT, h);
+=======
+	signal(SIGQUIT, SIG_DFL);
+>>>>>>> 66167f95af7cec6f4594e5494386c9cc6e1f7834
 	if (var->last_in == ERORR || var->last_out == ERORR)
 	{
 		close (var->pip_fd[1]);
