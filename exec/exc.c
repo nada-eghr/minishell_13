@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/03 15:35:37 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:45:02 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 
 int	 excut_comand(t_var	*var, t_cmd *list, t_env_list **list_env)
 {
-
+	if (var->rd_fd == NO_PIP && bilt_in(var,list, &*list_env))
+	{
+		var->its_bilt = 1;
+		return 0;
+	}
 	if (var->i < var->num_cmd - 1)
 	{
 		if (pipe(var->pip_fd))
@@ -83,11 +87,14 @@ void	more_comnd(t_cmd *list, t_env_list **list_env, t_var *var, int *arr_f)
 	{
 		var->last_in = NO_REDERCT;
 		var->last_out = NO_REDERCT;	
-		 rederection(list, var, arr_f, j);
-		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
-			var->last_out = NO_REDERCT;	
-		if (excut_comand(var, list, &*list_env))
-			return;
+		rederection(list, var, arr_f, j);
+		if (var->her_s == 1)
+			return ;
+		if (var->last_in != ERORR && var->last_out != ERORR)
+		{
+			if (excut_comand(var, list, &*list_env))
+				return;
+		}
 		list = list->next;
 		var->i++;
 	}
@@ -111,9 +118,8 @@ void	close_reder(t_var * var, int *arr_fd)
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 {
 	int	*arr_fd_h;
-
-	if (str_cmp(list->arg[0], "exit"))
-		bilt_in(var, list, list_env);
+	if (!list)
+		return ;
 	var->i = 0;
 	var->her_s = 0;
 	var->its_bilt = 0;
@@ -138,3 +144,4 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	wait_child(var);
 	close_reder(var, arr_fd_h);
 }
+	

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/02 18:36:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:38:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 void	write_err(char *s, char *arg, char *last)
 {
 	write(2, s, ft_strlen(s));
-
-	// if (up && arg)
-	// {
-	// 	write(2, &up, 1);
-	// 	write(2, arg, ft_strlen(arg));
-	// 	write(2, &up, 1);
-	// }
 	 if (arg)
 		write(2, arg, ft_strlen(arg));
 	if (last)
@@ -89,7 +82,7 @@ void	my_exit(char **args, int *exit_st, int pip)
 		alon_exit(exit_st, pip);
 	if (another_alpha(args[1]))
 	{
-		write_err("exit\nMinishell: exit: ", args[1],
+		write_err("Minishell: exit: ", args[1],
 		 ": numeric argument required\n");
 		exit (255);
 	}

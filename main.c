@@ -175,12 +175,12 @@ void	defult_env(t_env_list **env)
 }
 int	main(int ac , char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	t_env_list	*env_list;
 	t_var		var;
-	char	*input;
-	
+	char*input;
+
+	(void)ac;
+	(void)av;
 	sigg = NO_SIG_NAL;
 	var.exit_stat = 0;
 	if (!env[0])
@@ -229,7 +229,6 @@ int	main(int ac , char **av, char **env)
 		}
 		t_cmd *cmd = list_cmd(second_tokens);
 		exc(cmd, &env_list, &var);
-		//filter_lst = NULL;
 	}
 	return (0);
 }
