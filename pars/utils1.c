@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:43:37 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 11:28:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:59:31 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_isalnum(int c)
 	else
 		return (0);
 }
+
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/05 11:58:07 by slamhaou         ###   ########.fr       */
+=======
+/*   Updated: 2025/08/05 17:55:46 by naessgui         ###   ########.fr       */
+>>>>>>> a4afe53eca330fc9c56320243c70eafd539af4d4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +50,7 @@ void	my_cd(t_env_list *env, char **arg, int *exit_st)
 		write_err("Minishell: cd: ", arg[1], ": ");
 		perror(NULL);
 		*exit_st = 1;
+		return ;
 	}
 	update_od_nw_pwd(env, "PWD");
 	*exit_st = 0;

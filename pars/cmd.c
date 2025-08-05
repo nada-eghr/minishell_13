@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/02 09:54:31 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:23:28 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_cmd	*list_cmd(t_second_token *tokens)
 	}
 	return (head);
 }
+
 void	print_cmd(t_cmd *node_cmd)
 {
 	int	i;

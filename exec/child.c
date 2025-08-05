@@ -6,7 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/05 11:32:33 by slamhaou         ###   ########.fr       */
+=======
+/*   Updated: 2025/08/05 17:03:35 by naessgui         ###   ########.fr       */
+>>>>>>> a4afe53eca330fc9c56320243c70eafd539af4d4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@ void	wait_child(t_var *var)
 	}
 	signal (SIGINT, handler);
 	free(var->arr_id);
+	signal (SIGINT, handler); 
 }
 
 void	h(int s)

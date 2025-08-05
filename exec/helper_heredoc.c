@@ -6,7 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/05 16:25:38 by slamhaou         ###   ########.fr       */
+=======
+/*   Updated: 2025/08/04 13:48:12 by naessgui         ###   ########.fr       */
+>>>>>>> a4afe53eca330fc9c56320243c70eafd539af4d4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +68,7 @@ int	serch_del(char *str, char *del)
 	while (i < len)
 	{
 		j = 0;
-		while (str[i] && del[j] && str[i] == del[j])
+		while (str[j] && del[i] && str[i] == del[j])
 		{
 			i++;
 			j++;
@@ -73,6 +77,7 @@ int	serch_del(char *str, char *del)
 			return (1);
 		i = i - j;
 		i++;
+		j++;
 	}
 	return (0);
 }
