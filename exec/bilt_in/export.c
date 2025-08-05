@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 15:36:18 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:06:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	orredy_hav_valu(t_env_list *env, char *arg)
 	j = sv_ind;
 	while (env)
 	{
-		if (ft_strcmp(arg, env->content.key))
+		if (str_cmp(arg, env->content.key))
 		{
 			free(env->content.value);
 			arg[j++] = '=';

@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 17:38:34 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:02:30 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include <ctype.h>
 # include <stdio.h>
 #include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 # include <stdbool.h>
 # include <stdlib.h>
-// # include <string.h>
+#include <sys/stat.h> 
 #include <signal.h>
 # include <unistd.h>
 #include <limits.h>
@@ -35,7 +34,10 @@
 #define HERDC_IN_CMD 3
 #define  NO_SIG_NAL 4
 #define CMD_NOTFIND 127
- extern int sigg;
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
+extern int sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -289,8 +291,6 @@ void						ft_lstadd_back(t_env_list **lst, t_env_list *n);
 int							ft_strlen(char *str);
 int							str_cmp(char *s1, char *s2);
 char						**ft_split(char *str, char sep);
-char						*str_join(char *s1, char *s2, char sep);
-char						*str_dup(char *s);
 void						free_tab(char **str);
 char						*my_get_env(char *str, t_env_list *env);
 char						**return_list_to_arg(t_env_list *list_env);
@@ -307,7 +307,8 @@ void	my_export(t_env_list *env, char **args, int *exit_st);
 void		my_exit(char **args, int *exit_st, int pip);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
-int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env); //hydeha ger katesty beha
+int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env);
+int		serch_equal(char *str);
 //------------------- rediraction --------------------
 void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx);
 void	wait_child(t_var *var);
@@ -325,6 +326,8 @@ void	wait_heredoc(int *herdoc, t_var *var, int id);
 int		serch_del(char *str, char *del);
 void	close_reder(t_var * var, int *arr_fd);
 void	handler(int s);
-
+int		pars_exec(t_var *var, t_cmd *list);
+void	close_reder(t_var *var, int *arr_fd);
+char	*ft_join_path(char *s1, char *s2, char sep);
 
 #endif

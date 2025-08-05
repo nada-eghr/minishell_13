@@ -1,12 +1,12 @@
 # Compiler and flags
 # Compiler and flags
 CC      = gcc
-CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include
-LDFLAGS = -L$(HOME)/readline-install/lib
-LIBS    = -lreadline
-# CFLAGS  = -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
-# LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
+# CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include
+# LDFLAGS = -L$(HOME)/readline-install/lib
 # LIBS    = -lreadline
+CFLAGS  = -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
+LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
+LIBS    = -lreadline
 
 # Source and object files
 NAME    = minishell
@@ -33,9 +33,9 @@ SRCS    =  ./pars/expand.c  \
 			./pars/empty_node.c\
 			./exec/gt_l.c \
 			./exec/small_libft.c ./exec/exc.c \
-			./exec/helper.c ./exec/free_fun.c ./exec/linkd_list.c ./exec/all_env.c \
+			./exec/helper.c  ./exec/all_env.c \
 			./exec/bilt_in/pwd.c ./exec/bilt_in/env.c ./exec/bilt_in/cd.c \
-			 ./exec/bilt_in/unset.c ./exec/bilt_in/export.c \
+			 ./exec/bilt_in/unset.c ./exec/bilt_in/export.c ./exec/helper2.c\
 			 ./exec/bilt_in/exit.c ./exec/bilt_in/echo.c ./exec/helper_heredoc.c\
 			./exec/ignor_fun_now.c ./exec/rediraction.c ./exec/path.c ./exec/cmd_herdoc.c ./exec/child.c
 OBJS    = $(SRCS:.c=.o)

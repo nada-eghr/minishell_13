@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 11:58:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:06:33 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	delet_list(t_env_list **en, char *var, int start)
 
 	env = *en;
 	first = env;
-	while (env && ft_strcmp(env->content.key, var) == 0)
+	while (env && str_cmp(env->content.key, var) == 0)
 	{
 		env = env->next;
 		start++;

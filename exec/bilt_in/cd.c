@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/08/05 11:58:07 by slamhaou         ###   ########.fr       */
-=======
-/*   Updated: 2025/08/05 17:55:46 by naessgui         ###   ########.fr       */
->>>>>>> a4afe53eca330fc9c56320243c70eafd539af4d4
+/*   Updated: 2025/08/05 20:06:12 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +14,7 @@
 
 void	update_od_nw_pwd(t_env_list *env, char *s)
 {
-	while (env && ft_strcmp(env->content.key, s) == 0)
+	while (env && str_cmp(env->content.key, s) == 0)
 		env = env->next;
 	if (env)
 	{

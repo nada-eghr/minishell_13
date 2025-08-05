@@ -6,33 +6,13 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 16:28:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:56:01 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-<<<<<<< HEAD
 char	*ft_join_path(char *s1, char *s2, char sep)
-=======
-
-char	*str_dup(char *s)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = malloc(ft_strlen(s) + 1);
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-char	*str_join(char *s1, char *s2, char sep)
->>>>>>> a4afe53eca330fc9c56320243c70eafd539af4d4
 {
 	char	*str;
 	int		i;
