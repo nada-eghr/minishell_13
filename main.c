@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 17:54:53 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:52:48 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 int sigg = 0;
 
 void	handler(int s)
@@ -23,36 +21,36 @@ void	handler(int s)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay(); 
-	return;
+	return ;
 }
 
 void	defult_env(t_env_list **env)
 {
-	char *pwd;
-	int i;
-	
+	char	*pwd;
+	int		i;
+
 	i = 0;
 	pwd = getcwd(NULL, 0);
 	*env = ft_lstnew_env(ft_strjoin("PATH=", pwd));
 	free(pwd);
-	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("SHLVL=", "1")));
-	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
-	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
-}
-void ll(void)
-{
-    // Only works on macOS
-    system("leaks  -q minishell");  // or replace with your actual executable name
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("SHLVL=", "1")));
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
 }
 
-t_token   *start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list )
+void	ll(void)
 {
-	t_token *tokens;
-	char *input;
-	
+	system("leaks  -q minishell");
+}
+
+t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
+{
+	t_token	*tokens;
+	char	*input;
+
 	v->cont = 0;
 	input = readline("minishell$ ");
-	if (sigg !=  NO_SIG_NAL)
+	if (sigg != NO_SIG_NAL)
 	{
 		var->exit_stat = sigg;
 		sigg = NO_SIG_NAL;
@@ -63,15 +61,15 @@ t_token   *start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list 
 		exit (var->exit_stat);
 	}
 	if (is_line_empty(input))
-			return(*continu = 1, free(input), NULL);
+		return (*continu = 1, free(input), NULL);
 	add_history(input);
-	if(check_quotes(input, &*var))
-		return(*continu = 1, free(input), NULL);
+	if (check_quotes(input, &*var))
+		return (*continu = 1, free(input), NULL);
 	tokens = convert_to_node(input);
 	if (!tokens)
-		return(*continu = 1, free(tokens), NULL);
+		return (*continu = 1, free(tokens), NULL);
 	free(input);
-	return (expand_token(tokens , env_list, &var->exit_stat));
+	return (expand_token(tokens, env_list, &var->exit_stat));
 }
 
 void	first_step(char **env, t_vmin *v)
@@ -88,26 +86,26 @@ void	first_step(char **env, t_vmin *v)
 	v->var.exit_stat = 0;
 }
 
-int	main(int ac , char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
+	t_vmin	v;
+
 	(void)ac;
 	(void)av;
-	t_vmin v;
-
 	first_step(env, &v);
 	while (1)
 	{
 		v.filter_lst = start_pars(&v, &v.var, &v.cont, v.env_list);
 		if (!v.filter_lst && v.cont == 1)
-			continue;
+			continue ;
 		v.second_tokens = second_tokinization(v.filter_lst);
 		free_list(v.filter_lst);
 		v.second_tokens_head = v.second_tokens;
 		remove_empty_node(&v.second_tokens);
-		if (check_error(&v.second_tokens , &v.var) == 1)
+		if (check_error(&v.second_tokens, &v.var) == 1)
 		{
 			free_second_tokens(&v.second_tokens_head);
-			continue;
+			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
 		exc(v.cmd, &v.env_list, &v.var);
@@ -116,4 +114,3 @@ int	main(int ac , char **av, char **env)
 	}
 	return (0);
 }
-
