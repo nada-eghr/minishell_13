@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 13:06:12 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:48:12 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	serch_del(char *str, char *del)
 	while (i < len)
 	{
 		j = 0;
-		while (str[i] && del[j] && str[i] == del[j])
+		while (str[j] && del[i] && str[i] == del[j])
 		{
 			i++;
 			j++;
@@ -74,6 +74,7 @@ int	serch_del(char *str, char *del)
 			return (1);
 		i = i - j;
 		i++;
+		j++;
 	}
 	return (0);
 }

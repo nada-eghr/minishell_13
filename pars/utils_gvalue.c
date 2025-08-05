@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:31:03 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 11:28:20 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:01:22 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s)
 	}
 	return (s);
 }
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 13:05:42 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:38:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct variabel
 	int						her_s;
 	int						len_hrd;
 }							t_var;
+
 // typedef struct p_var
 // {
 // 	bool					s_quote;
@@ -122,6 +123,17 @@ typedef struct s_list
 	struct s_list			*next;
 }							t_env_list;
 
+typedef struct var
+{
+	t_env_list	*env_list;
+	t_var		var;
+	char	*input;
+	int		cont;
+	t_token *filter_lst;
+	t_second_token *second_tokens;
+	t_second_token *second_tokens_head;
+	t_cmd *cmd;
+}			t_vmin;
 //-----------------------    check_syntaxe    -----------------------------
 
 // bool						check_error(t_second_token **list);
@@ -231,7 +243,7 @@ t_token						*convert_to_node(char *data);
 
 //--------------------------    utils    ----------------------------------
 
-int							ft_strcmp(char *s1, char *s2);
+int							str_cmp(char *s1, char *s2);
 int							ft_strlen(char *str);
 char						*ft_strncpy(char *dst, const char *src, size_t n);
 char						*substr(const char *src, int start, int len);
@@ -256,12 +268,17 @@ void ll(void);
 char	*ft_strjoin_free(char *s1, char *s2);
 
 char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s);
-void	free_cmd_list(t_cmd *cmd);
+void	free_cmd_list(t_vmin *v);
 // void	free_second_tokens(t_second_token *head);
 void	free_second_tokens(t_second_token **head);
 
 void	delete_empty_node(t_second_token **head, t_second_token *nodeToDelete);
 void	remove_empty_node(t_second_token **second_tokens);
+void	remove_dollar_and_quotes_if_needed(t_token *token);
+void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat);
+void	remove_wrapping_quotes(t_token *token);
+void	ft_helper_env(t_token *token, t_env_list *env, int *exit_stat);
+void	ft_helper(t_token *token, t_env_list *env, int *exit_stat);
 
 ///////////////////////////////exc/////////////////////////////////////////
 

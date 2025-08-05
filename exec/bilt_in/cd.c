@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 11:07:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:55:46 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	my_cd(t_env_list *env, char **arg, int *exit_st)
 		write(2, ": ", 2);
 		perror(NULL);
 		*exit_st = 1;
+		return ;
 	}
 	*exit_st = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 12:53:25 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:03:35 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	wait_child(t_var *var)
 	int	stat;
 
 	i = 0;
-
+	signal(SIGINT, SIG_IGN);
 	while (i < var->num_cmd)
 	{
 		waitpid(var->arr_id[i], &stat, 0);
@@ -46,6 +46,7 @@ void	wait_child(t_var *var)
 		i++;
 	}
 	free(var->arr_id);
+	signal (SIGINT, handler); 
 }
 void	h(int s)
 {

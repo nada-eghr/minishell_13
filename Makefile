@@ -16,7 +16,9 @@ SRCS    =  ./pars/expand.c  \
 			./pars/pars.c \
 			./pars/get_value.c \
 			./pars/expand1.c \
+			./pars/dq_expand.c \
 			./pars/cmd.c main.c \
+			./pars/free_cmd.c \
 			./pars/filter_token.c  \
 			./pars/get_files.c \
 			./pars/get_param.c \

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:00:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 11:37:27 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:21:49 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_token	*creattoken(char *data)
 void	add_back(t_token **head, t_token *node)
 {
 	t_token	*tmp;
-	
+
 	if (!node)
-		return ; 
+		return ;
 	if (!*head)
 	{
 		*head = node;
@@ -56,64 +56,4 @@ void	printlinkedlist(t_token *head)
 		current = current->next;
 	}
 	printf("NULL\n");
-}
-
-void	free_list(t_token *head)
-{
-	t_token	*current;
-	t_token	*next_node;
-
-	current = head;
-	while (current != NULL)
-	{
-		next_node = current->next;
-		free(current->token);
-		free(current);
-		current = next_node;
-	}
-}
-
-void	free_str_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void	free_redirections(t_redirection *redi)
-{
-	t_redirection *tmp;
-
-	while (redi)
-	{
-		tmp = redi->next;
-		if (redi->file)
-			free(redi->file);
-		free(redi);
-		redi = tmp;
-	}
-}
-
-void	free_cmd_list(t_cmd *cmd)
-{
-	t_cmd *tmp;
-
-	while (cmd)
-	{
-		tmp = cmd->next;
-		if (cmd->arg)
-			free_str_array(cmd->arg);
-		if (cmd->redi)
-			free_redirections(cmd->redi);
-		free(cmd);
-		cmd = tmp;
-	}
 }

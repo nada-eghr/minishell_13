@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 12:56:11 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:54:53 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "minishell.h"
 
 int sigg = 0;
-
-bool	is_space(char c)
-{
-	return (c == ' ' || c == '\t');
-}
 
 void	handler(int s)
 {
@@ -44,65 +39,80 @@ void	defult_env(t_env_list **env)
 	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
 	ft_lstadd_back(&*env,ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
 }
+void ll(void)
+{
+    // Only works on macOS
+    system("leaks  -q minishell");  // or replace with your actual executable name
+}
+
+t_token   *start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list )
+{
+	t_token *tokens;
+	char *input;
+	
+	v->cont = 0;
+	input = readline("minishell$ ");
+	if (sigg !=  NO_SIG_NAL)
+	{
+		var->exit_stat = sigg;
+		sigg = NO_SIG_NAL;
+	}
+	if (!input)
+	{
+		write(1, "exit\n", 5);
+		exit (var->exit_stat);
+	}
+	if (is_line_empty(input))
+			return(*continu = 1, free(input), NULL);
+	add_history(input);
+	if(check_quotes(input, &*var))
+		return(*continu = 1, free(input), NULL);
+	tokens = convert_to_node(input);
+	if (!tokens)
+		return(*continu = 1, free(tokens), NULL);
+	free(input);
+	return (expand_token(tokens , env_list, &var->exit_stat));
+}
+
+void	first_step(char **env, t_vmin *v)
+{
+	sigg = NO_SIG_NAL;
+	if (!env[0])
+		defult_env(&v->env_list);
+	else
+		v->env_list = get_list_env(env);
+	rl_catch_signals = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal (SIGINT, handler);
+	sigg = NO_SIG_NAL;
+	v->var.exit_stat = 0;
+}
+
 int	main(int ac , char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	t_env_list	*env_list;
-	t_var		var;
-	char	*input;
-	
-	sigg = NO_SIG_NAL;
-	var.exit_stat = 0;
-	if (!env[0])
-		defult_env(&env_list);
-	else
-		env_list = get_list_env(env);
-	rl_catch_signals = 0;
-	signal(SIGQUIT, SIG_IGN);
-	signal (SIGINT, handler);
+	t_vmin v;
+
+	first_step(env, &v);
 	while (1)
 	{
-		input = readline("minishell$ ");
-		if (sigg !=  NO_SIG_NAL)
+		v.filter_lst = start_pars(&v, &v.var, &v.cont, v.env_list);
+		if (!v.filter_lst && v.cont == 1)
+			continue;
+		v.second_tokens = second_tokinization(v.filter_lst);
+		free_list(v.filter_lst);
+		v.second_tokens_head = v.second_tokens;
+		remove_empty_node(&v.second_tokens);
+		if (check_error(&v.second_tokens , &v.var) == 1)
 		{
-			var.exit_stat = sigg;
-			sigg = NO_SIG_NAL;
-		}
-		if (!input)
-		{
-			write(1, "exit\n", 5);
-			exit (0);
-		}
-		if (is_line_empty(input))
-		{
-			free(input);
+			free_second_tokens(&v.second_tokens_head);
 			continue;
 		}
-		add_history(input);
-		if(check_quotes(input, &var))
-		{
-			free(input);
-			continue;
-		}
-		t_token *tokens = convert_to_node(input);
-		t_token *filter_lst= expand_token(tokens , env_list, &var.exit_stat);
-		t_second_token *second_tokens = second_tokinization(filter_lst);
-		  remove_empty_node(&second_tokens);
-		if (!tokens)
-		{
-			free(tokens);
-			continue;
-		}
-		if (check_error(&second_tokens , &var) == 1)
-		{
-			free_list1(second_tokens);
-			continue;
-		}
-		t_cmd *cmd = list_cmd(second_tokens);
-		exc(cmd, &env_list, &var);
-		//print_cmd(cmd);
-		filter_lst = NULL;
+		v.cmd = list_cmd(v.second_tokens);
+		exc(v.cmd, &v.env_list, &v.var);
+		free_list1(v.second_tokens);
+		free_cmd_list(&v);
 	}
 	return (0);
 }

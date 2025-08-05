@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 11:38:26 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:56:19 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ t_token_type	get_token_type(char *token)
 {
 	int	len;
 
-	if (!token || !ft_strcmp(token, " "))
+	if (!token || str_cmp(token, " "))
 		return (T_UNKNOWN);
 	len = ft_strlen(token);
-	if (ft_strcmp(token, " ") == 0)
+	if (str_cmp(token, " ") )
 		return (T_SPACE);
-	if (ft_strcmp(token, "|") == 0)
+	if (str_cmp(token, "|"))
 		return (T_PIPE);
-	if (ft_strcmp(token, "<") == 0)
+	if (str_cmp(token, "<"))
 		return (T_RED_IN);
-	if (ft_strcmp(token, ">") == 0)
+	if (str_cmp(token, ">"))
 		return (T_RED_OUT);
-	if (ft_strcmp(token, ">>") == 0)
+	if (str_cmp(token, ">>"))
 		return (T_APPEND);
-	if (ft_strcmp(token, "<<") == 0)
+	if (str_cmp(token, "<<"))
 		return (T_HEREDOC);
 	if (token[0] == '"' && token[len - 1] == '"')
 		return (T_D_QUOTE);
@@ -60,7 +60,7 @@ t_token	*convert_to_node(char *data)
 		{
 			token = handle_quotes(data, &i);
 			if (!token)
-				return ( free_list(head), NULL);
+				return (free_list(head), NULL);
 		}
 		else
 			token = parse_word_token(data, &i);
