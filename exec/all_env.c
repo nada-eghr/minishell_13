@@ -3,19 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   all_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/04 10:56:17 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:28:04 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	*get_key(char *data, int i)
+{
+	char	*line;
+	int		j;
+
+	j = 0;
+	line = malloc(i + 1);
+	while (j < i)
+	{
+		line[j] = data[j];
+		j++;
+	}
+	line[j] = '\0';
+	return (line);
+}
+
 char	*get_line(char *data, char c)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
@@ -23,16 +39,7 @@ char	*get_line(char *data, char c)
 	while (data[i] && data[i] != '=')
 		i++;
 	if (c == 'f')
-	{
-		line = malloc(i + 1);
-		while (j < i)
-		{
-			line[j] = data[j];
-			j++;
-		}
-		line[j] = '\0';
-		return(line);
-	}
+		return (get_key(data, i));
 	else if (data[i] && c == 'l')
 	{
 		if (data[i] == '=')
@@ -41,7 +48,7 @@ char	*get_line(char *data, char c)
 		while (data[i])
 			line[j++] = data[i++];
 		line[j] = '\0';
-		return(line);
+		return (line);
 	}
 	return (NULL);
 }
@@ -49,8 +56,8 @@ char	*get_line(char *data, char c)
 t_env_list	*ft_lstnew_env(void *content)
 {
 	t_env_list	*nod;
-	char	*frst;
-	char	*last;
+	char		*frst;
+	char		*last;
 
 	frst = get_line(content, 'f');
 	last = get_line(content, 'l');
@@ -79,14 +86,14 @@ void	ft_lstadd_back(t_env_list **lst, t_env_list *n)
 		list = list->next;
 	list->next = n;
 }
+
 char	*my_get_env(char *str, t_env_list *env)
 {
-
 	while (env)
 	{
 		if (str_cmp(str, env->content.key))
 			return (env->content.value);
-		env = env->next;	
+		env = env->next;
 	}
 	return (NULL);
 }

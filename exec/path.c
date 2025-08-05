@@ -6,12 +6,12 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/03 20:09:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:13:30 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/stat.h> 
+
 int	str_chr(char *cmd, char c)
 {
 	int	i;
@@ -27,24 +27,22 @@ int	str_chr(char *cmd, char c)
 	}
 	return (0);
 }
-char *serch_path_env(char *cmd, t_env_list *env, int *exit_st)
+
+char	*serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 {
 	char	*path;
 	char	**split_path;
 	char	*new_p;
 	int		i;
-	
+
 	i = 0;
 	path = my_get_env("PATH", env);
 	split_path = ft_split(path, ':');
 	while (split_path[i])
 	{
-		new_p = str_join(split_path[i], cmd, '/');
+		new_p = ft_join_path(split_path[i], cmd, '/');
 		if (access(new_p, X_OK) == 0)
-		{
-			free_tab(split_path);	
-			return(new_p);
-		}
+			return (free_tab(split_path), new_p);
 		free(new_p);
 		i++;
 	}
@@ -57,13 +55,13 @@ char *serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 
 char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 {
-	struct stat sb;
-	
-	if(str_chr(cmd, '/'))
+	struct stat	sb;
+
+	if (str_chr(cmd, '/'))
 	{
 		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
 		{
-   			 write_err("Minishell: ", cmd, ": is a directory\n");
+			write_err("Minishell: ", cmd, ": is a directory\n");
 			return (*exit_st = 126, NULL);
 		}
 		if (access(cmd, X_OK) == 0)
@@ -73,9 +71,6 @@ char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 			write_err("Minishell: ", cmd, ": ");
 			return (*exit_st = 127, perror(NULL), NULL);
 		}
-		// write_err("Minishell: ", cmd, ": No such file or directory\n");
-		// return(*exit_st = 127, NULL);
 	}
-	else
 	return (serch_path_env(cmd, env, exit_st));
 }

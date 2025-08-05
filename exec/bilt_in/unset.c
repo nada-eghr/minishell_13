@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:57:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 11:24:28 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 11:58:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ int	chake_arg(char *str)
 	}
 	return (0);
 }
-void	delet_list(t_env_list **en, char *var)
+
+void	delet_list(t_env_list **en, char *var, int start)
 {
-	t_env_list *first;
-	t_env_list *therd;
+	t_env_list	*first;
+	t_env_list	*therd;
 	t_env_list	*env;
-	int start;
-	
-	start = 0;
+
 	env = *en;
 	first = env;
-	while (env && str_cmp(env->content.key, var) == 0)
+	while (env && ft_strcmp(env->content.key, var) == 0)
 	{
 		env = env->next;
 		start++;
@@ -61,7 +60,7 @@ void	delet_list(t_env_list **en, char *var)
 
 void	my_unset(t_env_list **en, char **args, int *exit_st)
 {
-	int			i;
+	int	i;
 
 	i = 1;
 	*exit_st = 0;
@@ -69,11 +68,11 @@ void	my_unset(t_env_list **en, char **args, int *exit_st)
 	{
 		if (chake_arg(args[i]))
 		{
-			write_err("Minishell: unset: `", args[i], "': not a valid identifier\n");
+			write_err("Minishell: unset: `", args[i],
+				"': not a valid identifier\n");
 			*exit_st = 1;
 		}
-		//printf ("arg %s \n", args[1]);
-		delet_list(en, args[i]);
+		delet_list(en, args[i], 0);
 		i++;
 	}
 }

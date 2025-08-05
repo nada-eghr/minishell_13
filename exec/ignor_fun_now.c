@@ -6,25 +6,58 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:42:51 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:57:43 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**return_list_to_arg(t_env_list *list_env)
+int	serch_equal(char *str)
 {
-	char	**arg;
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if (i > 0)
+		str[i] = '\0';
+	return (i);
+}
+
+char	*new_tab(t_env_list *list_env)
+{
+	char	*arr;
 	int		i;
 	int		j;
-	int		k;
-	int		s;
-	t_env_list *l;
-	
+
 	i = 0;
 	j = 0;
-	k = 0;
-	s = 0;
+	arr = malloc(ft_strlen(list_env->content.key) 
+			+ ft_strlen(list_env->content.value) + 2);
+	while (list_env->content.key[i])
+	{
+		arr[i] = list_env->content.key[i];
+		i++;
+	}
+	if (list_env->content.value)
+	{
+		arr[i++] = '=';
+		while (list_env->content.value[j])
+			arr[i++] = list_env->content.value[j++];
+		arr[i] = '\0';
+	}
+	return (arr);
+}
+
+char	**return_list_to_arg(t_env_list *list_env)
+{
+	t_env_list	*l;
+	char		**arg;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
 	l = list_env;
 	while (l)
 	{
@@ -35,23 +68,9 @@ char	**return_list_to_arg(t_env_list *list_env)
 	arg = malloc(sizeof(char *) * (i + 1));
 	while (j < i && list_env)
 	{
-		arg[j] = malloc(ft_strlen(list_env->content.key) + ft_strlen(list_env->content.value) + 2);
-		while (list_env->content.key[k])
-		{
-			arg[j][k] = list_env->content.key[k];
-			k++;
-		}
-		if (list_env->content.value)
-		{
-				arg[j][k++] = '=';
-			while (list_env->content.value[s])
-				arg[j][k++] = list_env->content.value[s++];
-			arg[j][k] = '\0';
-		}
-		j++;
+		arg[j] = new_tab(list_env);
 		list_env = list_env->next;
-		k = 0;
-		s = 0;
+		j++;
 	}
 	arg[j] = NULL;
 	return (arg);

@@ -6,11 +6,21 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 10:30:04 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:01:19 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	write_err(char *s, char *arg, char *last)
+{
+	if (s)
+		write(2, s, ft_strlen(s));
+	if (arg)
+		write(2, arg, ft_strlen(arg));
+	if (last)
+		write(2, last, ft_strlen(last));
+}
 
 void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
 {
@@ -29,10 +39,9 @@ void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
 	}
 	if (red->type == T_HEREDOC)
 		var->last_in = arr_fd_h[index];
-	
 }
-                                                                                                                                     
-void	out_file(int type, char *file , int *last_out)
+
+void	out_file(int type, char *file, int *last_out)
 {
 	if (type == T_RED_OUT)
 	{
@@ -50,10 +59,10 @@ void	out_file(int type, char *file , int *last_out)
 	{
 		if (last_out >= 0)
 			close(*last_out);
-		*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY,0664);
+		*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY, 0664);
 		if (*last_out < 0)
 		{
-			write_err("Minishell: ", file,": ");
+			write_err("Minishell: ", file, ": ");
 			perror(NULL);
 			*last_out = ERORR;
 		}
@@ -69,14 +78,14 @@ void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx)
 	{
 		in_file(rid, var, arr_f_h, indx);
 		if (var->last_in == ERORR)
-		 	break;
+			break ;
 		out_file(rid->type, rid->file, &var->last_out);
 		if (var->last_out == ERORR)
-			break;
+			break ;
 		rid = rid->next;
 	}
 	if (var->last_in == ERORR)
 		var->exit_stat = 1;
-	if (var->last_out == ERORR)	
+	if (var->last_out == ERORR)
 		var->exit_stat = 1;
 }

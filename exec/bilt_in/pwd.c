@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:44:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/20 11:57:02 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:21:49 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	my_pwd(int *exit_sta)
 {
-	char *path;
+	char	*path;
 
 	path = getcwd(NULL, 1);
 	if (!path)
@@ -23,4 +23,4 @@ void	my_pwd(int *exit_sta)
 	write(1, "\n", 1);
 	free(path);
 	*exit_sta = 0;
-}	
+}

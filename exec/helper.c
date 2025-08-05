@@ -1,44 +1,18 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   helper.c                                           :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/05/28 16:24:56 by slamhaou          #+#    #+#             */
-// /*   Updated: 2025/07/02 14:20:02 by slamhaou         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
+/*   Updated: 2025/08/05 16:28:48 by slamhaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
- #include "../minishell.h"
+#include "../minishell.h"
 
-// int	ft_strlen(char *str)
-// {
-// 	int	i;
-
-// 	if (!str)
-// 		return (0);
-// 	i = 0;
-// 	while (str[i])
-// 		i++;
-// 	return (i);
-// }
-char	*str_dup(char *s)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = malloc(ft_strlen(s) + 1);
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-char	*str_join(char *s1, char *s2, char sep)
+char	*ft_join_path(char *s1, char *s2, char sep)
 {
 	char	*str;
 	int		i;
@@ -47,9 +21,9 @@ char	*str_join(char *s1, char *s2, char sep)
 	i = 0;
 	j = 0;
 	if (!s1 && s2)
-		return (str_dup(s2));
+		return (ft_strdup(s2));
 	if (!s2 && s1)
-		return (str_dup(s1));
+		return (ft_strdup(s1));
 	if (!s1 && !s2)
 		return (NULL);
 	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
@@ -63,13 +37,14 @@ char	*str_join(char *s1, char *s2, char sep)
 	str[j] = '\0';
 	return (str);
 }
-int			str_cmp(char *s1, char *s2)
+
+int	str_cmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	 if (!s1 || !s2)
-	 	return (1);
+	if (!s1 || !s2)
+		return (1);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
@@ -80,21 +55,19 @@ int			str_cmp(char *s1, char *s2)
 		return (1);
 	return (0);
 }
+
 t_env_list	*get_list_env(char **env)
 {
 	t_env_list	*new_env;
 	t_env_list	*serch;
 	int			i;
 	int			serch_old_p;
-	
+
 	i = 1;
-	new_env = ft_lstnew_env(env[0]);
 	serch_old_p = 0;
+	new_env = ft_lstnew_env(env[0]);
 	while (env[i])
-	{
-		ft_lstadd_back(&new_env, ft_lstnew_env(env[i]));
-		i++;
-	}
+		ft_lstadd_back(&new_env, ft_lstnew_env(env[i++]));
 	serch = new_env;
 	while (serch)
 	{

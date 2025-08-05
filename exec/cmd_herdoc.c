@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_herdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 13:01:41 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:00:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	len_heredoc(t_cmd *list, int n)
 {
-	int	count;
 	t_redirection	*red;
+	int				count;
 
-	red = list->redi;
 	count = 0;
+	red = list->redi;
 	if (n == HERDC_IN_LIST)
 	{
 		while (list)
@@ -39,10 +39,12 @@ int	len_heredoc(t_cmd *list, int n)
 	}
 	return (count);
 }
-void	type_of_red_is_heredoc(t_redirection *red, t_var *var, t_env_list *env, int fd)
+
+void	type_of_red_is_heredoc(t_redirection *red, t_var *var,
+	t_env_list *env, int fd)
 {
-	char *input;
-	
+	char	*input;
+
 	while (red->type == T_HEREDOC)
 	{
 		write(1, "> ", 2);
@@ -53,7 +55,7 @@ void	type_of_red_is_heredoc(t_redirection *red, t_var *var, t_env_list *env, int
 				free(input);
 			if (!input)
 				var->exit_stat = 0;
-			break;
+			break ;
 		}
 		if (var->len_hrd == 0)
 		{
@@ -65,14 +67,15 @@ void	type_of_red_is_heredoc(t_redirection *red, t_var *var, t_env_list *env, int
 	}
 }
 
-void	child_heredoc(int *herdoc, t_redirection *red, t_var *var, t_env_list *env)
+void	child_heredoc(int *herdoc, t_redirection *red
+	, t_var *var, t_env_list *env)
 {
-	signal(SIGINT, handler_sig_herd);
-	close (herdoc[0]);
 	int	len;
 
+	signal(SIGINT, handler_sig_herd);
+	close (herdoc[0]);
 	len = var->len_hrd;
-	while (red)
+	while (var->len_hrd > 0)
 	{
 		if (red->type == T_HEREDOC)
 			var->len_hrd--;
@@ -111,7 +114,7 @@ void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
 	signal (SIGINT, handler);
 }
 
-int *open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env)
+int	*open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env)
 {
 	int	i;
 	int	*arr_fd_herdoc;

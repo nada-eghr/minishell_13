@@ -6,18 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 09:35:01 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:36:18 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	is_alpha(char c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
 
 int	chake_args(char *str, int *pls)
 {
@@ -25,32 +18,25 @@ int	chake_args(char *str, int *pls)
 
 	i = 0;
 	if ((str[i] <= '9' && str[i] >= '0') || (is_alpha(str[i]) == 0))
-	{
 		if (str[i] != '_')
-		return (1);
-	}
+			return (1);
 	while (str[i] && str[i] != '=')
 	{
-		if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
+		if (is_alpha(str[i]) == 0)
 			if (str[i] != '=' && str[i] != '_' && str[i] != '+')
 				return (1);
 		if (str[i] == '+' && is_alpha(str[i - 1]) && str[i + 1] == '=')
 			*pls = 1;
-		if (str[i] == '+' && str[i+1] != '=')
+		if (str[i] == '+' && str[i + 1] != '=')
 			return (1);
 		i++;
 	}
 	if (str[i] && str[i] == '=')
-	{
-		while (str[i])
-		{
-			if (str[i] == '!')
-				return (1);
-			i++;
-		}
-	}
+		if (serch(str, '!'))
+			return (1);
 	return (0);
 }
+
 void	print_all_var(t_env_list *env, int *exit_st)
 {
 	while (env)
@@ -58,7 +44,8 @@ void	print_all_var(t_env_list *env, int *exit_st)
 		if (str_cmp(env->content.key, "_") == 0)
 		{
 			if (env->content.value)
-				printf("declare -x %s=\"%s\"\n", env->content.key, env->content.value);
+				printf("declare -x %s=\"%s\"\n",
+					env->content.key, env->content.value);
 			else
 				printf("declare -x %s\n", env->content.key);
 		}
@@ -66,49 +53,41 @@ void	print_all_var(t_env_list *env, int *exit_st)
 	}
 	*exit_st = 0;
 }
+
 int	orredy_hav_valu(t_env_list *env, char *arg)
 {
-	int	i;
-	int	j;
 	char	*st;
-	
+	int		i;
+	int		j;
+	int		sv_ind;
+
 	i = 0;
-	j = 0;
-	while (arg[i] && arg[i] != '=')
-		i++;
-	st = malloc(i + 1);
-	i = 0;
-	while (arg[i] && arg[i] != '=')
-	{
-		st[i] = arg[i];
-		i++;
-	}
-	st[i] = '\0';
+	sv_ind = serch_equal(arg);
+	j = sv_ind;
 	while (env)
 	{
-		if (str_cmp(st, env->content.key))
+		if (ft_strcmp(arg, env->content.key))
 		{
-			free(st);
 			free(env->content.value);
-			if (arg[i] == '=')
-				i++;
-			st = malloc(ft_strlen(&arg[i]) + 1);
-			while (arg[i])
-				st[j++] = arg[i++];
-			st[j] = '\0';
+			arg[j++] = '=';
+			st = malloc(ft_strlen(&arg[j]) + 1);
+			while (arg[j])
+				st[i++] = arg[j++];
+			st[i] = '\0';
 			env->content.value = st;
-			st = NULL;
 			return (1);
 		}
 		env = env->next;
 	}
+	arg[sv_ind] = '=';
 	return (0);
 }
+
 void	have_pls_(t_env_list *env, char *arg)
 {
-	int	i;
-	char *join;
-	
+	int		i;
+	char	*join;
+
 	i = 0;
 	while (arg[i] && arg[i] != '+')
 		i++;
@@ -119,19 +98,19 @@ void	have_pls_(t_env_list *env, char *arg)
 			env = env->next;
 		if (env)
 		{
-			join = str_join(env->content.value, &arg[i + 2], '\0');
+			join = ft_strjoin(env->content.value, &arg[i + 2]);
 			free(env->content.value);
 			env->content.value = join;
 		}
 	}
-	
 }
+
 void	my_export(t_env_list *env, char **args, int *exit_st)
 {
 	int	i;
-	int pls;
-	
-	i = 1;  
+	int	pls;
+
+	i = 1; 
 	pls = 0;
 	if (args[i] == NULL)
 		print_all_var(env, exit_st);
@@ -139,14 +118,15 @@ void	my_export(t_env_list *env, char **args, int *exit_st)
 	{
 		if (chake_args(args[i], &pls))
 		{
-			write_err("Minishell: export: `", args[i], "': not a valid identifier\n");
+			write_err("Minishell: export: `", args[i],
+				"': not a valid identifier\n");
 			*exit_st = 1;
 			return ;
 		}
 		if (pls == 1)
 			have_pls_(env, args[i]);
 		else if (orredy_hav_valu(env, args[i]) == 0)
-				ft_lstadd_back(&env,ft_lstnew_env(args[i]));
+			ft_lstadd_back(&env, ft_lstnew_env(args[i]));
 		i++;
 	}
 	*exit_st = 0;

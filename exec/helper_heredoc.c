@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 13:06:12 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:25:38 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,20 @@ void	handler_sig_herd(int s)
 {
 	(void)s;
 	write(1, "\n", 1);
-	exit (130);
+	exit(130);
 }
 
 char	*expand_herdoc(char *input, t_env_list *env)
 {
 	t_token	tok;
-	int exits;
-	
+	int		exits;
+
 	exits = 0;
 	tok.token = input;
 	tok.type = 0;
 	tok.next = NULL;
 	tok.is_quoted = NULL;
-
-	expand_word_token(&tok,env, &exits);
+	expand_word_token(&tok, env, &exits);
 	input = NULL;
 	return (tok.token);
 }
@@ -43,7 +42,7 @@ void	wait_heredoc(int *herdoc, t_var *var, int id)
 	waitpid(id, &inform, 0);
 	if (WEXITSTATUS(inform) == OUT_SIG_INT)
 	{
-		close (herdoc[0]);
+		close(herdoc[0]);
 		var->her_s = 1;
 		var->exit_stat = 130;
 	}
@@ -54,14 +53,14 @@ void	wait_heredoc(int *herdoc, t_var *var, int id)
 
 int	serch_del(char *str, char *del)
 {
-	int i;
+	int	i;
 	int	j;
-	int len;
+	int	len;
 
 	if (!str)
 		return (0);
 	i = 0;
-	len =  ft_strlen(del);
+	len = ft_strlen(del);
 	while (i < len)
 	{
 		j = 0;
