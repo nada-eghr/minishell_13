@@ -1,10 +1,10 @@
 # Compiler and flags
 # Compiler and flags
-CC      = gcc
+CC      = cc
 # CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include
 # LDFLAGS = -L$(HOME)/readline-install/lib
 # LIBS    = -lreadline
-CFLAGS  = -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
+CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
 LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
 LIBS    = -lreadline
 
