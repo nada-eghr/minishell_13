@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 13:26:35 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:13:41 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,18 @@ void	wait_child(t_var *var)
 		{
 			if (var->last_in != ERORR && var->last_out != ERORR 
 				&& i == var->num_cmd - 1)
-				var->exit_stat = WEXITSTATUS(stat);
+			{
+				if (WIFSIGNALED(stat))
+				{
+					write(1, "\n", 1);
+					if (WTERMSIG(stat) == SIGINT)
+						var->exit_stat = 130;
+					if (WTERMSIG(stat) == SIGQUIT)
+						var->exit_stat = 131;
+				}
+				else
+					var->exit_stat = WEXITSTATUS(stat);
+			}
 		}
 		i++;
 	}
@@ -53,9 +64,14 @@ void	wait_child(t_var *var)
 
 void	h(int s)
 {
-	(void)s;
-	write(1, "coocoo\n", 7);
-	exit(135);
+	if (s == SIGINT)
+	{
+		write(1, "\n", 1);
+		exit(130);
+	}
+	if (s == SIGQUIT)
+		exit(135);
+		
 }
 
 void	check_and_dup(t_var *var)
