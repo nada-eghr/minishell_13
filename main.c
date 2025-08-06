@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 20:52:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:57:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,8 @@ void	defult_env(t_env_list **env)
 	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
 }
 
-void	ll(void)
+void	input_chack(char *input, t_env_list *env_list, t_var *var)
 {
-	system("leaks  -q minishell");
-}
-
-t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
-{
-	t_token	*tokens;
-	char	*input;
-
-	v->cont = 0;
-	input = readline("minishell$ ");
 	if (sigg != NO_SIG_NAL)
 	{
 		var->exit_stat = sigg;
@@ -58,8 +48,18 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 	if (!input)
 	{
 		write(1, "exit\n", 5);
+		free_env(env_list);
 		exit (var->exit_stat);
 	}
+}
+t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
+{
+	t_token	*tokens;
+	char	*input;
+
+	v->cont = 0;
+	input = readline("minishell$ ");
+	input_chack(input, env_list, var);
 	if (is_line_empty(input))
 		return (*continu = 1, free(input), NULL);
 	add_history(input);

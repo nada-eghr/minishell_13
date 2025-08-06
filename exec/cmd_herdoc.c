@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 16:00:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:07:16 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
 	var->len_hrd = len_heredoc(list, HERDC_IN_CMD);
 	if (pipe(herdoc))
 	{
-		write_err("Minishell: ", "pipe error: ", NULL);
-		perror(NULL);
+		write_err("Minishell: ", "pipe error: ", "p");
 		var->exit_stat = 1;
 		return ;
 	}
@@ -103,8 +102,7 @@ void	creat_child_herdoc(t_cmd *list, t_var *var, t_env_list *env)
 	id = fork();
 	if (id < 0)
 	{
-		write_err("Minishell: ", "fork: ", NULL);
-		perror(NULL);
+		write_err("Minishell: ", "fork: ", "p");
 		var->exit_stat = 1;
 		return ;
 	}

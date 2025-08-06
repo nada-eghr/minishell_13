@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 20:02:30 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:16:00 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void						ft_lstadd_back(t_env_list **lst, t_env_list *n);
 int							ft_strlen(char *str);
 int							str_cmp(char *s1, char *s2);
 char						**ft_split(char *str, char sep);
-void						free_tab(char **str);
+void						free_all(char **s1, void *s2, int ext);
 char						*my_get_env(char *str, t_env_list *env);
 char						**return_list_to_arg(t_env_list *list_env);
 int							is_alpha(char c);
@@ -304,7 +304,7 @@ void	my_env(t_env_list *env, int	*exit_st);
 void	my_cd(t_env_list *env, char **arg, int *exit_st);
 void	my_unset(t_env_list **en, char **args, int *exit_st);
 void	my_export(t_env_list *env, char **args, int *exit_st);
-void		my_exit(char **args, int *exit_st, int pip);
+void	my_exit(char **args, int *exit_st, int pip, t_env_list *env);
 void	my_echo(char **args, int *exit_st);
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env);
@@ -313,14 +313,12 @@ int		serch_equal(char *str);
 void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx);
 void	wait_child(t_var *var);
 void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
-void	arr_id_pross(t_var *var, t_cmd *list);
+int		*arr_id_pross(t_var *var, t_cmd *list);
 //------------------------ heredoc ------------------
-void	signal_handel(int *exit);
 char	*get_next_line(int fd);
 int		*open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env);
 int		serch(char *romind, int c);
 void	handler_sig_herd(int s);
-int		size_herd_in_comand(t_redirection *red);
 char	*expand_herdoc(char *input, t_env_list *env);
 void	wait_heredoc(int *herdoc, t_var *var, int id);
 int		serch_del(char *str, char *del);
@@ -329,5 +327,6 @@ void	handler(int s);
 int		pars_exec(t_var *var, t_cmd *list);
 void	close_reder(t_var *var, int *arr_fd);
 char	*ft_join_path(char *s1, char *s2, char sep);
+void	free_env(t_env_list *env);
 
 #endif

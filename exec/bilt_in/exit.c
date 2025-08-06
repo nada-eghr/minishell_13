@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/04 17:00:47 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:50:09 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	chake_erorr(char **args)
 	return (num);
 }
 
-void	my_exit(char **args, int *exit_st, int pip)
+void	my_exit(char **args, int *exit_st, int pip, t_env_list *env)
 {
 	int	num;
 	int	eror;
@@ -86,7 +86,10 @@ void	my_exit(char **args, int *exit_st, int pip)
 	if (args[1] == NULL)
 	{
 		if (pip == NO_PIP)
+		{
 			write(1, "exit\n", 6);
+			free_env(env);
+		}
 		exit(*exit_st);
 	}
 	if (args[2] != NULL)
@@ -97,5 +100,6 @@ void	my_exit(char **args, int *exit_st, int pip)
 		return ;
 	}
 	num = chake_erorr(args);
+	free_env(env);
 	exit (num);
 }

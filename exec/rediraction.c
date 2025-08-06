@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 19:01:19 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:08:19 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ void	write_err(char *s, char *arg, char *last)
 		write(2, s, ft_strlen(s));
 	if (arg)
 		write(2, arg, ft_strlen(arg));
-	if (last)
+	if (last[0] != 'p' && last[1])
 		write(2, last, ft_strlen(last));
+	if (last[0] == 'p' && !last[1])
+	{
+		write(2, ": ", 2);
+		perror(NULL);
+	}
 }
 
 void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
@@ -31,8 +36,7 @@ void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
 		var->last_in = open(red->file, O_RDONLY);
 		if (var->last_in < 0)
 		{
-			write_err("Minishell: ", red->file, ": ");
-			perror(NULL);
+			write_err("Minishell: ", red->file, "p");
 			var->last_in = ERORR;
 			return ;
 		}
@@ -50,8 +54,7 @@ void	out_file(int type, char *file, int *last_out)
 		*last_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0664);
 		if (*last_out < 0)
 		{
-			write_err("Minishell: ", file, ": ");
-			perror(NULL);
+			write_err("Minishell: ", file, "p");
 			*last_out = ERORR;
 		}
 	}
@@ -62,8 +65,7 @@ void	out_file(int type, char *file, int *last_out)
 		*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY, 0664);
 		if (*last_out < 0)
 		{
-			write_err("Minishell: ", file, ": ");
-			perror(NULL);
+			write_err("Minishell: ", file, "p");
 			*last_out = ERORR;
 		}
 	}

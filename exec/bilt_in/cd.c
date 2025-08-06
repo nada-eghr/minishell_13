@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:11:49 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 20:06:12 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:08:29 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	my_cd(t_env_list *env, char **arg, int *exit_st)
 	}
 	if (chdir(arg[1]) != 0)
 	{
-		write_err("Minishell: cd: ", arg[1], ": ");
-		perror(NULL);
+		write_err("Minishell: cd: ", arg[1], "p");
 		*exit_st = 1;
 		return ;
 	}

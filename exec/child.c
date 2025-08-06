@@ -6,14 +6,15 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 19:29:55 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:26:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	arr_id_pross(t_var *var, t_cmd *list)
+int	*arr_id_pross(t_var *var, t_cmd *list)
 {
+	int	*arr_id;
 	int	counter;
 
 	counter = 0;
@@ -23,9 +24,10 @@ void	arr_id_pross(t_var *var, t_cmd *list)
 		list = list->next;
 	}
 	if (counter == 0)
-		return ;
+		return (NULL);
 	var->num_cmd = counter;
-	var->arr_id = malloc(sizeof(pid_t) * counter);
+	arr_id = malloc(sizeof(pid_t) * counter);
+	return (arr_id);
 }
 
 void	wait_child(t_var *var)
@@ -47,15 +49,13 @@ void	wait_child(t_var *var)
 		i++;
 	}
 	signal (SIGINT, handler);
-	free(var->arr_id);
-	signal (SIGINT, handler); 
 }
 
 void	h(int s)
 {
 	(void)s;
 	write(1, "coocoo\n", 7);
-	exit(131);
+	exit(135);
 }
 
 void	check_and_dup(t_var *var)
@@ -95,8 +95,7 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	if (var->last_in == ERORR || var->last_out == ERORR)
 	{
 		close (var->pip_fd[1]);
-		var->exit_stat = 1;
-		exit (0);
+		free_all(NULL, var->arr_id, 1);
 	}
 	check_and_dup(var);
 	b = bilt_in(var, list, &*list_env);
@@ -104,11 +103,8 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 		exit (var->exit_stat);
 	path = it_correct_comnd(&var->exit_stat, list->arg[0], *list_env);
 	if (!path)
-		exit (var->exit_stat);
+		free_all(NULL, var->arr_id, var->exit_stat);
 	env_arr = return_list_to_arg(*list_env);
 	if (execve(path, list->arg, env_arr) < 0)
-	{
-		free_tab(env_arr);
-		exit (127);
-	}
+		free_all(env_arr, path, CMD_NOTFIND);
 }

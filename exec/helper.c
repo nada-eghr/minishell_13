@@ -6,11 +6,39 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 19:56:01 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:12:48 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_env(t_env_list *env)
+{
+	t_env_list	*list;
+
+	while (env)
+	{
+		list = env;
+		env = env->next;
+		list->next = NULL;
+		free(list->content.key);
+		free(list->content.value);
+	}
+	env = NULL;
+}
+
+void	free_all(char **s1, void *s2, int ext)
+{
+	int	i;
+
+	i = 0;
+	if (s1)
+		while (s1[i])
+			free(s1[i++]);
+	if (s2)
+		free(s2);
+	exit(ext);
+}
 
 char	*ft_join_path(char *s1, char *s2, char sep)
 {
@@ -27,6 +55,8 @@ char	*ft_join_path(char *s1, char *s2, char sep)
 	if (!s1 && !s2)
 		return (NULL);
 	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	if (!str)
+		return (NULL);
 	while (s1[i])
 		str[j++] = s1[i++];
 	if (sep == '/')

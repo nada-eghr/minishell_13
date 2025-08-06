@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 12:27:28 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:36:00 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	bilt_in(t_var *var, t_cmd *list, t_env_list **list_env)
 	else if (str_cmp(list->arg[0], "export"))
 		return (my_export(*list_env, list->arg, &var->exit_stat), 1);
 	else if (str_cmp(list->arg[0], "exit"))
-		return (my_exit(list->arg, &var->exit_stat, var->rd_fd), 1);
+		return (my_exit(list->arg, &var->exit_stat, var->rd_fd, *list_env), 1);
 	else if (str_cmp(list->arg[0], "echo"))
 		return (my_echo(list->arg, &var->exit_stat), 1);
 	return (0);
@@ -54,18 +54,13 @@ int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 	if (var->i < var->num_cmd - 1)
 	{
 		if (pipe(var->pip_fd))
-		{
-			write_err("Minishell: ", "pipe error: ", NULL);
-			perror(NULL);
-			return (var->exit_stat = 1, 1);
-		}
+			return (write_err("Minishell: ", "pipe error", "p")
+				, var->exit_stat = 1, 1);
 	}
 	var->arr_id[var->i] = fork();
 	if (var->arr_id[var->i] < 0)
 	{
-		wait_child(var);
-		write_err("Minishell: ", "fork", ": ");
-		perror(NULL);
+		write_err("Minishell: ", "fork", "p");
 		return (var->exit_stat = 1, 1);
 	}
 	if (var->arr_id[var->i] == 0)
@@ -108,7 +103,6 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 		rederection(list, var, arr_fd_h, 0);
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
 		{
-			free(var->arr_id);
 			close_reder(var, arr_fd_h);
 			return ;
 		}

@@ -6,22 +6,11 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 16:36:38 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:12:05 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	free_tab(char **str)
-{
-	int	i;
-
-	if (!*str || !str)
-		return ;
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-}
 
 int	is_alpha(char c)
 {
@@ -40,11 +29,11 @@ int	pars_exec(t_var *var, t_cmd *list)
 	var->rd_fd = NO_PIP;
 	var->last_out = NO_REDERCT;
 	var->last_in = NO_REDERCT;
-	arr_id_pross(var, list);
+	var->arr_id = arr_id_pross(var, list);
 	return (0);
 }
 
-void	close_reder(t_var *var, int *arr_fd)
+void	close_reder(t_var *var, int *arr_fd_hr)
 {
 	int	len;
 
@@ -56,9 +45,10 @@ void	close_reder(t_var *var, int *arr_fd)
 	if (var->len_hrd > 0)
 	{
 		while (len > var->len_hrd)
-			close(arr_fd[len++]);
-		free(arr_fd);
+			close(arr_fd_hr[len++]);
+		free(arr_fd_hr);
 	}
+	free(var->arr_id);
 }
 
 int	serch(char *str, int c)
