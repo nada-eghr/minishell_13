@@ -1,0 +1,52 @@
+total 168
+drwxr-xr-x  12 naessgui  candidates    408 Aug  7 13:31 .
+drwxr-xr-x  18 naessgui  candidates    612 Aug  7 11:58 ..
+-rw-r--r--   1 naessgui  candidates   6148 Aug  7 13:19 .DS_Store
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 11:57 .git
+-rw-r--r--   1 naessgui  candidates   1671 Aug  7 13:30 Makefile
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 13:30 exec
+-rw-r--r--   1 naessgui  candidates   3153 Aug  7 12:54 main.c
+-rwxr-xr-x   1 naessgui  candidates  54556 Aug  7 13:30 minishell
+-rw-r--r--   1 naessgui  candidates  10914 Aug  7 12:43 minishell.h
+-rw-r--r--   1 naessgui  candidates      0 Aug  7 13:31 nada
+drwxr-xr-x  24 naessgui  candidates    816 Aug  7 13:30 pars
+drwxr-xr-x  20 naessgui  candidates    680 Aug  7 12:54 tester
+total 176
+drwxr-xr-x  12 naessgui  candidates    408 Aug  7 13:34 .
+drwxr-xr-x  18 naessgui  candidates    612 Aug  7 11:58 ..
+-rw-r--r--   1 naessgui  candidates   6148 Aug  7 13:19 .DS_Store
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 11:57 .git
+-rw-r--r--   1 naessgui  candidates   1671 Aug  7 13:30 Makefile
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 13:34 exec
+-rw-r--r--   1 naessgui  candidates   3237 Aug  7 13:34 main.c
+-rwxr-xr-x   1 naessgui  candidates  54684 Aug  7 13:34 minishell
+-rw-r--r--   1 naessgui  candidates  10914 Aug  7 12:43 minishell.h
+-rw-r--r--   1 naessgui  candidates    762 Aug  7 13:31 nada
+drwxr-xr-x  24 naessgui  candidates    816 Aug  7 13:34 pars
+drwxr-xr-x  20 naessgui  candidates    680 Aug  7 12:54 tester
+total 176
+drwxr-xr-x  12 naessgui  candidates    408 Aug  7 13:34 .
+drwxr-xr-x  18 naessgui  candidates    612 Aug  7 11:58 ..
+-rw-r--r--   1 naessgui  candidates   6148 Aug  7 13:19 .DS_Store
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 11:57 .git
+-rw-r--r--   1 naessgui  candidates   1671 Aug  7 13:30 Makefile
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 13:34 exec
+-rw-r--r--   1 naessgui  candidates   3237 Aug  7 13:34 main.c
+-rwxr-xr-x   1 naessgui  candidates  54684 Aug  7 13:34 minishell
+-rw-r--r--   1 naessgui  candidates  10914 Aug  7 12:43 minishell.h
+-rw-r--r--   1 naessgui  candidates   1524 Aug  7 13:35 nada
+drwxr-xr-x  24 naessgui  candidates    816 Aug  7 13:34 pars
+drwxr-xr-x  20 naessgui  candidates    680 Aug  7 12:54 tester
+total 176
+drwxr-xr-x  12 naessgui  candidates    408 Aug  7 13:36 .
+drwxr-xr-x  18 naessgui  candidates    612 Aug  7 11:58 ..
+-rw-r--r--   1 naessgui  candidates   6148 Aug  7 13:19 .DS_Store
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 11:57 .git
+-rw-r--r--   1 naessgui  candidates   1671 Aug  7 13:30 Makefile
+drwxr-xr-x  15 naessgui  candidates    510 Aug  7 13:36 exec
+-rw-r--r--   1 naessgui  candidates   3240 Aug  7 13:35 main.c
+-rwxr-xr-x   1 naessgui  candidates  54684 Aug  7 13:36 minishell
+-rw-r--r--   1 naessgui  candidates  10914 Aug  7 12:43 minishell.h
+-rw-r--r--   1 naessgui  candidates   2286 Aug  7 13:35 nada
+drwxr-xr-x  24 naessgui  candidates    816 Aug  7 13:36 pars
+drwxr-xr-x  20 naessgui  candidates    680 Aug  7 12:54 tester

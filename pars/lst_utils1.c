@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:48:36 by naessgui          #+#    #+#             */
-/*   Updated: 2025/07/28 16:10:17 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:31:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ void	add_b(t_second_token **head, t_second_token *node)
 	node->next = NULL;
 }
 
-void	printlinkedlist1(t_second_token *head)
-{
-	t_second_token	*current;
+// void	printlinkedlist1(t_second_token *head)
+// {
+// 	t_second_token	*current;
 
-	current = head;
-	while (current != NULL)
-	{
-		printf(" %s -> ", current->token);
-		current = current->next;
-	}
-	printf("NULL\n");
-}
+// 	current = head;
+// 	while (current != NULL)
+// 	{
+// 		printf(" %s -> ", current->token);
+// 		current = current->next;
+// 	}
+// 	printf("NULL\n");
+// }
 
 void	free_list1(t_second_token *head)
 {

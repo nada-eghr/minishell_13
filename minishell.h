@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 11:04:31 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:43:18 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
 #endif
-extern int sigg;
+extern int g_sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -327,5 +327,6 @@ int		pars_exec(t_var *var, t_cmd *list);
 void	close_reder(t_var *var, int *arr_fd);
 char	*ft_join_path(char *s1, char *s2, char sep);
 void	free_env(t_env_list *env);
+void	print_cmd(t_cmd *node_cmd);
 
 #endif

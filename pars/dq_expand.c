@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:12 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 13:52:40 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:51:50 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	int		j;
 	char	*s1;
 	char	*s2;
+	char	*value;
 	char	*joined;
 
 	if (!token || !token->token || !ft_strchr(token->token, '$'))
@@ -87,7 +88,9 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 		j++;
 	s1 = substr(token->token, 1, j - 1);
 	s2 = substr(token->token, j, ft_strlen(token->token) - j - 1);
-	joined = ft_strjoin(s1, get_env_or_empty(s2, env, exit_stat));
+	value = get_env_or_empty(s2, env, exit_stat);
+	joined = ft_strjoin(s1, value);
+	free(value);
 	free(token->token);
 	token->token = ft_strdup(joined);
 	ft_free_exp(s1, s2, joined);

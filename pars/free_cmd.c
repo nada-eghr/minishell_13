@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:53:35 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 17:38:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:46:29 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	free_list(t_token *head)
 		current = next_node;
 	}
 }
+
 void	free_second_tokens(t_second_token **head)
 {
-	t_second_token *tmp;
+	t_second_token	*tmp;
 
 	while (*head)
 	{
@@ -82,7 +83,7 @@ void	free_cmd_list(t_vmin *v)
 		if (v->cmd->redi)
 			free_redirections(v->cmd->redi);
 		free(v->cmd);
-		v->cmd= tmp;
+		v->cmd = tmp;
 	}
 	v->filter_lst = NULL;
 }

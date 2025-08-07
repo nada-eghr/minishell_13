@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:57:56 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:19 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:45:01 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token_type	get_token_type(char *token)
 	if (!token || str_cmp(token, " "))
 		return (T_UNKNOWN);
 	len = ft_strlen(token);
-	if (str_cmp(token, " ") )
+	if (str_cmp(token, " "))
 		return (T_SPACE);
 	if (str_cmp(token, "|"))
 		return (T_PIPE);

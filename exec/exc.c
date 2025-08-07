@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 11:03:24 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:49:13 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,33 @@ void	my_parent(t_var *var)
 	}
 }
 
+// int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
+// {
+// 	if (var->rd_fd == NO_PIP && str_cmp("exit", list->arg[0]))
+// 		bilt_in(var, list, &*list_env);
+// 	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
+// 	{
+// 		if (pipe(var->pip_fd))
+// 			return (write_err("Minishell: ", "pipe error", "p")
+// 				, var->exit_stat = 1, 1);
+// 	}
+// 	var->arr_id[var->i] = fork();
+// 	if (var->arr_id[var->i] < 0)
+// 	{
+// 		write_err("Minishell: ", "fork", "p");
+// 		return (var->exit_stat = 1, 1);
+// 	}
+// 	if (var->arr_id[var->i] == 0)
+// 		my_child(var, list, list_env);
+// 	else
+// 		my_parent(var);
+// 	return (0);
+// }
+
 int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 {
-	if (var->rd_fd == NO_PIP && str_cmp("exit", list->arg[0]))
-		bilt_in(var, list, &*list_env);
+	if (var->rd_fd == NO_PIP && bilt_in(var, list, &*list_env))
+		return (1);
 	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
 	{
 		if (pipe(var->pip_fd))
