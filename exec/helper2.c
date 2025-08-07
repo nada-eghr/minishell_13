@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 18:53:20 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:51:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 	int	len;
 
 	len = 0;
-
 	if (var->last_in != NO_REDERCT)
 	{
 		close(var->last_in);
@@ -46,7 +45,6 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 	}
 	if (var->last_out >= 0)
 	{
-		
 		close(var->last_out);
 		dup2(std_in_out[1], 1);
 	}
@@ -72,5 +70,13 @@ int	serch(char *str, int c)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	its_bilt(char *s)
+{
+	if (str_cmp(s, "cd") || str_cmp(s, "echo") || str_cmp(s, "env") 
+		|| str_cmp(s, "export") || str_cmp(s, "pwd") || str_cmp(s, "unset"))
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 18:53:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:55:08 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,5 +328,5 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out);
 char	*ft_join_path(char *s1, char *s2, char sep);
 void	free_env(t_env_list *env);
 void	check_and_dup(t_var *var);
-
+int		its_bilt(char *s);
 #endif

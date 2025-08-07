@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 19:23:15 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:58:20 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ int	*arr_id_pross(t_var *var, t_cmd *list)
 		return (NULL);
 	var->num_cmd = counter;
 	arr_id = malloc(sizeof(pid_t) * counter);
+	counter = 0;
+	while (counter < var->num_cmd)
+		arr_id[counter++] = 0;
 	return (arr_id);
 }
 
-void	checker_signal(t_var *var, int	st)
+void	checker_signal(t_var *var, int st)
 {
 	if (WIFSIGNALED(st))
 	{
 		write(1, "\n", 1);
 		if (WTERMSIG(st) == SIGINT)
-		var->exit_stat = 130;
+			var->exit_stat = 130;
 		if (WTERMSIG(st) == SIGQUIT)
 			var->exit_stat = 131;
 	}
