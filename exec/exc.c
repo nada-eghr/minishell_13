@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:52:20 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:03:24 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	my_parent(t_var *var)
 
 int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 {
-	if (var->rd_fd == NO_PIP && bilt_in(var, list, &*list_env))
-		return (var->its_bilt = 1, 0);
-	if (var->i < var->num_cmd - 1)
+	if (var->rd_fd == NO_PIP && str_cmp("exit", list->arg[0]))
+		bilt_in(var, list, &*list_env);
+	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
 	{
 		if (pipe(var->pip_fd))
 			return (write_err("Minishell: ", "pipe error", "p")

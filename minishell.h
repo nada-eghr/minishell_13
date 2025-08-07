@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/06 13:16:00 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:04:31 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct variabel
 	int						*arr_id;
 	int						num_cmd;
 	int						pip_fd[2];
-	int						its_bilt;
 	int						her_s;
 	int						len_hrd;
 }							t_var;

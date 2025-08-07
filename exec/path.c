@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:07:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:21:50 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 		}
 		if (access(cmd, X_OK) == 0)
 			return (*exit_st = 0, cmd);
+		if (access(cmd, X_OK) && S_ISREG(sb.st_mode))
+		{
+			write_err("Minishell: ", cmd, "p");
+			return (*exit_st = 126, NULL);
+		}
 		else
 		{
 			write_err("Minishell: ", cmd, "p");
