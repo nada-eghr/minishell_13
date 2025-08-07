@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 20:09:07 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:12:18 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <readline/history.h>
 # include <stdbool.h>
 # include <stdlib.h>
+#include <sys/wait.h>
 #include <sys/stat.h> 
 #include <signal.h>
 # include <unistd.h>
@@ -37,7 +38,7 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
 #endif
-extern int g_g_sigg;
+extern int g_sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
