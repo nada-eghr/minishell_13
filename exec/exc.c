@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 12:49:13 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:50:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,15 @@ void	my_parent(t_var *var)
 	}
 }
 
-// int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
-// {
-// 	if (var->rd_fd == NO_PIP && str_cmp("exit", list->arg[0]))
-// 		bilt_in(var, list, &*list_env);
-// 	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
-// 	{
-// 		if (pipe(var->pip_fd))
-// 			return (write_err("Minishell: ", "pipe error", "p")
-// 				, var->exit_stat = 1, 1);
-// 	}
-// 	var->arr_id[var->i] = fork();
-// 	if (var->arr_id[var->i] < 0)
-// 	{
-// 		write_err("Minishell: ", "fork", "p");
-// 		return (var->exit_stat = 1, 1);
-// 	}
-// 	if (var->arr_id[var->i] == 0)
-// 		my_child(var, list, list_env);
-// 	else
-// 		my_parent(var);
-// 	return (0);
-// }
-
 int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 {
-	if (var->rd_fd == NO_PIP && bilt_in(var, list, &*list_env))
+	if (var->rd_fd == NO_PIP && its_bilt(list->arg[0]))
+	{
+		check_and_dup(var);
+		bilt_in(var, list, &*list_env);
+		var->its_bilt = 1;
 		return (1);
+	}
 	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
 	{
 		if (pipe(var->pip_fd))
@@ -117,22 +99,27 @@ void	more_comnd(t_cmd *list, t_env_list **list_env, t_var *var, int *arr_f)
 void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 {
 	int	*arr_fd_h;
+	int	std_it[2];
 
+	std_it[0] = dup(0);
+	std_it[1] = dup(1);
 	if (pars_exec(var, list))
 		return ;
+	if (str_cmp("exit", list->arg[0]))
+		my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env);
 	arr_fd_h = open_all_heredoc(list, var, *list_env);
 	if (!list->next)
 	{
 		rederection(list, var, arr_fd_h, 0);
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
 		{
-			close_reder(var, arr_fd_h);
+			close_reder(var, arr_fd_h, std_it);
 			return ;
 		}
 		excut_comand(var, list, &*list_env);
 	}
 	else
 		more_comnd(list, list_env, var, arr_fd_h);
+	close_reder(var, arr_fd_h, std_it);
 	wait_child(var);
-	close_reder(var, arr_fd_h);
 }

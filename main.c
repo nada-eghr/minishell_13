@@ -6,18 +6,18 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 13:57:04 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:07:57 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/cdefs.h>
-// int g_sigg = 0;
+
+int g_sigg = 0;
 
 void	handler(int s)
 {
 	(void)s;
-	// g_sigg = 1;
+	g_sigg = 1;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -39,19 +39,17 @@ void	defult_env(t_env_list **env)
 	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
 }
 
-void	input_chack(char *input,__unused t_env_list *env_list, t_var *var)
+void	input_chack(char *input, t_env_list *env_list, t_var *var)
 {
-	// if (g_sigg != NO_SIG_NAL)
-	// {
-	// 	var->exit_stat = g_sigg;
-	// 	g_sigg = NO_SIG_NAL;
-	// }
+	if (g_sigg != NO_SIG_NAL)
+	{
+		var->exit_stat = g_sigg;
+		g_sigg = NO_SIG_NAL;
+	}
 	if (!input)
 	{
-		printf("env\n");
 		write(1, "exit\n", 5);
-		// free_env(env_list);
-		printf("ldsfjal;j\n");
+		free_env(env_list);
 		exit (var->exit_stat);
 	}
 }
@@ -77,26 +75,22 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 
 void	first_step(char **env, t_vmin *v)
 {
-	// g_sigg = NO_SIG_NAL;
+	g_sigg = NO_SIG_NAL;
 	if (!env[0])
 		defult_env(&v->env_list);
 	else
 		v->env_list = get_list_env(env);
-	// rl_catch_signals = 0;
-	// signal(SIGQUIT, SIG_IGN);
-	// signal (SIGINT, handler);
-	// g_sigg = NO_SIG_NAL;
+	rl_catch_signals = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal (SIGINT, handler);
+	g_sigg = NO_SIG_NAL;
 	v->var.exit_stat = 0;
 }
-void ll(void)
-{
-	system("leaks -q minishell");
-}
+
 int	main(int ac, char **av, char **env)
 {
 	t_vmin	v;
-	
-	atexit(ll);
+
 	(void)ac;
 	(void)av;
 	first_step(env, &v);
@@ -115,7 +109,6 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
-		//print_cmd(v.cmd);
 		exc(v.cmd, &v.env_list, &v.var);
 		free_list1(v.second_tokens);
 		free_cmd_list(&v);

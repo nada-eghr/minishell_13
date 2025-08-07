@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 12:43:18 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:09:07 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
 #endif
-extern int g_sigg;
+extern int g_g_sigg;
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -50,6 +50,7 @@ typedef struct variabel
 	int						*arr_id;
 	int						num_cmd;
 	int						pip_fd[2];
+	int						its_bilt;
 	int						her_s;
 	int						len_hrd;
 }							t_var;
@@ -321,12 +322,12 @@ void	handler_sig_herd(int s);
 char	*expand_herdoc(char *input, t_env_list *env);
 void	wait_heredoc(int *herdoc, t_var *var, int id);
 int		serch_del(char *str, char *del);
-void	close_reder(t_var * var, int *arr_fd);
 void	handler(int s);
 int		pars_exec(t_var *var, t_cmd *list);
-void	close_reder(t_var *var, int *arr_fd);
+void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out);
 char	*ft_join_path(char *s1, char *s2, char sep);
 void	free_env(t_env_list *env);
 void	print_cmd(t_cmd *node_cmd);
-
+void	check_and_dup(t_var *var);
+int		its_bilt(char *s);
 #endif
