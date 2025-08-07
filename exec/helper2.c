@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:12:05 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:04:42 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	pars_exec(t_var *var, t_cmd *list)
 		return (1);
 	var->i = 0;
 	var->her_s = 0;
-	var->its_bilt = 0;
 	var->rd_fd = NO_PIP;
 	var->last_out = NO_REDERCT;
 	var->last_in = NO_REDERCT;

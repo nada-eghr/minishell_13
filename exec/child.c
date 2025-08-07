@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 15:13:41 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:04:19 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,32 @@ int	*arr_id_pross(t_var *var, t_cmd *list)
 	return (arr_id);
 }
 
+void	checker_signal(t_var *var, int	st)
+{
+	if (WIFSIGNALED(st))
+	{
+		write(1, "\n", 1);
+		if (WTERMSIG(st) == SIGINT)
+		var->exit_stat = 130;
+		if (WTERMSIG(st) == SIGQUIT)
+			var->exit_stat = 131;
+	}
+	else
+		var->exit_stat = WEXITSTATUS(st);
+}
 void	wait_child(t_var *var)
 {
 	int	i;
-	int	stat;
+	int	st;
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
 	while (i < var->num_cmd)
 	{
-		waitpid(var->arr_id[i], &stat, 0);
-		if (i == var->num_cmd - 1 && var->its_bilt == 0)
-		{
-			if (var->last_in != ERORR && var->last_out != ERORR 
-				&& i == var->num_cmd - 1)
-			{
-				if (WIFSIGNALED(stat))
-				{
-					write(1, "\n", 1);
-					if (WTERMSIG(stat) == SIGINT)
-						var->exit_stat = 130;
-					if (WTERMSIG(stat) == SIGQUIT)
-						var->exit_stat = 131;
-				}
-				else
-					var->exit_stat = WEXITSTATUS(stat);
-			}
-		}
+		waitpid(var->arr_id[i], &st, 0);
+		if ((i == var->num_cmd - 1)
+			&& (var->last_in != ERORR && var->last_out != ERORR))
+			checker_signal(var, st);
 		i++;
 	}
 	signal (SIGINT, handler);
@@ -66,12 +65,14 @@ void	h(int s)
 {
 	if (s == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(1, "got signal\n", 11);
 		exit(130);
 	}
 	if (s == SIGQUIT)
+	{
+		write(1, "got signal\n", 11);
 		exit(135);
-		
+	}
 }
 
 void	check_and_dup(t_var *var)
@@ -108,6 +109,7 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 	int		b;
 
 	signal(SIGQUIT, h);
+	signal(SIGINT, h);
 	if (var->last_in == ERORR || var->last_out == ERORR)
 	{
 		close (var->pip_fd[1]);
