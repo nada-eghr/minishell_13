@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 19:51:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/08 07:30:23 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 			close(arr_fd_hr[len++]);
 		free(arr_fd_hr);
 	}
-	free(var->arr_id);
 }
 
 int	serch(char *str, int c)

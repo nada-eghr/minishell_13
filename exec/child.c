@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 19:58:20 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/08 07:30:31 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	wait_child(t_var *var)
 		i++;
 	}
 	signal (SIGINT, handler);
+	free(var->arr_id);
 }
 
 void	check_and_dup(t_var *var)

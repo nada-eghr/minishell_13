@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 20:06:56 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/08 08:24:35 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	orredy_hav_valu(t_env_list *env, char *arg)
 	{
 		if (str_cmp(arg, env->content.key))
 		{
+			if (sv_ind < 0)
+				return (1);
 			free(env->content.value);
 			arg[j++] = '=';
 			st = malloc(ft_strlen(&arg[j]) + 1);
@@ -79,7 +81,8 @@ int	orredy_hav_valu(t_env_list *env, char *arg)
 		}
 		env = env->next;
 	}
-	arg[sv_ind] = '=';
+	if (arg[sv_ind])
+		arg[sv_ind] = '=';
 	return (0);
 }
 

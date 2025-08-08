@@ -1,0 +1,3 @@
+export l
+export l="              "; echo $l
+echo "$USER"$LS$HOME"HO-ME"'$_'
