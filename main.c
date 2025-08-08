@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/08 08:46:35 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/08 12:09:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 
 	v->cont = 0;
 	input = readline("minishell$ ");
+// 	printf("this input[%s]\n", input);
 	input_chack(input, env_list, var);
 	if (is_line_empty(input))
 		return (*continu = 1, free(input), NULL);
@@ -109,6 +110,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
+		//print_cmd(v.cmd);
 		exc(v.cmd, &v.env_list, &v.var);
 		free_list1(v.second_tokens);
 		free_cmd_list(&v);

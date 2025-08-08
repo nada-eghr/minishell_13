@@ -6,7 +6,7 @@ CC      = cc
 # # -fsanitize=address -g
 # LDFLAGS = -L$(HOME)/readline-install/lib
 # LIBS    = -lreadline
-CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
+CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include #-fsanitize=address -g
 LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
 LIBS    = -lreadline
 
