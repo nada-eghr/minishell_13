@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:08:19 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:25:53 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	out_file(int type, char *file, int *last_out)
 {
 	if (type == T_RED_OUT)
 	{
-		if (last_out >= 0)
+		if (*last_out >= 0)
 			close(*last_out);
 		*last_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0664);
 		if (*last_out < 0)
@@ -60,7 +60,7 @@ void	out_file(int type, char *file, int *last_out)
 	}
 	else if (type == T_APPEND)
 	{
-		if (last_out >= 0)
+		if (*last_out >= 0)
 			close(*last_out);
 		*last_out = open(file, O_CREAT | O_APPEND | O_WRONLY, 0664);
 		if (*last_out < 0)

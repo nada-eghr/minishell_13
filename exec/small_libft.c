@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 09:29:12 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:44 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:26:59 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ char	**ft_endd(char **arr, unsigned long len, char *str, char c)
 
 char	**ft_split(char *str, char sep)
 {
-	int				i;
 	char			**arr;
 	char			**res;
 	unsigned long	len;
 
-	i = 0;
 	len = word(str, sep);
 	arr = malloc(sizeof(char *) * (len + 1));
 	if (!arr)
