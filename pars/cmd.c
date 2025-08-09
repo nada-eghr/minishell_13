@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:54:08 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 17:02:57 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:39:53 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,31 +91,4 @@ t_cmd	*list_cmd(t_second_token *tokens)
 		curr = curr->next;
 	}
 	return (head);
-}
-
-void	print_cmd(t_cmd *node_cmd)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (node_cmd)
-	{
-		i = 0;
-		printf("command [%d] -->", j);
-		while (node_cmd->arg[i])
-		{
-			printf(" [ %s ] ", node_cmd->arg[i++]);
-		}
-		printf("\n");
-		while (node_cmd->redi)
-		{
-			printf("type : [ %d ] <-------> file : [ %s ]  ,------> is %d\n",
-				node_cmd->redi->type, node_cmd->redi->file,
-				node_cmd->redi->her_doc);
-			node_cmd->redi = node_cmd->redi->next;
-		}
-		node_cmd = node_cmd->next;
-		j++;
-	}
 }

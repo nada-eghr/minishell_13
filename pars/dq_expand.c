@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dq_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:12 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 17:21:03 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:53:31 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	char	*s2;
 	char	*value;
 	char	*joined;
-
+	
 	if (!token || !token->token || !ft_strchr(token->token, '$'))
 		return ;
 	j = 0;
@@ -96,14 +96,3 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	token->token = ft_strdup(joined);
 	ft_free_exp(s1, s2, joined);
 }
-
-// void	handle_escaped_dollar(t_token *tmp)
-// {
-// 	if (tmp->token[0] == '\\' && tmp->token[1] == '$')
-// 	{
-// 		char *literal = ft_strdup(tmp->token + 1);
-// 		free(tmp->token);
-// 		tmp->token = literal;
-// 		return ;
-// 	}
-// }

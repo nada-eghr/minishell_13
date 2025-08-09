@@ -1,13 +1,6 @@
-# Compiler and flags
-# Compiler and flags
 CC      = cc  
-# -fsanitize=address -g
-# CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
-
-# LDFLAGS = -L$(HOME)/readline-install/lib
-# LIBS    = -lreadline
-CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include #-fsanitize=address -g
-LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
+CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
+LDFLAGS = -L$(HOME)/readline-install/lib
 LIBS    = -lreadline
 
 # Source and object files
@@ -56,7 +49,6 @@ SRCS    =  ./pars/expand.c  \
 
 OBJS    = $(SRCS:.c=.o)
 
-# Build target
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -65,14 +57,12 @@ $(NAME): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up object files and binary
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
-# Rebuild everything
 re: fclean all
 s : all clean
 .PHONY: all clean fclean re
