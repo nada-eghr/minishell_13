@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:12:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:08:11 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 void	free_env(t_env_list *env)
 {
 	t_env_list	*list;
+	t_env_list	*l;
 
 	while (env)
 	{
 		list = env;
+		l = list;
 		env = env->next;
 		list->next = NULL;
 		free(list->content.key);
 		free(list->content.value);
+		free(list);
 	}
 	env = NULL;
 }
@@ -95,9 +98,9 @@ t_env_list	*get_list_env(char **env)
 
 	i = 1;
 	serch_old_p = 0;
-	new_env = ft_lstnew_env(env[0]);
+	new_env = ft_lstnew_env(env[0], ENV);
 	while (env[i])
-		ft_lstadd_back(&new_env, ft_lstnew_env(env[i++]));
+		ft_lstadd_back(&new_env, ft_lstnew_env(env[i++], ENV));
 	serch = new_env;
 	while (serch)
 	{
@@ -110,6 +113,6 @@ t_env_list	*get_list_env(char **env)
 		serch = serch->next;
 	}
 	if (serch_old_p == 0)
-		ft_lstadd_back(&new_env, ft_lstnew_env("OLDPWD"));
+		ft_lstadd_back(&new_env, ft_lstnew_env("OLDPWD", ENV));
 	return (new_env);
 }

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 11:59:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:50:16 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	arr_fd_h = open_all_heredoc(list, var, *list_env);
 	if (!list->next)
 	{
+		var->rd_fd = NO_PIP;
 		rederection(list, var, arr_fd_h, 0);
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:42:51 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 08:10:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 11:23:41 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@ int	serch_equal(char *str)
 	if (i > 0)
 		str[i] = '\0';
 	return (i);
+}
+
+void	print_all_var(t_env_list *env, int *exit_st)
+{
+	while (env)
+	{
+		if (str_cmp(env->content.key, "_") == 0)
+		{
+			if (env->content.value)
+				printf("declare -x %s=\"%s\"\n",
+					env->content.key, env->content.value);
+			else
+				printf("declare -x %s\n", env->content.key);
+		}
+		env = env->next;
+	}
+	*exit_st = 0;
 }
 
 char	*new_tab(t_env_list *list_env)
@@ -46,8 +63,8 @@ char	*new_tab(t_env_list *list_env)
 		arr[i++] = '=';
 		while (list_env->content.value[j])
 			arr[i++] = list_env->content.value[j++];
-		arr[i] = '\0';
 	}
+	arr[i] = '\0';
 	return (arr);
 }
 

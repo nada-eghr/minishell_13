@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 12:16:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:08:39 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,46 +40,36 @@ int	chake_args(char *str, int *pls)
 	return (0);
 }
 
-void	print_all_var(t_env_list *env, int *exit_st)
+void	organized_nod(t_env_list *env, char *arg, int j)
 {
-	while (env)
-	{
-		if (str_cmp(env->content.key, "_") == 0)
-		{
-			if (env->content.value)
-				printf("declare -x %s=\"%s\"\n",
-					env->content.key, env->content.value);
-			else
-				printf("declare -x %s\n", env->content.key);
-		}
-		env = env->next;
-	}
-	*exit_st = 0;
+	char	*st;
+	int		i;
+
+	i = 0;
+	free(env->content.value);
+	env->content.value = NULL;
+	arg[j++] = '=';
+	st = malloc(ft_strlen(&arg[j]) + 1);
+	if (!st)
+		return ;
+	while (arg[j])
+		st[i++] = arg[j++];
+	st[i] = '\0';
+	env->content.value = st;
 }
 
 int	orredy_hav_valu(t_env_list *env, char *arg)
 {
-	char	*st;
-	int		i;
-	int		j;
 	int		sv_ind;
 
-	i = 0;
 	sv_ind = serch_equal(arg);
-	j = sv_ind;
 	while (env)
 	{
 		if (str_cmp(arg, env->content.key))
 		{
 			if (sv_ind < 0)
 				return (1);
-			free(env->content.value);
-			arg[j++] = '=';
-			st = malloc(ft_strlen(&arg[j]) + 1);
-			while (arg[j])
-				st[i++] = arg[j++];
-			st[i] = '\0';
-			env->content.value = st;
+			organized_nod(env, arg, sv_ind);
 			return (1);
 		}
 		env = env->next;
@@ -133,7 +123,7 @@ void	my_export(t_env_list *env, char **args, int *exit_st)
 		if (pls == 1)
 			have_pls_(env, args[i]);
 		else if (orredy_hav_valu(env, args[i]) == 0)
-			ft_lstadd_back(&env, ft_lstnew_env(args[i]));
+			ft_lstadd_back(&env, ft_lstnew_env(args[i], ENV));
 		i++;
 	}
 	*exit_st = 0;

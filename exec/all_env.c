@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 07:32:49 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:12:47 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,16 @@ char	*get_line(char *data, char c)
 	return (NULL);
 }
 
-t_env_list	*ft_lstnew_env(void *content)
+t_env_list	*ft_lstnew_env(void *data, int stet)
 {
 	t_env_list	*nod;
 	char		*frst;
 	char		*last;
 
-	frst = get_line(content, 'f');
-	last = get_line(content, 'l');
+	frst = get_line(data, 'f');
+	last = get_line(data, 'l');
+	if (stet == ENV_DEFAULT)
+		free(data);
 	nod = malloc(sizeof(t_env_list));
 	if (!nod)
 		return (NULL);

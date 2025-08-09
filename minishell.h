@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/07 20:12:18 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:13:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 #define HERDC_IN_LIST 2
 #define HERDC_IN_CMD 3
 #define  NO_SIG_NAL 4
+#define ENV_DEFAULT 5
+#define ENV 6
 #define CMD_NOTFIND 127
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
@@ -287,7 +289,7 @@ void	ft_helper(t_token *token, t_env_list *env, int *exit_stat);
 
 //-----------------------------------------
 t_env_list					*get_list_env(char **env);
-t_env_list					*ft_lstnew_env(void *content);
+t_env_list					*ft_lstnew_env(void *data, int stet);
 void						ft_lstadd_back(t_env_list **lst, t_env_list *n);
 int							ft_strlen(char *str);
 int							str_cmp(char *s1, char *s2);
@@ -331,4 +333,5 @@ void	free_env(t_env_list *env);
 void	print_cmd(t_cmd *node_cmd);
 void	check_and_dup(t_var *var);
 int		its_bilt(char *s);
+void	print_all_var(t_env_list *env, int *exit_st);
 #endif

@@ -1,5 +1,7 @@
 
- 	
+unset PATH
+cat Makefile
+
 export HOLA="bonjour      "  
 echo $HOLA | cat -e
 export HOLA="   -n bonjour   "  

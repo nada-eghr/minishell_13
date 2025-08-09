@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/07 11:21:50 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 11:25:32 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ int	str_chr(char *cmd, char c)
 	return (0);
 }
 
+void	free_dbl_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
 char	*serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 {
 	char	*path;
@@ -37,17 +47,19 @@ char	*serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 
 	i = 0;
 	path = my_get_env("PATH", env);
-	split_path = ft_split(path, ':');
-	while (split_path[i])
+	if (path)
 	{
-		new_p = ft_join_path(split_path[i], cmd, '/');
-		if (access(new_p, X_OK) == 0)
-			return (free(split_path), new_p);
-		free(new_p);
-		i++;
+		split_path = ft_split(path, ':');
+		while (split_path[i])
+		{
+			new_p = ft_join_path(split_path[i], cmd, '/');
+			if (access(new_p, X_OK) == 0)
+				return (free_dbl_arr(split_path), new_p);
+			free(new_p);
+			i++;
+		}
+		free_dbl_arr(split_path);
 	}
-	if (split_path)
-		free(split_path);
 	write_err("Minishell: ", cmd, ": command not found\n");
 	return (*exit_st = CMD_NOTFIND, NULL);
 }

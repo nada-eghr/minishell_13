@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/08 12:09:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:44:33 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	defult_env(t_env_list **env)
 
 	i = 0;
 	pwd = getcwd(NULL, 0);
-	*env = ft_lstnew_env(ft_strjoin("PATH=", pwd));
+	*env = ft_lstnew_env(ft_strjoin("PWD=", pwd), ENV_DEFAULT);
 	free(pwd);
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("SHLVL=", "1")));
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("SHLVL=", "1"), ENV_DEFAULT));
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env"), ENV_DEFAULT));
+	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL), ENV_DEFAULT));
 }
 
 void	input_chack(char *input, t_env_list *env_list, t_var *var)
@@ -87,13 +87,17 @@ void	first_step(char **env, t_vmin *v)
 	g_sigg = NO_SIG_NAL;
 	v->var.exit_stat = 0;
 }
-
+void	s()
+{
+	system("leaks minishell");
+}
 int	main(int ac, char **av, char **env)
 {
 	t_vmin	v;
 
 	(void)ac;
 	(void)av;
+	atexit(s);
 	first_step(env, &v);
 	while (1)
 	{
@@ -110,7 +114,6 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
-		//print_cmd(v.cmd);
 		exc(v.cmd, &v.env_list, &v.var);
 		free_list1(v.second_tokens);
 		free_cmd_list(&v);
