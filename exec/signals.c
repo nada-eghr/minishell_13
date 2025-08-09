@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 17:09:48 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 17:20:34 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:31:14 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	handler(int s)
 void	defult_env(t_env_list **env)
 {
 	char	*pwd;
-	int		i;
 
-	i = 0;
 	pwd = getcwd(NULL, 0);
 	*env = ft_lstnew_env(ft_strjoin("PWD=", pwd), ENV_DEFAULT);
 	free(pwd);
