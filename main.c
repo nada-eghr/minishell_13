@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 18:54:47 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 
 	v->cont = 0;
 	input = readline("minishell$ ");
-	input_chack(input, env_list, var);
+	input_check(input, env_list, var);
 	if (is_line_empty(input))
 		return (*continu = 1, free(input), NULL);
 	add_history(input);

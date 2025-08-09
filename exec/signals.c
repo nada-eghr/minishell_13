@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 17:09:48 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 17:31:14 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	defult_env(t_env_list **env)
 		(ft_strjoin("OLDPWD", NULL), ENV_DEFAULT));
 }
 
-void	input_chack(char *input, t_env_list *env_list, t_var *var)
+void	input_check(char *input, t_env_list *env_list, t_var *var)
 {
 	if (g_sigg != NO_SIG_NAL)
 	{

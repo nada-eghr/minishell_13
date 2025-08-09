@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 20:06:02 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:18:10 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,12 @@ void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
 	if (tmp->token[0] == '$' && tmp->token[1] == '"')
 	{
 		remove_dollar_and_quotes_if_needed(tmp);
-		printf("1\n");
 		return ;
 	}
-	if (ft_strchr(tmp->token, '$')){
-		printf("2\n");
+	if (ft_strchr(tmp->token, '$'))
 		expand_dollar_in_token(tmp, env, exit_stat);
-	}
 	else
-	{
 		remove_wrapping_quotes(tmp);
-		printf("3\n");
-		
-	}
-	
 }
 
 void	expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat)

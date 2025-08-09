@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 17:28:54 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct variabel
 	int						rd_fd;
 	int						last_in;
 	int						last_out;
-	int						id_pros;
 	int						exit_stat;
 	int						*arr_id;
 	int						num_cmd;
@@ -298,7 +297,7 @@ char						*it_correct_comnd(int *exit_st, char *cmd,
 								t_env_list *env);
 void						defult_env(t_env_list **env);
 void						handler(int s);
-void						input_chack(char *input, t_env_list *env_list,
+void						input_check(char *input, t_env_list *env_list,
 								t_var *var);
 //////----BILT_IN----///////
 void						my_pwd(int *exit_sta);
@@ -339,6 +338,5 @@ void						handler(int s);
 void						close_reder(t_var *var, int *arr_fd_hr,
 								int *std_in_out);
 void						free_env(t_env_list *env);
-void						print_cmd(t_cmd *node_cmd);
 void						check_and_dup(t_var *var);
 #endif

@@ -40,7 +40,7 @@ SRCS    =  ./pars/expand.c  \
 			./exec/bilt_in/exit.c \
 			./exec/bilt_in/echo.c \
 			./exec/helper_heredoc.c\
-			./exec/ignor_fun_now.c \
+			./exec/helper3.c \
 			./exec/rediraction.c \
 			./exec/path.c \
 			./exec/cmd_herdoc.c \

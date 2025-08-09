@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 19:50:33 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:09:53 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 	int	len;
 
 	len = 0;
-	close(var->last_in);
+	if (var->last_in >= 0)
+		close(var->last_in);
 	dup2(std_in_out[0], 0);
 	close(std_in_out[0]);
-	close(var->last_out);
+	if (var->last_out >= 0)
+		close(var->last_out);
 	dup2(std_in_out[1], 1);
 	close(std_in_out[1]);
 	if (var->len_hrd > 0)

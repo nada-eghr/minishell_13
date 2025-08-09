@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 19:20:56 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:07:35 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	checker_signal(t_var *var, int st)
 {
 	if (var->its_bilt)
 		return ;
-	if (WIFSIGNALED(st))
+	else if (WIFSIGNALED(st))
 	{
 		write(1, "\n", 1);
 		if (WTERMSIG(st) == SIGINT)

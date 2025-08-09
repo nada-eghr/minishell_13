@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:12 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 21:53:31 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:40:53 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	char	*s2;
 	char	*value;
 	char	*joined;
-	
+
 	if (!token || !token->token || !ft_strchr(token->token, '$'))
 		return ;
 	j = 0;
