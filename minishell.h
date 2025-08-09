@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 22:30:03 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,8 +307,8 @@ void						my_unset(t_env_list **en, char **args,
 								int *exit_st);
 void						my_export(t_env_list *env, char **args,
 								int *exit_st);
-void						my_exit(char **args, int *exit_st, int pip,
-								t_env_list *env);
+int							my_exit(char **args, int *exit_st, int pip,
+								 t_env_list *env);
 void						my_echo(char **args, int *exit_st);
 void						exc(t_cmd *list, t_env_list **list_env, t_var *var);
 int							bilt_in(t_var *var, t_cmd *list,

@@ -1,6 +1,10 @@
 CC      = cc  
-CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
-LDFLAGS = -L$(HOME)/readline-install/lib
+# CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
+# LDFLAGS = -L$(HOME)/readline-install/lib
+# LIBS    = -lreadline
+
+CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include #-fsanitize=address -g
+LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
 LIBS    = -lreadline
 
 # Source and object files

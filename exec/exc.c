@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 19:23:56 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 22:29:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	{
 		rederection(list, var, arr_fd_h, 0);
 		if (str_cmp("exit", list->arg[0]) == 1)
-			my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env);
+		{
+			if (my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env))
+				return ;
+		}
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
 		{
 			close_reder(var, arr_fd_h, std_it);
