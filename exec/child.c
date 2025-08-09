@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 17:00:10 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:20:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	checker_signal(t_var *var, int st)
 		if (WTERMSIG(st) == SIGQUIT)
 			var->exit_stat = 131;
 	}
-	if (var->its_bilt == 0)
+	else if (var->its_bilt == 0)
 		var->exit_stat = WEXITSTATUS(st);
 }
 

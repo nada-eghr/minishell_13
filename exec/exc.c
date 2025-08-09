@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 16:25:39 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:23:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 	{
 		check_and_dup(var);
 		bilt_in(var, list, &*list_env);
-		var->its_bilt = 1;
-		return (1);
+		return (var->its_bilt = 1, 1);
 	}
 	if (var->i < var->num_cmd - 1 && var->rd_fd != NO_PIP)
 	{
@@ -66,6 +65,8 @@ int	excut_comand(t_var *var, t_cmd *list, t_env_list **list_env)
 	if (var->arr_id[var->i] < 0)
 	{
 		write_err("Minishell: ", "fork", "p");
+		close(var->pip_fd[0]);
+		close(var->pip_fd[1]);
 		return (var->exit_stat = 1, 1);
 	}
 	if (var->arr_id[var->i] == 0)
