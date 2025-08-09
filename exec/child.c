@@ -6,7 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/07 20:34:53 by naessgui         ###   ########.fr       */
+=======
+/*   Updated: 2025/08/08 07:30:31 by slamhaou         ###   ########.fr       */
+>>>>>>> 214b2be17e1bcde565caae37f416b23de75bf585
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +67,7 @@ void	wait_child(t_var *var)
 		i++;
 	}
 	signal (SIGINT, handler);
+	free(var->arr_id);
 }
 
 void	check_and_dup(t_var *var)

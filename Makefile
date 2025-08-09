@@ -2,13 +2,13 @@
 # Compiler and flags
 CC      = cc 
 
-CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include -fsanitize=address -g
-
-LDFLAGS = -L$(HOME)/readline-install/lib
-LIBS    = -lreadline
-# CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
-# LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
+# CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
+# # -fsanitize=address -g
+# LDFLAGS = -L$(HOME)/readline-install/lib
 # LIBS    = -lreadline
+CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include #-fsanitize=address -g
+LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
+LIBS    = -lreadline
 
 # Source and object files
 NAME    = minishell

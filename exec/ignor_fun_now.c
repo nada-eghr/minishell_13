@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:42:51 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 18:57:43 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/08 08:10:45 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	serch_equal(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	if (!str[i])
+		return (-1);
 	if (i > 0)
 		str[i] = '\0';
 	return (i);
