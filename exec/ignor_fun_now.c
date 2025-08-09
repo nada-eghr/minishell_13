@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ignor_fun_now.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:42:51 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 08:10:45 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:17:49 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char	*new_tab(t_env_list *list_env)
 		arr[i++] = '=';
 		while (list_env->content.value[j])
 			arr[i++] = list_env->content.value[j++];
-		arr[i] = '\0';
 	}
+	arr[i] = '\0';
 	return (arr);
 }
 

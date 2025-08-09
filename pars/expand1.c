@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:25:38 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/01 13:40:26 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 09:39:19 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	expand_env_variable(t_token *tmp, t_env_list *env, int *exit_stat)
 	char	*joined;
 
 	j = 0;
-	while (tmp->token[j] && tmp->token[j] != '$')
+	while (tmp->token[j] && tmp->token[j] != '$' )
 		j++;
 	s1 = substr(tmp->token, 0, j);
 	s2 = substr(tmp->token, j, ft_strlen(tmp->token) - j);

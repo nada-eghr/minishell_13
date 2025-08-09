@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/06 15:51:02 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:35:04 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ void	expand_single_quote(t_token *tmp)
 t_token	*expand_token(t_token *token, t_env_list *env, int *exit_stat)
 {
 	t_token	*tmp;
-	t_token	*prev;
 
 	tmp = token;
-	prev = token;
 	while (tmp)
 	{
-		if (tmp->type == T_D_QUOTE)
+		if (tmp->type == T_D_QUOTE){
+			
 			ft_helper(tmp, env, exit_stat);
+			printf("here\n");
+		}
 		else if (tmp->type == T_ENV)
 			ft_helper_env(tmp, env, exit_stat);
 		else if (tmp->type == T_S_QUOTE)
@@ -78,7 +79,6 @@ t_token	*expand_token(t_token *token, t_env_list *env, int *exit_stat)
 				delete_specific_node(&token, tmp);
 			expand_word_token(tmp, env, exit_stat);
 		}
-		prev = tmp;
 		tmp = tmp->next;
 	}
 	return (token);

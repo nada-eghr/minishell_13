@@ -3,56 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/08 12:09:59 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:25:08 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
-int g_sigg = 0;
-
-void	handler(int s)
-{
-	(void)s;
-	g_sigg = 1;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay(); 
-	return ;
-}
-
-void	defult_env(t_env_list **env)
-{
-	char	*pwd;
-	int		i;
-
-	i = 0;
-	pwd = getcwd(NULL, 0);
-	*env = ft_lstnew_env(ft_strjoin("PATH=", pwd));
-	free(pwd);
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("SHLVL=", "1")));
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("_=", "/usr/bin/env")));
-	ft_lstadd_back(&*env, ft_lstnew_env(ft_strjoin("OLDPWD", NULL)));
-}
-
-void	input_chack(char *input, t_env_list *env_list, t_var *var)
-{
-	if (g_sigg != NO_SIG_NAL)
-	{
-		var->exit_stat = g_sigg;
-		g_sigg = NO_SIG_NAL;
-	}
-	if (!input)
-	{
-		write(1, "exit\n", 5);
-		free_env(env_list);
-		exit (var->exit_stat);
-	}
-}
 t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 {
 	t_token	*tokens;
@@ -60,7 +20,6 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 
 	v->cont = 0;
 	input = readline("minishell$ ");
-// 	printf("this input[%s]\n", input);
 	input_chack(input, env_list, var);
 	if (is_line_empty(input))
 		return (*continu = 1, free(input), NULL);
@@ -83,15 +42,18 @@ void	first_step(char **env, t_vmin *v)
 		v->env_list = get_list_env(env);
 	rl_catch_signals = 0;
 	signal(SIGQUIT, SIG_IGN);
-	signal (SIGINT, handler);
+	signal(SIGINT, handler);
 	g_sigg = NO_SIG_NAL;
 	v->var.exit_stat = 0;
 }
-
+//  void ll(void)
+//  {
+// 	system("leaks -q minishell");
+//  }
 int	main(int ac, char **av, char **env)
 {
 	t_vmin	v;
-
+	// atexit(ll);
 	(void)ac;
 	(void)av;
 	first_step(env, &v);
@@ -110,7 +72,6 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
-		//print_cmd(v.cmd);
 		exc(v.cmd, &v.env_list, &v.var);
 		free_list1(v.second_tokens);
 		free_cmd_list(&v);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 14:12:48 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:48:17 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_env(t_env_list *env)
 		list->next = NULL;
 		free(list->content.key);
 		free(list->content.value);
+		free(list);
 	}
 	env = NULL;
 }
@@ -74,7 +75,7 @@ int	str_cmp(char *s1, char *s2)
 
 	i = 0;
 	if (!s1 || !s2)
-		return (1);
+		return (-1);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
