@@ -1,9 +1,9 @@
 # Compiler and flags
 # Compiler and flags
-CC      = cc 
-
+CC      = cc  
+# -fsanitize=address -g
 # CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
-# # -fsanitize=address -g
+
 # LDFLAGS = -L$(HOME)/readline-install/lib
 # LIBS    = -lreadline
 CFLAGS  = -g -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include #-fsanitize=address -g
@@ -34,12 +34,26 @@ SRCS    =  ./pars/expand.c  \
 			./pars/quotes.c \
 			./pars/empty_node.c\
 			./exec/gt_l.c \
-			./exec/small_libft.c ./exec/exc.c \
-			./exec/helper.c  ./exec/all_env.c \
-			./exec/bilt_in/pwd.c ./exec/bilt_in/env.c ./exec/bilt_in/cd.c \
-			 ./exec/bilt_in/unset.c ./exec/bilt_in/export.c ./exec/helper2.c\
-			 ./exec/bilt_in/exit.c ./exec/bilt_in/echo.c ./exec/helper_heredoc.c\
-			./exec/ignor_fun_now.c ./exec/rediraction.c ./exec/path.c ./exec/cmd_herdoc.c ./exec/child.c
+			./exec/small_libft.c \
+			./exec/exc.c \
+			./exec/helper.c  \
+			./exec/all_env.c \
+			./exec/bilt_in/pwd.c \
+			./exec/bilt_in/env.c \
+			./exec/bilt_in/cd.c \
+			./exec/bilt_in/unset.c \
+			./exec/bilt_in/export.c \
+			./exec/helper2.c \
+			./exec/bilt_in/exit.c \
+			./exec/bilt_in/echo.c \
+			./exec/helper_heredoc.c\
+			./exec/ignor_fun_now.c \
+			./exec/rediraction.c \
+			./exec/path.c \
+			./exec/cmd_herdoc.c \
+			./exec/signals.c\
+			./exec/child.c
+
 OBJS    = $(SRCS:.c=.o)
 
 # Build target

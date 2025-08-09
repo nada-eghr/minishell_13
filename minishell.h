@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 12:13:07 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:28:54 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,35 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-#include <errno.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/stat.h> 
-#include <signal.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 # include <unistd.h>
-#include <limits.h>
-#include <fcntl.h>
-#define	ERORR	-1
-#define NO_REDERCT -2 
-#define  FIRST_CMD -3
-#define  NO_PIP -4
-#define SUCCESS 1
-#define OUT_SIG_INT 130
-#define HERDC_IN_LIST 2
-#define HERDC_IN_CMD 3
-#define  NO_SIG_NAL 4
-#define ENV_DEFAULT 5
-#define ENV 6
-#define CMD_NOTFIND 127
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 42
-#endif
-extern int g_sigg;
+# define ERORR -1
+# define NO_REDERCT -2
+# define FIRST_CMD -3
+# define NO_PIP -4
+# define SUCCESS 1
+# define OUT_SIG_INT 130
+# define HERDC_IN_LIST 2
+# define HERDC_IN_CMD 3
+# define NO_SIG_NAL 4
+# define ENV_DEFAULT 5
+# define ENV 6
+# define CMD_NOTFIND 127
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+extern int					g_sigg;
+
 //---------------------------------------------------------
 typedef struct variabel
 {
@@ -58,25 +60,17 @@ typedef struct variabel
 	int						len_hrd;
 }							t_var;
 
-// typedef struct p_var
-// {
-// 	bool					s_quote;
-// 	bool					d_quote;
-// 	char					*input_line;
-
-// }							t_p_var;
-
 typedef enum e_token_type
 {
 	T_WORD,
-	T_PIPE,    /* | */
-	T_RED_IN,  /* < */
-	T_RED_OUT, /* > */
-	T_APPEND,  /* >> */
-	T_HEREDOC, /* << */
-	T_ENV,     /* $.. */
-	T_S_QUOTE, /* '...' */
-	T_D_QUOTE, /* "..." */
+	T_PIPE,
+	T_RED_IN,
+	T_RED_OUT,
+	T_APPEND,
+	T_HEREDOC,
+	T_ENV,
+	T_S_QUOTE,
+	T_D_QUOTE,
 	T_UNKNOWN,
 	T_SPACE
 }							t_token_type;
@@ -109,9 +103,9 @@ typedef struct s_redirection
 typedef struct s_cmd
 {
 	char					**arg;
-	int herdoc;
+	int						herdoc;
 	t_redirection			*redi;
-	struct s_cmd *next; // next command in pipeline
+	struct s_cmd			*next;
 }							t_cmd;
 
 //---------------------------  env struct  -------------------------------
@@ -130,26 +124,39 @@ typedef struct s_list
 
 typedef struct var
 {
-	t_env_list	*env_list;
-	t_var		var;
-	char	*input;
-	int		cont;
-	t_token *filter_lst;
-	t_second_token *second_tokens;
-	t_second_token *second_tokens_head;
-	t_cmd *cmd;
-}			t_vmin;
+	t_env_list				*env_list;
+	t_var					var;
+	char					*input;
+	int						cont;
+	t_token					*filter_lst;
+	t_second_token			*second_tokens;
+	t_second_token			*second_tokens_head;
+	t_cmd					*cmd;
+}							t_vmin;
 //-----------------------    check_syntaxe    -----------------------------
+bool						check_error(t_second_token **list, t_var *var);
 
-// bool						check_error(t_second_token **list);
-bool						check_error2(t_token **list);
 //-------------------------      cmd        -------------------------------
-
+int							check(t_second_token *token);
 t_cmd						*creat_cmd(t_second_token *list);
 void						add_back_cmd(t_cmd **head, t_cmd *node);
 t_cmd						*list_cmd(t_second_token *tokens);
-void						print_node_cmd(t_cmd *node_cmd);
-void						print_cmd(t_cmd *node_cmd);
+
+//------------------------      dq_expand   -----------------------------
+void						ft_helper_env(t_token *token, t_env_list *env,
+								int *exit_stat);
+void						ft_helper(t_token *token, t_env_list *env,
+								int *exit_stat);
+void						remove_dollar_and_quotes_if_needed(t_token *token);
+void						expand_dollar_in_token(t_token *token,
+								t_env_list *env, int *exit_stat);
+void						remove_wrapping_quotes(t_token *token);
+void						handle_escaped_dollar(t_token *tmp);
+//-------------------------empty_node-----------------------------
+void						delete_empty_node(t_second_token **head,
+								t_second_token *nodeToDelete);
+void						remove_empty_node(t_second_token **second_tokens);
+bool						is_line_empty(const char *line);
 
 //-------------------------  expand_utils  --------------------------------
 
@@ -157,7 +164,6 @@ int							ft_strncmp(const char *s1, const char *s2,
 								size_t n);
 char						*ft_itoa(int n);
 void						ft_free_exp(char *s1, char *s2, char *s3);
-int							is_end_of_key(char c);
 
 //---------------------------	expand    ------------------------------
 
@@ -187,6 +193,13 @@ void						delete_specific_node(t_token **head,
 								t_token *nodeToDelete);
 t_token						*convert_to_token(t_token *token);
 
+//-------------------------   free_cmd   -------------------------------
+void						free_list(t_token *head);
+void						free_second_tokens(t_second_token **head);
+void						free_str_array(char **arr);
+void						free_redirections(t_redirection *redi);
+void						free_cmd_list(t_vmin *v);
+
 //-------------------------    get_files     ------------------------------
 
 t_redirection				*add_new(int type, char *file_name, int her_doc);
@@ -215,27 +228,24 @@ char						*get_value1(char *str, t_env_list *env,
 
 t_token						*creattoken(char *data);
 void						add_back(t_token **head, t_token *node);
-void						printlinkedlist(t_token *head);
-void						free_list(t_token *head);
 
 //--------------------------lst_Utils1-------------------------------
 
 t_second_token				*creat_second_token(char *data, t_token_type type);
 void						add_b(t_second_token **head, t_second_token *node);
-void						printlinkedlist1(t_second_token *head);
 void						free_list1(t_second_token *head);
 
 //--------------------------    pars.c   ----------------------------------
 
 t_token						*parse_operator_token(const char *data, int *i);
 t_token						*parse_quoted_token(const char *data, int *i);
-t_token						*parse_word_token(const char *data, int *i);
+t_token						*parse_word_token(char *data, int *i);
 t_token						*handle_spaces(const char *data, int *i);
 t_token						*handle_quotes(const char *data, int *i);
 
 //---------------------------  quotes  ---------------------------------
 
-// int							check_quotes(char *str);
+int							check_quotes(char *str, t_var *var);
 
 //------------------------ second_tokinization -----------------------------
 
@@ -246,44 +256,29 @@ t_second_token				*second_tokinization(t_token *token);
 t_token_type				get_token_type(char *token);
 t_token						*convert_to_node(char *data);
 
-//--------------------------    utils    ----------------------------------
+//------------------------- utils_gvalue -----------------------------
+char						*ft_strjoin_free(char *s1, char *s2);
+char						*handle_digit_env(const char *str, int *i,
+								t_env_list *env, char *s);
+char						*ft_strjoin(char *s1, char *s2);
+char						*substr(const char *src, int start, int len);
+char						*ft_strdup(char *s);
 
-int							str_cmp(char *s1, char *s2);
+//--------------------------    utils    ----------------------------------
 int							ft_strlen(char *str);
 char						*ft_strncpy(char *dst, const char *src, size_t n);
 char						*substr(const char *src, int start, int len);
 char						*ft_strdup(char *s);
-
+char						*ft_strchr(char *s, int c);
 //--------------------------    utils1    ----------------------------------
 
-int							ft_isprint(int c);
 int							ft_space(char c);
-char						*ft_strjoin(char *s1, char *s2);
-char						*ft_strchr(char *s, int c);
-bool						is_line_empty(const char *line);
 int							ft_isalnum(int c);
 int							ft_isdigit(int c);
-int	ft_isalpha(int c);
+int							ft_isalpha(int c);
 
 //–----------------------------------------------------------------------------
-int	check_quotes(char *str, t_var *var);
-bool	check_error(t_second_token **list , t_var *var);
-void ll(void);
-// char *expand_line(char *input , t_env_list *env_list);
-char	*ft_strjoin_free(char *s1, char *s2);
-
-char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s);
-void	free_cmd_list(t_vmin *v);
-// void	free_second_tokens(t_second_token *head);
-void	free_second_tokens(t_second_token **head);
-
-void	delete_empty_node(t_second_token **head, t_second_token *nodeToDelete);
-void	remove_empty_node(t_second_token **second_tokens);
-void	remove_dollar_and_quotes_if_needed(t_token *token);
-void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat);
-void	remove_wrapping_quotes(t_token *token);
-void	ft_helper_env(t_token *token, t_env_list *env, int *exit_stat);
-void	ft_helper(t_token *token, t_env_list *env, int *exit_stat);
+void						ll(void);
 
 ///////////////////////////////exc/////////////////////////////////////////
 
@@ -301,37 +296,49 @@ int							is_alpha(char c);
 void						write_err(char *s, char *arg, char *last);
 char						*it_correct_comnd(int *exit_st, char *cmd,
 								t_env_list *env);
+void						defult_env(t_env_list **env);
+void						handler(int s);
+void						input_chack(char *input, t_env_list *env_list,
+								t_var *var);
 //////----BILT_IN----///////
-void		my_pwd(int *exit_sta);
-void	my_env(t_env_list *env, int	*exit_st);
-void	my_cd(t_env_list *env, char **arg, int *exit_st);
-void	my_unset(t_env_list **en, char **args, int *exit_st);
-void	my_export(t_env_list *env, char **args, int *exit_st);
-void	my_exit(char **args, int *exit_st, int pip, t_env_list *env);
-void	my_echo(char **args, int *exit_st);
-void	exc(t_cmd *list, t_env_list **list_env, t_var *var);
-int		bilt_in(t_var *var, t_cmd *list, t_env_list **list_env);
-int		serch_equal(char *str);
+void						my_pwd(int *exit_sta);
+void						my_env(t_env_list *env, int *exit_st);
+void						my_cd(t_env_list *env, char **arg, int *exit_st);
+void						my_unset(t_env_list **en, char **args,
+								int *exit_st);
+void						my_export(t_env_list *env, char **args,
+								int *exit_st);
+void						my_exit(char **args, int *exit_st, int pip,
+								t_env_list *env);
+void						my_echo(char **args, int *exit_st);
+void						exc(t_cmd *list, t_env_list **list_env, t_var *var);
+int							bilt_in(t_var *var, t_cmd *list,
+								t_env_list **list_env);
+int							serch_equal(char *str);
 //------------------- rediraction --------------------
-void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx);
-void	wait_child(t_var *var);
-void	my_child(t_var *var, t_cmd *list, t_env_list **list_env);
-int		*arr_id_pross(t_var *var, t_cmd *list);
+void						rederection(t_cmd *list, t_var *var, int *arr_f_h,
+								int indx);
+void						wait_child(t_var *var);
+void						my_child(t_var *var, t_cmd *list,
+								t_env_list **list_env);
+int							*arr_id_pross(t_var *var, t_cmd *list);
 //------------------------ heredoc ------------------
-char	*get_next_line(int fd);
-int		*open_all_heredoc(t_cmd *list, t_var *var, t_env_list *env);
-int		serch(char *romind, int c);
-void	handler_sig_herd(int s);
-char	*expand_herdoc(char *input, t_env_list *env);
-void	wait_heredoc(int *herdoc, t_var *var, int id);
-int		serch_del(char *str, char *del);
-void	handler(int s);
-int		pars_exec(t_var *var, t_cmd *list);
-void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out);
-char	*ft_join_path(char *s1, char *s2, char sep);
-void	free_env(t_env_list *env);
-void	print_cmd(t_cmd *node_cmd);
-void	check_and_dup(t_var *var);
-int		its_bilt(char *s);
-void	print_all_var(t_env_list *env, int *exit_st);
+void						print_all_var(t_env_list *env, int *exit_st);
+char						*get_next_line(int fd);
+char						*expand_herdoc(char *input, t_env_list *env);
+char						*ft_join_path(char *s1, char *s2, char sep);
+int							*open_all_heredoc(t_cmd *list, t_var *var,
+								t_env_list *env);
+int							serch(char *romind, int c);
+int							serch_del(char *str, char *del);
+int							pars_exec(t_var *var, t_cmd *list, int *std_it);
+int							its_bilt(char *s);
+void						handler_sig_herd(int s);
+void						wait_heredoc(int *herdoc, t_var *var, int id);
+void						handler(int s);
+void						close_reder(t_var *var, int *arr_fd_hr,
+								int *std_in_out);
+void						free_env(t_env_list *env);
+void						print_cmd(t_cmd *node_cmd);
+void						check_and_dup(t_var *var);
 #endif

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:51:35 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 13:57:36 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:59:30 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ char	*my_get_env(char *str, t_env_list *env)
 	while (env)
 	{
 		if (str_cmp(str, env->content.key))
-		{
-			
 			return (env->content.value);
-		}
 		env = env->next;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:38:46 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 14:00:30 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/08 17:15:31 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*extract_var_value(char *str, int *i, t_env_list *env, char *s)
 	len = 0;
 	if (ft_isdigit(str[*i]))
 		return (s = handle_digit_env(str, i, env, s));
-	if (!ft_isalpha(str[*i]) && str[*i] != '_')
+	if (!ft_isalpha(str[*i]) && str[*i] != '_' && str[*i] != '*')
 		return (s = ft_strjoin_free(s, "$"));
 	while (ft_isalnum(str[*i + len]) || str[*i + len] == '_')
 		len++;

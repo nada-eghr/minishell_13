@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:08:50 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 11:35:17 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 09:38:56 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,21 @@ void	ft_free_exp(char *s1, char *s2, char *s3)
 	free(s1);
 	free(s2);
 	free(s3);
+}
+
+void	remove_wrapping_quotes(t_token *token)
+{
+	char	*new_data;
+
+	if (!token || !token->token)
+		return ;
+	if (ft_strlen(token->token) >= 2)
+	{
+		new_data = substr(token->token, 1, ft_strlen(token->token) - 2);
+		if (!new_data)
+			return ;
+		free(token->token);
+		token->token = ft_strdup(new_data);
+		free(new_data);
+	}
 }

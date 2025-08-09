@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 13:32:29 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:34:16 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	chake_erorr(char **args)
 	int	eror;
 	int	num;
 
+	eror = 0;
 	if (another_alpha(args[1]))
 	{
 		write_err("Minishell: exit: ", args[1],

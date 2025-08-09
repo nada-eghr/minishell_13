@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dq_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:12 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/06 15:51:50 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:21:03 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	ft_helper(t_token *token, t_env_list *env, int *exit_stat)
 		expand_double_quote(token, env, exit_stat);
 		return ;
 	}
-	while (helper != NULL && helper->type != T_SPACE)
+	while (helper != NULL && helper->type != T_SPACE
+		&& helper->type != T_HEREDOC)
 		helper = helper->prev;
 	if (!(helper) || (helper->type == T_SPACE && helper->prev == NULL))
 	{
@@ -96,19 +97,13 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	ft_free_exp(s1, s2, joined);
 }
 
-void	remove_wrapping_quotes(t_token *token)
-{
-	char	*new_data;
-
-	if (!token || !token->token)
-		return ;
-	if (ft_strlen(token->token) >= 2)
-	{
-		new_data = substr(token->token, 1, ft_strlen(token->token) - 2);
-		if (!new_data)
-			return ;
-		free(token->token);
-		token->token = ft_strdup(new_data);
-		free(new_data);
-	}
-}
+// void	handle_escaped_dollar(t_token *tmp)
+// {
+// 	if (tmp->token[0] == '\\' && tmp->token[1] == '$')
+// 	{
+// 		char *literal = ft_strdup(tmp->token + 1);
+// 		free(tmp->token);
+// 		tmp->token = literal;
+// 		return ;
+// 	}
+// }

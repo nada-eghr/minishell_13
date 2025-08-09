@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/08 07:30:23 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:20:13 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_alpha(char c)
 	return (0);
 }
 
-int	pars_exec(t_var *var, t_cmd *list)
+int	pars_exec(t_var *var, t_cmd *list, int *std_it)
 {
 	if (!list)
 		return (1);
@@ -30,6 +30,8 @@ int	pars_exec(t_var *var, t_cmd *list)
 	var->last_out = NO_REDERCT;
 	var->last_in = NO_REDERCT;
 	var->arr_id = arr_id_pross(var, list);
+	std_it[0] = dup(0);
+	std_it[1] = dup(1);
 	return (0);
 }
 
@@ -38,16 +40,12 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 	int	len;
 
 	len = 0;
-	if (var->last_in != NO_REDERCT)
-	{
-		close(var->last_in);
-		dup2(std_in_out[0], 0);
-	}
-	if (var->last_out >= 0)
-	{
-		close(var->last_out);
-		dup2(std_in_out[1], 1);
-	}
+	close(var->last_in);
+	dup2(std_in_out[0], 0);
+	close(std_in_out[0]);
+	close(var->last_out);
+	dup2(std_in_out[1], 1);
+	close(std_in_out[1]);
 	if (var->len_hrd > 0)
 	{
 		while (len > var->len_hrd)

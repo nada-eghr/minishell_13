@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:05:43 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/03 17:52:56 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/09 11:29:04 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*parse_quoted_token(const char *data, int *i)
 	return (token);
 }
 
-t_token	*parse_word_token(const char *data, int *i)
+t_token	*parse_word_token( char *data, int *i)
 {
 	int		start;
 	int		end;

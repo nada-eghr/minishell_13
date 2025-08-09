@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:26:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 12:08:11 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:47:49 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	free_env(t_env_list *env)
 {
 	t_env_list	*list;
-	t_env_list	*l;
 
 	while (env)
 	{
 		list = env;
-		l = list;
 		env = env->next;
 		list->next = NULL;
 		free(list->content.key);
@@ -77,7 +75,7 @@ int	str_cmp(char *s1, char *s2)
 
 	i = 0;
 	if (!s1 || !s2)
-		return (1);
+		return (-1);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
