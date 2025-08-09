@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/06 12:50:09 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:32:29 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	chake_erorr(char **args)
 void	my_exit(char **args, int *exit_st, int pip, t_env_list *env)
 {
 	int	num;
-	int	eror;
 
-	eror = 1;
 	if (args[1] == NULL)
 	{
 		if (pip == NO_PIP)

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:06:30 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 11:55:47 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:04:24 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	*arr_id_pross(t_var *var, t_cmd *list)
 
 void	checker_signal(t_var *var, int st)
 {
+	if(var->its_bilt)
+		return ;
 	if (WIFSIGNALED(st))
 	{
 		write(1, "\n", 1);
@@ -43,7 +45,7 @@ void	checker_signal(t_var *var, int st)
 		if (WTERMSIG(st) == SIGQUIT)
 			var->exit_stat = 131;
 	}
-	else if (var->its_bilt == 0)
+	if (var->its_bilt == 0)
 		var->exit_stat = WEXITSTATUS(st);
 }
 
@@ -112,7 +114,9 @@ void	my_child(t_var *var, t_cmd *list, t_env_list **list_env)
 		exit (var->exit_stat);
 	path = it_correct_comnd(&var->exit_stat, list->arg[0], *list_env);
 	if (!path)
+	{
 		free_all(NULL, var->arr_id, var->exit_stat);
+	}
 	env_arr = return_list_to_arg(*list_env);
 	free_env(*list_env);
 	free(var->arr_id);

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 12:44:33 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:08:56 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_token	*start_pars(t_vmin *v, t_var *var, int *continu, t_env_list *env_list)
 
 	v->cont = 0;
 	input = readline("minishell$ ");
-// 	printf("this input[%s]\n", input);
 	input_chack(input, env_list, var);
 	if (is_line_empty(input))
 		return (*continu = 1, free(input), NULL);
@@ -97,7 +96,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	atexit(s);
+	//atexit(s);
 	first_step(env, &v);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 11:25:32 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:56:51 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*serch_path_env(char *cmd, t_env_list *env, int *exit_st)
 	int		i;
 
 	i = 0;
+	path = NULL;
 	path = my_get_env("PATH", env);
 	if (path)
 	{

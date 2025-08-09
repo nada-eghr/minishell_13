@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 12:50:16 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:07:48 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,11 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	std_it[1] = dup(1);
 	if (pars_exec(var, list))
 		return ;
-	if (str_cmp("exit", list->arg[0]))
-		my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env);
 	arr_fd_h = open_all_heredoc(list, var, *list_env);
 	if (!list->next)
 	{
-		var->rd_fd = NO_PIP;
+		if (str_cmp("exit", list->arg[0]))
+			my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env);
 		rederection(list, var, arr_fd_h, 0);
 		if (var->last_in == ERORR || var->last_out == ERORR || var->her_s == 1)
 		{
