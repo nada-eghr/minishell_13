@@ -1,4 +1,4 @@
-CC      = cc  
+CC      = cc  -fsanitize=address -g
 CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
 LDFLAGS = -L$(HOME)/readline-install/lib
 LIBS    = -lreadline
