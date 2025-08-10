@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 17:18:10 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:12:02 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@ void	expand_env_token(t_token *tmp, t_env_list *env, int *exit_stat)
 	new_data = get_env_or_empty(tmp->token, env, exit_stat);
 	free(tmp->token);
 	tmp->token = new_data;
-}
-
-void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
-{
-	if (tmp->token[0] == '$' && tmp->token[1] == '"')
-	{
-		remove_dollar_and_quotes_if_needed(tmp);
-		return ;
-	}
-	if (ft_strchr(tmp->token, '$'))
-		expand_dollar_in_token(tmp, env, exit_stat);
-	else
-		remove_wrapping_quotes(tmp);
 }
 
 void	expand_word_token(t_token *tmp, t_env_list *env, int *exit_stat)
@@ -55,28 +42,37 @@ void	expand_single_quote(t_token *tmp)
 	free(new_data);
 }
 
+t_token	*process_token(t_token *tmp, t_token **head, t_env_list *env,
+		int *exit_stat)
+{
+	t_token	*next;
+
+	if (tmp->type == T_D_QUOTE)
+		ft_helper(tmp, env, exit_stat);
+	else if (tmp->type == T_ENV)
+		ft_helper_env(tmp, env, exit_stat);
+	else if (tmp->type == T_S_QUOTE)
+		expand_single_quote(tmp);
+	else if (tmp->type == T_WORD)
+	{
+		if (str_cmp(tmp->token, "$") && tmp->next
+			&& (tmp->next->type == T_D_QUOTE || tmp->next->type == T_S_QUOTE))
+		{
+			next = tmp->next;
+			delete_specific_node(head, tmp);
+			tmp = next;
+		}
+		expand_word_token(tmp, env, exit_stat);
+	}
+	return (tmp->next);
+}
+
 t_token	*expand_token(t_token *token, t_env_list *env, int *exit_stat)
 {
 	t_token	*tmp;
 
 	tmp = token;
 	while (tmp)
-	{
-		if (tmp->type == T_D_QUOTE)
-			ft_helper(tmp, env, exit_stat);
-		else if (tmp->type == T_ENV)
-			ft_helper_env(tmp, env, exit_stat);
-		else if (tmp->type == T_S_QUOTE)
-			expand_single_quote(tmp);
-		else if (tmp->type == T_WORD)
-		{
-			if (str_cmp(tmp->token, "$") && tmp->next
-				&& ((tmp->next->type == T_D_QUOTE
-						|| tmp->next->type == T_S_QUOTE)))
-				delete_specific_node(&token, tmp);
-			expand_word_token(tmp, env, exit_stat);
-		}
-		tmp = tmp->next;
-	}
+		tmp = process_token(tmp, &token, env, exit_stat);
 	return (token);
 }

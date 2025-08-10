@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:25:38 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 09:39:19 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:26:24 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*join_empty_and_skip(char *str, int *i, char *s)
 	while (str[*i] && str[*i] != '$' && str[*i] != ' ')
 		(*i)++;
 	free(s);
-	return (ft_strjoin("", ""));
+	return (ft_strjoin("", "", N_FREE));
 }
 
 char	*get_env_or_empty(char *key, t_env_list *env, int *exit_stat)
@@ -59,7 +59,7 @@ void	expand_env_variable(t_token *tmp, t_env_list *env, int *exit_stat)
 	s1 = substr(tmp->token, 0, j);
 	s2 = substr(tmp->token, j, ft_strlen(tmp->token) - j);
 	val = get_env_or_empty(s2, env, exit_stat);
-	joined = ft_strjoin(s1, val);
+	joined = ft_strjoin(s1, val, N_FREE);
 	free(tmp->token);
 	tmp->token = ft_strdup(joined);
 	free(s1);
@@ -79,7 +79,7 @@ void	remove_quotes(t_token *tmp)
 	j = 0;
 	while (tmp->token[i])
 	{
-		if (tmp->token[i] != '"')
+		if (tmp->token[i] != '"' && tmp->token[i] != '\'')
 			str[j++] = tmp->token[i];
 		i++;
 	}

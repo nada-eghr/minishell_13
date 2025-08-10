@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:21:37 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 14:34:16 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/09 22:41:44 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	another_alpha(char *s)
 	i = 0;
 	if (s[i] == '-' || s[i] == '+')
 		i++;
+	if (!s[i])
+		return (1);
 	while (s[i])
 	{
 		if (!(s[i] >= '0' && s[i] <= '9'))
@@ -56,29 +58,29 @@ int	another_alpha(char *s)
 	return (0);
 }
 
-int	chake_erorr(char **args)
+int	chake_erorr(char *args)
 {
 	int	eror;
 	int	num;
 
 	eror = 0;
-	if (another_alpha(args[1]))
+	if (another_alpha(args))
 	{
-		write_err("Minishell: exit: ", args[1],
+		write_err("exit\nMinishell: exit: ", args,
 			": numeric argument required\n");
 		exit (255);
 	}
-	num = ft_atoi(args[1], &eror);
+	num = ft_atoi(args, &eror);
 	if (eror == -1)
 	{
-		write_err("exit\nMinishell: exit: ", args[1], 
+		write_err("exit\nMinishell: exit: ", args, 
 			": numeric argument required\n");
 		exit (255);
 	}
 	return (num);
 }
 
-void	my_exit(char **args, int *exit_st, int pip, t_env_list *env)
+int	my_exit(char **args, int *exit_st, int pip, t_env_list *env)
 {
 	int	num;
 
@@ -93,12 +95,13 @@ void	my_exit(char **args, int *exit_st, int pip, t_env_list *env)
 	}
 	if (args[2] != NULL)
 	{
+		chake_erorr(args[1]);
 		write_err("exit\nMinishell: exit: ", NULL,
 			"too many arguments\n");
 		*exit_st = 1;
-		return ;
+		return (1);
 	}
-	num = chake_erorr(args);
+	num = chake_erorr(args[1]);
 	free_env(env);
 	exit (num);
 }

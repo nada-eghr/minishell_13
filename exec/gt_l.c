@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   gt_l.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 11:46:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 16:23:58 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:28:25 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdlib.h>
 
 char	*get_new_line(char *romind, int *n)
 {
@@ -77,7 +78,7 @@ char	*get_linee(int fd, char *buffer)
 			return (romind = NULL, line);
 		}
 		buffer[red] = '\0';
-		romind = ft_strjoin(romind, buffer);
+		romind = ft_strjoin(romind, buffer, FREE);
 	}
 	line = get_new_line(romind, &i);
 	romind = new_rom(romind, i);

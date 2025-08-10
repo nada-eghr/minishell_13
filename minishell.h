@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:39:58 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@
 # define NO_SIG_NAL 4
 # define ENV_DEFAULT 5
 # define ENV 6
+# define FREE 7
+# define N_FREE 8
 # define CMD_NOTFIND 127
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-extern int					g_sigg;
+extern int	g_sigg;
 
 //---------------------------------------------------------
 typedef struct variabel
@@ -259,7 +261,7 @@ t_token						*convert_to_node(char *data);
 char						*ft_strjoin_free(char *s1, char *s2);
 char						*handle_digit_env(const char *str, int *i,
 								t_env_list *env, char *s);
-char						*ft_strjoin(char *s1, char *s2);
+char						*ft_strjoin(char *s1, char *s2, int flag);
 char						*substr(const char *src, int start, int len);
 char						*ft_strdup(char *s);
 
@@ -307,7 +309,7 @@ void						my_unset(t_env_list **en, char **args,
 								int *exit_st);
 void						my_export(t_env_list *env, char **args,
 								int *exit_st);
-void						my_exit(char **args, int *exit_st, int pip,
+int							my_exit(char **args, int *exit_st, int pip,
 								t_env_list *env);
 void						my_echo(char **args, int *exit_st);
 void						exc(t_cmd *list, t_env_list **list_env, t_var *var);

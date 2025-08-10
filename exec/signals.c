@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 17:09:48 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:29:16 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	defult_env(t_env_list **env)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	*env = ft_lstnew_env(ft_strjoin("PWD=", pwd), ENV_DEFAULT);
+	*env = ft_lstnew_env(ft_strjoin("PWD=", pwd, N_FREE), ENV_DEFAULT);
 	free(pwd);
 	ft_lstadd_back(&*env, ft_lstnew_env
-		(ft_strjoin("SHLVL=", "1"), ENV_DEFAULT));
+		(ft_strjoin("SHLVL=", "1", N_FREE), ENV_DEFAULT));
 	ft_lstadd_back(&*env, ft_lstnew_env
-		(ft_strjoin("_=", "/usr/bin/env"), ENV_DEFAULT));
+		(ft_strjoin("_=", "/usr/bin/env", N_FREE), ENV_DEFAULT));
 	ft_lstadd_back(&*env, ft_lstnew_env
-		(ft_strjoin("OLDPWD", NULL), ENV_DEFAULT));
+		(ft_strjoin("OLDPWD", NULL, N_FREE), ENV_DEFAULT));
 }
 
 void	input_check(char *input, t_env_list *env_list, t_var *var)

@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:31:03 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/04 14:01:22 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:35:34 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*joined;
 
-	joined = ft_strjoin(s1, s2);
+	joined = ft_strjoin(s1, s2, N_FREE);
 	free(s1);
 	return (joined);
 }
@@ -37,7 +37,7 @@ char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s)
 	{
 		if (ft_strncmp(tmp->content.key, buf, 2) == 0)
 		{
-			temp = ft_strjoin(s, tmp->content.value);
+			temp = ft_strjoin(s, tmp->content.value, N_FREE);
 			free(s);
 			return (temp);
 		}
@@ -46,14 +46,13 @@ char	*handle_digit_env(const char *str, int *i, t_env_list *env, char *s)
 	return (s);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int flag)
 {
 	int		i;
 	int		j;
 	char	*str;
 
 	i = 0;
-	j = 0;
 	if (!s1 && !s2)
 		return (NULL);
 	if (s1 && !s2)
@@ -63,14 +62,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);
+	j = 0;
 	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
+		str[i++] = s1[j++];
+	j = 0;
 	while (s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
+	if (flag == FREE)
+		free(s1);
 	return (str);
 }
 

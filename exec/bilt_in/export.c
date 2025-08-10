@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:20:29 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 12:08:39 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:28:56 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	have_pls_(t_env_list *env, char *arg)
 			env = env->next;
 		if (env)
 		{
-			join = ft_strjoin(env->content.value, &arg[i + 2]);
+			join = ft_strjoin(env->content.value, &arg[i + 2], N_FREE);
 			free(env->content.value);
 			env->content.value = join;
 		}

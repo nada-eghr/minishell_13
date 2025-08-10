@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:12 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 19:40:53 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:26:37 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,6 @@ void	ft_helper(t_token *token, t_env_list *env, int *exit_stat)
 	remove_quotes(token);
 }
 
-void	remove_dollar_and_quotes_if_needed(t_token *token)
-{
-	char	*new_data;
-
-	if (!token || !token->token)
-		return ;
-	if (token->token[0] == '$' && token->token[1] == '"')
-	{
-		new_data = substr(token->token, 2, ft_strlen(token->token) - 3);
-		free(token->token);
-		token->token = ft_strdup(new_data);
-		free(new_data);
-	}
-}
-
 void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 {
 	int		j;
@@ -90,9 +75,17 @@ void	expand_dollar_in_token(t_token *token, t_env_list *env, int *exit_stat)
 	s1 = substr(token->token, 1, j - 1);
 	s2 = substr(token->token, j, ft_strlen(token->token) - j - 1);
 	value = get_env_or_empty(s2, env, exit_stat);
-	joined = ft_strjoin(s1, value);
+	joined = ft_strjoin(s1, value, N_FREE);
 	free(value);
 	free(token->token);
 	token->token = ft_strdup(joined);
 	ft_free_exp(s1, s2, joined);
+}
+
+void	expand_double_quote(t_token *tmp, t_env_list *env, int *exit_stat)
+{
+	if (ft_strchr(tmp->token, '$'))
+		expand_dollar_in_token(tmp, env, exit_stat);
+	else
+		remove_wrapping_quotes(tmp);
 }

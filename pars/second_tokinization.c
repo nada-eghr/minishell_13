@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:33:36 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/01 13:38:11 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:26:43 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_second_token	*merge_word_tokens(t_token **tmp)
 			|| (*tmp)->type == T_S_QUOTE || (*tmp)->type == T_D_QUOTE))
 	{
 		tmp_join = str;
-		str = ft_strjoin(str, (*tmp)->token);
+		str = ft_strjoin(str, (*tmp)->token, N_FREE);
 		sav_tp = (*tmp)->type;
 		free(tmp_join);
 		*tmp = (*tmp)->next;

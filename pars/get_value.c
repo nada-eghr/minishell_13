@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:38:46 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/08 17:15:31 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:26:12 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*handle_special_dollar(char *s, int *i, int *exit_stat)
 	char	*temp;
 
 	status = ft_itoa(*exit_stat);
-	temp = ft_strjoin(s, status);
+	temp = ft_strjoin(s, status, N_FREE);
 	free(s);
 	free(status);
 	*i += 2;
@@ -46,7 +46,7 @@ char	*extract_var_value(char *str, int *i, t_env_list *env, char *s)
 	{
 		if (!ft_strncmp(key, tmp->content.key, ft_strlen(tmp->content.key) + 1))
 		{
-			temp = ft_strjoin(s, tmp->content.value);
+			temp = ft_strjoin(s, tmp->content.value, N_FREE);
 			return (free(key), free(s), temp);
 		}
 		tmp = tmp->next;
@@ -60,9 +60,9 @@ char	*handle_empty_or_space_after_dollar(char *s, int *i, char next)
 
 	temp = NULL;
 	if (next == '$')
-		temp = ft_strjoin(s, "$");
+		temp = ft_strjoin(s, "$", N_FREE);
 	else if (next == '?')
-		temp = ft_strjoin(s, "?");
+		temp = ft_strjoin(s, "?", N_FREE);
 	free(s);
 	(*i)++;
 	return (temp);
@@ -75,7 +75,7 @@ char	*append_char_to_str(char *s, char c)
 
 	buf[0] = c;
 	buf[1] = '\0';
-	temp = ft_strjoin(s, buf);
+	temp = ft_strjoin(s, buf, 'n');
 	free(s);
 	return (temp);
 }
