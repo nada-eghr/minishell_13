@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 13:16:20 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/05 19:56:38 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:00:40 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,17 @@ int	serch_del(char *str, char *del)
 {
 	int	i;
 	int	j;
-	int	len;
 
 	if (!str)
 		return (0);
 	i = 0;
-	len = ft_strlen(del);
-	while (i < len)
+	j = 0;
+	while (str[j] && del[i] && str[i] == del[j])
 	{
-		j = 0;
-		while (str[j] && del[i] && str[i] == del[j])
-		{
-			i++;
-			j++;
-		}
-		if (!del[j] && str[i] == '\n' && !str[i + 1])
-			return (1);
-		i = i - j;
 		i++;
 		j++;
 	}
+	if (!del[j] && str[i] == '\n' && !str[i + 1])
+		return (1);
 	return (0);
 }

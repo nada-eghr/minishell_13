@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:27:48 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/09 21:30:05 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:46:22 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,32 @@ void	first_step(char **env, t_vmin *v)
 	g_sigg = NO_SIG_NAL;
 	v->var.exit_stat = 0;
 }
+void	print_cmd(t_cmd *node_cmd)
+{
+	int	i;
+	int	j;
 
+	j = 0;
+	while (node_cmd)
+	{
+		i = 0;
+		printf("command [%d] -->", j);
+		while (node_cmd->arg[i])
+		{
+			printf(" [ %s ] ", node_cmd->arg[i++]);
+		}
+		printf("\n");
+		while (node_cmd->redi)
+		{
+			printf("type : [ %d ] <-------> file : [ %s ]  ,------> is %d\n",
+				node_cmd->redi->type, node_cmd->redi->file,
+				node_cmd->redi->her_doc);
+			node_cmd->redi = node_cmd->redi->next;
+		}
+		node_cmd = node_cmd->next;
+		j++;
+	}
+}
 int	main(int ac, char **av, char **env)
 {
 	t_vmin	v;
@@ -69,6 +94,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		v.cmd = list_cmd(v.second_tokens);
+	//	print_cmd(v.cmd);
 		exc(v.cmd, &v.env_list, &v.var);
 		free_list1(v.second_tokens);
 		free_cmd_list(&v);

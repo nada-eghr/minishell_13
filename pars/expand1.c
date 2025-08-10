@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:25:38 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/10 12:26:24 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:19:11 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	remove_quotes(t_token *tmp)
 	str = malloc(ft_strlen(tmp->token) + 1);
 	i = 0;
 	j = 0;
+	// printf("1 = %s\n", tmp->token);
 	while (tmp->token[i])
 	{
 		if (tmp->token[i] != '"' && tmp->token[i] != '\'')
@@ -84,6 +85,7 @@ void	remove_quotes(t_token *tmp)
 		i++;
 	}
 	str[j] = '\0';
+	// printf("1 = %s\n", str);
 	free(tmp->token);
 	tmp->token = ft_strdup(str);
 	free(str);
