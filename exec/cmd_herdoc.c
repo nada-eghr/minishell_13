@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:20:17 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/10 15:40:43 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/10 17:30:17 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ int	len_heredoc(t_cmd *list, int n)
 	{
 		while (red)
 		{
-			
 			if (red->type == T_HEREDOC)
-			{
 				count++;
-			}
 			red = red->next;
 		}
 	}
@@ -74,6 +71,7 @@ void	child_heredoc(int *herdoc, t_redirection *red
 	, t_var *var, t_env_list *env)
 {
 	int	len;
+
 	signal(SIGINT, handler_sig_herd);
 	close (herdoc[0]);
 	len = var->len_hrd;
