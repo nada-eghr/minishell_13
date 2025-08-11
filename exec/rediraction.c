@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:27:05 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 13:25:53 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:05:07 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	write_err(char *s, char *arg, char *last)
 	}
 }
 
-void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
+void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int *index)
 {
 	if (red->type == T_RED_IN)
 	{
@@ -42,7 +42,14 @@ void	in_file(t_redirection *red, t_var *var, int *arr_fd_h, int index)
 		}
 	}
 	if (red->type == T_HEREDOC)
-		var->last_in = arr_fd_h[index];
+	{
+		var->len_hrd--;
+		if (var->len_hrd == 0)
+		{
+			var->last_in = arr_fd_h[*index];
+				(*index)++;
+		}
+	}
 }
 
 void	out_file(int type, char *file, int *last_out)
@@ -71,11 +78,12 @@ void	out_file(int type, char *file, int *last_out)
 	}
 }
 
-void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int indx)
+void	rederection(t_cmd *list, t_var *var, int *arr_f_h, int *indx)
 {
 	t_redirection	*rid;
 
 	rid = list->redi;
+	var->len_hrd = len_heredoc(list, HERDC_IN_CMD);
 	while (rid)
 	{
 		in_file(rid, var, arr_f_h, indx);

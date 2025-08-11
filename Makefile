@@ -1,6 +1,6 @@
-CC      = cc  -fsanitize=address -g
-CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
-LDFLAGS = -L$(HOME)/readline-install/lib
+LIBS    = -lreadline
+CFLAGS  = -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
+LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
 LIBS    = -lreadline
 
 # Source and object files

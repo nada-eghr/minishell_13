@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:55:34 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/10 12:39:58 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:01:15 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ int							bilt_in(t_var *var, t_cmd *list,
 int							serch_equal(char *str);
 //------------------- rediraction --------------------
 void						rederection(t_cmd *list, t_var *var, int *arr_f_h,
-								int indx);
+								int *indx);
 void						wait_child(t_var *var);
 void						my_child(t_var *var, t_cmd *list,
 								t_env_list **list_env);
@@ -341,4 +341,5 @@ void						close_reder(t_var *var, int *arr_fd_hr,
 								int *std_in_out);
 void						free_env(t_env_list *env);
 void						check_and_dup(t_var *var);
+int							len_heredoc(t_cmd *list, int n);
 #endif
