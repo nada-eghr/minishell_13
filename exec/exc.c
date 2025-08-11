@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/11 10:02:40 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:23:54 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	}
 	else
 		more_comnd(list, list_env, var, arr_fd_h);
+	var->len_hrd = len_heredoc(list, HERDC_IN_LIST);
 	close_reder(var, arr_fd_h, std_it);
 	wait_child(var);
 }
