@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 20:29:52 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 13:56:51 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/10 19:59:15 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ char	*it_correct_comnd(int *exit_st, char *cmd, t_env_list *env)
 {
 	struct stat	sb;
 
-	if (str_chr(cmd, '/'))
+	if (str_chr (cmd, '/') && stat(cmd, &sb) == 0)
 	{
-		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
+		if (S_ISDIR(sb.st_mode))
 		{
 			write_err("Minishell: ", cmd, ": is a directory\n");
 			return (*exit_st = 126, NULL);

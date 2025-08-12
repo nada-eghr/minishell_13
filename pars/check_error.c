@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:03:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/08/10 14:00:41 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/12 19:22:38 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	check_error(t_second_token **list, t_var *var)
 		return (var->exit_stat = 258, true);
 	}
 	*list = save;
-	if (check_redirections(list) || str_cmp((*list)->token, "!"))
+	if (check_redirections(list))
 	{
 		if (*list && (*list)->next == NULL)
 			printf("minishell: syntax error near unexpected token `newline'\n");

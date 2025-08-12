@@ -1,9 +1,8 @@
-CC      = cc  -fsanitize=address -g
+CC      = cc
 CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
 LDFLAGS = -L$(HOME)/readline-install/lib
 LIBS    = -lreadline
 
-# Source and object files
 NAME    = minishell
 SRCS    =  ./pars/expand.c  \
 			./pars/utils1.c  \
