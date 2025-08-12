@@ -6,7 +6,7 @@
 /*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 17:38:08 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 22:29:56 by slamhaou         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:23:54 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	more_comnd(t_cmd *list, t_env_list **list_env, t_var *var, int *arr_f)
 	{
 		var->last_in = NO_REDERCT;
 		var->last_out = NO_REDERCT;
-		rederection(list, var, arr_f, j);
+		rederection(list, var, arr_f, &j);
 		if (var->her_s == 1)
 			return ;
 		if (var->last_in != ERORR && var->last_out != ERORR)
@@ -101,13 +101,15 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 {
 	int	*arr_fd_h;
 	int	std_it[2];
-
+	int	j;
+	
+	j = 0;
 	if (pars_exec(var, list, std_it))
 		return ;
 	arr_fd_h = open_all_heredoc(list, var, *list_env);
 	if (!list->next)
 	{
-		rederection(list, var, arr_fd_h, 0);
+		rederection(list, var, arr_fd_h, &j);
 		if (str_cmp("exit", list->arg[0]) == 1)
 		{
 			if (my_exit(list->arg, &var->exit_stat, NO_PIP, *list_env))
@@ -122,6 +124,7 @@ void	exc(t_cmd *list, t_env_list **list_env, t_var *var)
 	}
 	else
 		more_comnd(list, list_env, var, arr_fd_h);
+	var->len_hrd = len_heredoc(list, HERDC_IN_LIST);
 	close_reder(var, arr_fd_h, std_it);
 	wait_child(var);
 }

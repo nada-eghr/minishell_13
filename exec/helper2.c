@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:28:36 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/09 21:09:53 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:25:50 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	close_reder(t_var *var, int *arr_fd_hr, int *std_in_out)
 	close(std_in_out[1]);
 	if (var->len_hrd > 0)
 	{
-		while (len > var->len_hrd)
+		while (len < var->len_hrd)
 			close(arr_fd_hr[len++]);
 		free(arr_fd_hr);
 	}
