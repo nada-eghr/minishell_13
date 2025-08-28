@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gt_l.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slamhaou <slamhaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 11:46:00 by slamhaou          #+#    #+#             */
-/*   Updated: 2025/08/10 12:28:25 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:28:33 by slamhaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_linee(int fd, char *buffer)
 	while (serch(romind, '\n') == 0)
 	{
 		red = read(fd, buffer, BUFFER_SIZE);
-		if (red < 0 || errno == EINTR)
+		if (red < 0)
 			return (NULL);
 		if (red == 0 && !romind)
 			return (NULL);

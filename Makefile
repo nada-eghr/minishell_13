@@ -1,7 +1,8 @@
 CC      = cc
-CFLAGS  =  -Wall -Wextra -Werror -I$(HOME)/readline-install/include 
-LDFLAGS = -L$(HOME)/readline-install/lib
+CFLAGS  = -Wall -Wextra -Werror -I/Users/slamhaou/.brew/opt/readline/include
+LDFLAGS = -L/Users/slamhaou/.brew/opt/readline/lib
 LIBS    = -lreadline
+
 
 NAME    = minishell
 SRCS    =  ./pars/expand.c  \
